@@ -1,0 +1,52 @@
+<!-- Add Vue.js -->
+<script src="https://unpkg.com/vue@2.6.12/dist/vue.js"></script>
+
+<!-- Add BootstrapVue CSS -->
+<link
+  type="text/css"
+  rel="stylesheet"
+  href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+/>
+<link
+  type="text/css"
+  rel="stylesheet"
+  href="https://unpkg.com/bootstrap-vue@2.21.2/dist/bootstrap-vue.css"
+/>
+
+<!-- Add BootstrapVue JS after Vue -->
+<script src="https://unpkg.com/bootstrap-vue@2.21.2/dist/bootstrap-vue.js"></script>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Your styles and meta tags -->
+  </head>
+  <body>
+    <div id="app">
+      <b-container class="text-center" fluid>
+        <b-row align-h="center" align-v="center" class="full-height">
+          <b-col cols="12" md="6">
+            <h1>{{ message }}</h1>
+            <p>This is the beginning of the web app</p>
+            <b-button variant="primary" @click="goToSignup">Sign Up</b-button>
+            <b-button>Login</b-button>
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          message: "Hello Chingun",
+        },
+        methods: {
+          goToSignup: function () {
+            window.location.href = "user-input.html";
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

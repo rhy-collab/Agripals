@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!-- This line is a document type declaration that helps browsers to display web pages correctly. -->
+
+<html>
+  <!-- This is the root element of an HTML page. -->
+
+  <head>
+    <!-- The head element contains meta-information about the HTML document. -->
+
+    <title>My Website</title>
+    <!-- The title element specifies the title of the HTML document. The title is displayed in the browser's title bar or tab. -->
+
+    <style>
+      <!-- The style element is used to embed CSS rules in an HTML document. -->
+
+        .hidden {
+          display: none;
+        }
+        <!-- This CSS rule hides elements with the class "hidden". -->
+
+        button {
+          display: none;
+        }
+        <!-- This CSS rule hides all button elements. -->
+
+        @media (max-width: 600px) {
+          nav {
+            display: none;
+          }
+          button {
+            display: block;
+          }
+        }
+        <!-- These CSS rules hide the navigation and show the button on screens smaller than 600px wide. -->
+
+        header {
+          background-color: #f8f9fa;
+          padding: 20px;
+          text-align: center;
+          border-bottom: 1px solid #ddd;
+        }
+        <!-- These CSS rules style the header element. -->
+
+        header h1 {
+          color: #333;
+        }
+        <!-- This CSS rule changes the color of the h1 element inside the header. -->
+
+        nav a {
+          margin: 0 10px;
+          text-decoration: none;
+          color: #333;
+        }
+        <!-- These CSS rules style the links inside the navigation. -->
+    </style>
+    <!-- End of the style element. -->
+  </head>
+  <!-- End of the head element. -->
+
+  <body>
+    <!-- The body element contains the content of the HTML document. -->
+
+    <header>
+      <!-- The header element represents a container for introductory content or a set of navigational links. -->
+
+      <h1>Welcome to My Website</h1>
+      <!-- The h1 element defines the most important heading. -->
+
+      <nav>
+        <!-- The nav element is a container for navigation links. -->
+
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+      <!-- These are the navigation links. -->
+
+      <button onclick="toggleLinks()">Click Me</button>
+      <!-- This is a button that calls the "toggleLinks" function when clicked. -->
+
+      <div id="links" class="hidden">
+        <!-- This div contains additional links and is hidden by default. -->
+
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+      </div>
+      <!-- These are the additional links. -->
+    </header>
+    <!-- End of the header element. -->
+
+    <script>
+      <!-- The script element is used to embed JavaScript code in an HTML document. -->
+
+      function toggleLinks() {
+        var links = document.getElementById("links");
+        links.classList.toggle("hidden");
+      }
+      <!-- This JavaScript function toggles the visibility of the additional links. -->
+    </script>
+    <!-- End of the script element. -->
+  </body>
+  <!-- End of the body element. -->
+</html>
+<!-- End of the html element. -->

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Website</title>
+  </head>
+  <style>
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+
+    .logo-container img {
+      height: 50px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+    }
+
+    .nav-links li {
+      margin: 0 10px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: rgb(192, 59, 59);
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    .menu-toggle .hamburger {
+      width: 30px;
+      height: 2px;
+      background-color: rgb(70, 36, 164);
+      margin: 5px 0;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-links.active {
+        display: block;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+  </style>
+
+  <body>
+    <header>
+      <div class="logo-container">
+        <img src="path_to_your_logo.png" alt="Logo" />
+      </div>
+      <nav class="nav">
+        <div class="menu-toggle">
+          <div class="hamburger"></div>
+          <li><a href="#link1">Contact</a></li>
+          <li><a href="#link2">Abouyt us</a></li>
+          <li><a href="#link3">Services</a></li>
+        </div>
+
+        <ul class="nav-links">
+          <li><a href="#link1">Contact</a></li>
+          <li><a href="#link2">About us</a></li>
+          <li><a href="#link3">Services</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <p>This is a simple website.</p>
+      <button>Click me</button>
+    </main>
+    <footer>
+      <p>Copyright &copy; 2022</p>
+    </footer>
+    <script>
+      // Select the hamburger menu
+      var menuToggle = document.querySelector(".menu-toggle");
+
+      // Add a click event listener
+      menuToggle.addEventListener("click", function () {
+        // Select the nav links
+        var navLinks = document.querySelector(".nav-links");
+
+        // Toggle the 'active' class
+        navLinks.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>

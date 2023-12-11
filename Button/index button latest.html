@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Australia Oyster Coast</title>
+    <style>
+      .hidden {
+        display: none;
+      }
+
+      /* Hide the button by default */
+      button {
+        display: none;
+        background-color: rgb(104, 56, 56);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .bg-blue {
+        background-color: blue;
+      }
+      button:active {
+        background-color: rgb(255, 0, 195);
+      }
+
+      /* Styling the header */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      header h1 {
+        color: #333;
+      }
+
+      nav a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: #333;
+      }
+
+      /* Show the button on screens smaller than 600px */
+      @media (max-width: 600px) {
+        nav {
+          display: none;
+        }
+        button {
+          display: block;
+        }
+      }
+
+      a {
+        color: green; /* Replace 'green' with the color you want */
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to My Website</h1>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+      <button id="myButton" onclick="toggleDropdown()">Click Me</button>
+
+      <!-- Dropdown HTML -->
+      <div id="dropdown" style="display: none">
+        <button onclick="handleLinkClick(1)" id="link1">Link 1</button>
+        <button onclick="handleLinkClick(2)" id="link2">Link 2</button>
+        <button onclick="handleLinkClick(3)" id="link3">Link 3</button>
+      </div>
+    </header>
+
+    <script>
+      function toggleDropdown() {
+        var dropdown = document.getElementById("dropdown");
+        if (dropdown.style.display === "none") {
+          dropdown.style.display = "block";
+          document.getElementById("link1").style.color = "green";
+          document.getElementById("link2").style.color = "green";
+          document.getElementById("link3").style.color = "green";
+        } else {
+          dropdown.style.display = "none";
+          document.getElementById("link1").style.color = ""; // Reset to default color
+          document.getElementById("link2").style.color = ""; // Reset to default color
+          document.getElementById("link3").style.color = ""; // Reset to default color
+        }
+      }
+
+      function handleLinkClick(linkNumber) {
+        console.log("Link " + linkNumber + " clicked");
+      }
+    </script>
+  </body>
+</html>
