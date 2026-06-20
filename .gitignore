@@ -1,0 +1,30 @@
+# Secrets & env
+.env
+.env.local
+*.pem
+*.key
+id_rsa*
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Node
+node_modules/
+dist/
+
+# Data (keep small CSVs, ignore large dumps)
+data/*.csv
+!data/sample*.csv
