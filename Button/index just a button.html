@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Website</title>
+    <style>
+      .hidden {
+        display: none;
+      }
+      .blue {
+        background-color: blue;
+        color: white; /* Change the text color to white for better visibility */
+      }
+    </style>
+  </head>
+  <body>
+    <button id="myButton" onclick="toggleLinks()">Click Me</button>
+    <div id="links" class="hidden">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </div>
+    <script>
+      function toggleLinks() {
+        var links = document.getElementById("links");
+        var button = document.getElementById("myButton");
+        links.classList.toggle("hidden");
+        button.classList.toggle("blue");
+      }
+    </script>
+  </body>
+</html>

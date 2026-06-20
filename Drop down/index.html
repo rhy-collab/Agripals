@@ -1,0 +1,42 @@
+<!-- BEGIN: Button -->
+<button onclick="toggleDropdown()">Click me</button>
+
+<!-- BEGIN: Dropdown -->
+<div id="dropdown" style="display: none">
+  <button onclick="handleLinkClick(1)">Link 1</button>
+  <button onclick="handleLinkClick(2)">Link 2</button>
+  <button onclick="handleLinkClick(3)">Link 3</button>
+</div>
+
+<!-- BEGIN: JavaScript -->
+<script>
+  function toggleDropdown() {
+    var dropdown = document.getElementById("dropdown");
+    if (dropdown.style.display === "none") {
+      dropdown.style.display = "block";
+    } else {
+      dropdown.style.display = "none";
+    }
+  }
+
+  function handleLinkClick(linkNumber) {
+    // Handle link click here
+    console.log("Link " + linkNumber + " clicked");
+  }
+</script>
+<!-- END: JavaScript -->
+
+<!-- BEGIN: CSS -->
+<style>
+  #dropdown {
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+  #dropdown button {
+    display: block;
+    margin-bottom: 5px;
+  }
+</style>
+<!-- END: CSS -->

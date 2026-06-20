@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+/* Section 1 */
+<html>
+  <head>
+    <title>My Personal Website</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #000000;
+        font-family: Arial, sans-serif;
+        color: #ffffff;
+        padding-top: 80px;
+      }
+      .header {
+        background-color: #f8f9fa;
+        padding: 10px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+      }
+      .nav-link {
+        margin: 0 15px;
+        text-decoration: none;
+        color: black;
+      }
+      .nav-link:hover {
+        color: blue;
+      }
+      .main-container {
+        width: 100%;
+        max-width: 1200px;
+        padding: 0 15px;
+        margin: 0 auto;
+      }
+
+      .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .intro-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+      }
+
+      .intro-heading,
+      .intro-text {
+        color: #ffffff;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 20px;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      .featured-image {
+        max-width: 50%;
+        height: auto;
+      }
+
+      /* Section 2 */
+
+      #interactive-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      #interactive-button:hover {
+        background-color: #0069d9;
+      }
+      /* Section 3 */
+
+      /* For desktop */
+      @media (min-width: 992px) {
+        .main-container {
+          width: 100%;
+          padding: 0 50px;
+          margin: 0 auto;
+        }
+        /* Rest of your CSS */
+
+        .row {
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: flex-start;
+        }
+        .intro-heading,
+        .intro-text {
+          width: 400px;
+        }
+        .featured-image {
+          padding: 0 50px; /* Increase padding to the image */
+        }
+      }
+
+      /* For iPad */
+      @media (min-width: 768px) and (max-width: 991px) {
+        .main-container {
+          margin-top: 20px; /* Add margin-top here */
+        }
+        .row {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .intro-heading,
+        .intro-text {
+          width: 100%;
+        }
+      }
+      /* Section 4 */
+      @media (max-width: 767px) {
+        body {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          height: 70vh;
+          margin: 0;
+          background-color: #000000;
+          font-family: Arial, sans-serif;
+          color: #ffffff;
+          padding-top: 80px;
+        }
+
+        .main-container {
+          margin-top: 0; /* Set margin-top to 0 */
+        }
+
+        .row {
+          flex-direction: column;
+          align-items: center;
+          margin-top: 20px; /* Add margin-top here */
+        }
+
+        .intro-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin-right: 20px;
+          padding: 0 15px; /* Add padding here */
+          /* Remove the margin-top property here */
+        }
+
+        .intro-heading,
+        .intro-text {
+          width: calc(
+            100% - 30px
+          ); /* Subtract the added padding from the width */
+        }
+
+        .header nav {
+          display: none;
+        }
+        /* Section 5 */
+        #interactive-button {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <img src="logo.png" alt="Logo" style="width: 229px; height: 48px" />
+      <nav>
+        <a href="#" class="nav-link">Home</a>
+        <a href="#" class="nav-link">About</a>
+        <a href="#" class="nav-link">Contact</a>
+      </nav>
+    </header>
+    <div class="main-container">
+      <div class="row">
+        <div class="intro-container">
+          <h1 class="intro-heading">Hello, Chingun!</h1>
+          <p class="intro-text">
+            I'm excited to share that I'm learning to code! I started with the
+            free version of ChatGPT 4 with Bing Chat and have been learning step
+            by step.
+          </p>
+          <div class="button-container">
+            <button id="interactive-button">Sign up!</button>
+          </div>
+        </div>
+        <img class="featured-image" src="1234.png" alt="Featured Image" />
+      </div>
+      <div id="dynamic-message"></div>
+    </div>
+
+    <script>
+      var button = document.getElementById("interactive-button");
+      var message = document.getElementById("dynamic-message");
+
+      button.addEventListener("click", function () {
+        message.innerHTML = "Button was clicked";
+      });
+    </script>
+  </body>
+</html>

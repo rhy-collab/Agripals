@@ -1,0 +1,41 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.logo-container img {
+  height: 50px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+}
+
+.nav-links li {
+  margin: 0 10px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: rgb(192, 59, 59);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Hide the button by default */
+#toggle-button {
+  display: none;
+}
+
+/* Show the button on screens smaller than 600px */
+@media (max-width: 600px) {
+  #toggle-button {
+    display: block;
+  }
+}

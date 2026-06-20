@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dropdown Example</title>
+    <style>
+      #dropdown {
+        background-color: #ffffff;
+        padding: 10px;
+        margin-top: 10px;
+      }
+
+      #dropdown button {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      #logo {
+        font-size: 2em;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div id="logo">Oz</div>
+      <button onclick="toggleDropdown()">Click me</button>
+    </header>
+
+    <div id="dropdown" style="display: none">
+      <button onclick="handleLinkClick(1)">Link 1</button>
+      <button onclick="handleLinkClick(2)">Link 2</button>
+      <button onclick="handleLinkClick(3)">Link 3</button>
+    </div>
+
+    <h1>Hello World</h1>
+
+    <script>
+      function toggleDropdown() {
+        var dropdown = document.getElementById("dropdown");
+        if (dropdown.style.display === "none") {
+          dropdown.style.display = "block";
+        } else {
+          dropdown.style.display = "none";
+        }
+      }
+
+      function handleLinkClick(linkNumber) {
+        console.log("Link " + linkNumber + " clicked");
+      }
+    </script>
+  </body>
+</html>

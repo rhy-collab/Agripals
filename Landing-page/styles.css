@@ -1,0 +1,116 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #000000;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    padding-top: 80px; 
+}
+.header {
+    background-color: #f8f9fa;
+    padding: 10px; 
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex; 
+    justify-content: space-between; 
+}
+.nav-link {
+    margin: 0 15px;
+    text-decoration: none;
+    color: black;
+}
+.nav-link:hover {
+    color: blue;
+}
+.main-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+.row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.intro-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.intro-heading, .intro-text {
+    color: #ffffff;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+.featured-image {
+    max-width: 50%; 
+    height: auto;
+}
+#interactive-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+#interactive-button:hover {
+    background-color: #0069d9;
+}
+/* For desktop */
+@media (min-width: 992px) {
+    .row {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .intro-heading, .intro-text {
+        width: 400px;
+    }
+}
+/* For iPad */
+@media (min-width: 768px) and (max-width: 991px) {
+    .row {
+        flex-direction: column;
+        align-items: center;
+    }
+    .intro-heading, .intro-text {
+        width: 100%;
+    }
+}
+/* For iPhone */
+@media (max-width: 767px) {
+    .row {
+        flex-direction: column;
+        align-items: center;
+    }
+    .intro-heading, .intro-text {
+        width: 100%;
+    }
+}

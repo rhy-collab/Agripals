@@ -131,6 +131,6 @@ When robots produce and deliver food end-to-end, our infrastructure ensures equi
 ---
 
 **Status:** Pre-launch MVP setup  
-**Repository:** https://github.com/[username]/agripals (to be created)  
+**Repository:** https://github.com/rhy-collab/agripals  
 **Lead:** Rhys  
 **Contact:** Discord (Herbie), Hermes Desktop, Obsidian Sync
