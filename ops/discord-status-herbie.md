@@ -24,7 +24,7 @@
 
 ## Current Milestone
 
-**Goal:** Execute first 10 oyster deliveries (Batemans Bay → Nowra → Sydney)  
+**Goal:** Execute first 10 oyster deliveries (Tomales Bay → Petaluma → San Francisco)  
 **Method:** SMS-based tracking, handwritten order numbers, photos at each handoff  
 **Target:** 100% success rate → approach VCs for $300K seed
 
@@ -32,9 +32,9 @@
 
 ## Next Actions
 
-- [ ] Reconnect with Sydney chef (confirm interest, order frequency)
-- [ ] Confirm Steve (Batemans Bay oyster farmer) availability
-- [ ] Get Mustang Logistics contact (owner or ops manager)
+- [ ] Reconnect with SF pilot restaurant chef (confirm interest, order frequency)
+- [ ] Confirm Steve (Tomales Bay oyster farmer) availability
+- [ ] Get Bay Area logistics partner contact (owner or ops manager)
 - [ ] Design SMS templates (order confirmation, pickup, delivery)
 - [ ] Build ops tracking spreadsheet
 - [ ] Execute first test delivery
@@ -44,7 +44,7 @@
 ## Blockers
 
 1. **Supply reliability:** Rhys managing personally initially, need 3+ backup farmers
-2. **Mustang Logistics:** Need meeting with owner to smooth depot coordination
+2. **Logistics partner:** Need meeting with owner to smooth Petaluma depot coordination
 3. **Packaging:** Currently hessian bags + plastic; cool-chain boxes later
 
 ---

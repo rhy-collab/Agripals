@@ -36,8 +36,8 @@ Examples:
 
 - `2406200017 READY`
 - `2406200017 PICKEDUP`
-- `2406200017 NOWRA`
-- `2406200017 SYDNEY`
+- `2406200017 PETALUMA`
+- `2406200017 SF`
 - `2406200017 DELIVERED`
 - `2406200017 ISSUE`
 
@@ -55,13 +55,13 @@ Example SMS:
 
 ### 2. Farmer Supply Check
 
-Agripals checks if Steve in Batemans Bay has stock.
+Agripals checks if the Tomales Bay farmer has stock.
 
 Example SMS:
 
-`Hi Steve, can you supply 5 dozen unshucked oysters for Tuesday pickup? Order 2406200017. Reply YES or NO.`
+`Hi [Farmer], can you supply 5 dozen unshucked oysters for Tuesday pickup? Order 2406200017. Reply YES or NO.`
 
-If Steve says no, the same message goes to the backup farmer list.
+If the farmer says no, the same message goes to the backup farmer list.
 
 ### 3. Pickup Coordination
 
@@ -69,11 +69,19 @@ Once supply is confirmed, Agripals sends the driver and farmer the same order nu
 
 Farmer message:
 
-`Pickup confirmed for order 2406200017. Please meet the Mustang driver at Batemans Bay at [time/place]. Reply READY when packed.`
+`Pickup confirmed for order 2406200017. Please meet the logistics driver at Tomales Bay at [time/place]. Reply READY when packed.`
+
+**Packing instructions (the whole "label" system):** triple-bag the oysters (three plastic bags), tie it off with masking tape, and write `2406200017` on the tape in pen. No printed label, no equipment — this is the same handwritten-number approach as the rest of this doc, applied to the physical parcel.
+
+**Farm-side grading, by photo:** before sealing the bag, ask the farmer for two photos, texted in:
+
+`Before you seal it up — 2 quick photos please: 1) a handful of the oysters so we can check size/consistency, 2) one oyster shucked so we can check the meat. Reply with both and you're done.`
+
+AI grades both photos against the promised grade (size consistency, meat quality/color). This is what replaces a human inspector — see `docs/go-to-market-strategy.md` for how this fits the broader direct-from-farmer model and why grading-by-photo is what makes cutting out the wholesaler (who traditionally did this grading) possible.
 
 Driver message:
 
-`Agripals pickup 2406200017: 5 dozen oysters from Steve at Batemans Bay. Text PICKEDUP once collected. If delayed, text ISSUE.`
+`Agripals pickup 2406200017: 5 dozen oysters from [Farmer] at Tomales Bay. Text PICKEDUP once collected. If delayed, text ISSUE.`
 
 ### 4. Driver Collection
 
@@ -87,9 +95,9 @@ If possible, the driver also texts a photo of the parcel or bag. This gives proo
 
 Every depot contact receives the same instruction:
 
-`Agripals order 2406200017 is moving to [next location]. Please text 2406200017 NOWRA when received and 2406200017 SENT when forwarded.`
+`Agripals order 2406200017 is moving to [next location]. Please text 2406200017 PETALUMA when received and 2406200017 SENT when forwarded.`
 
-For the first 10 deliveries, Rhys should personally maintain one contact inside Mustang Logistics who can chase the order if a status is missed.
+For the first 10 deliveries, Rhys should personally maintain one contact inside the Bay Area logistics partner who can chase the order if a status is missed.
 
 ### 6. Chef Delivery
 
@@ -100,6 +108,18 @@ Chef receives:
 Completion happens only when the chef replies:
 
 `2406200017 DELIVERED`
+
+### 7. Delivery-Side Grading & Escrow Release
+
+Payment for the order is held in escrow from the moment it's placed — the farmer isn't paid until the order is confirmed delivered *and* the grading checks out on the receiving end. This is what lets a restaurant trust a photo-graded order from a farmer they've never met, and it's a core part of removing the wholesaler (who traditionally provided that trust) from the chain.
+
+Once the chef texts `DELIVERED`, ask for the same two photos requested from the farmer:
+
+`Thanks for confirming! Two quick photos so we can check the grading matches what was promised: 1) a handful of the oysters in your hand, 2) one shucked. Reply with both.`
+
+AI compares the delivery-side photos against the farm-side photos from step 3. If the grading is within tolerance and there's no complaint from the chef, escrow releases automatically to the farmer — no invoice chasing, no manual reconciliation. If grading looks off, flag it for human review before releasing payment.
+
+Once escrow releases, a real invoice is generated automatically and emailed from the farmer to the chef, so there's a normal paper trail on both sides despite the whole transaction having been coordinated entirely by text.
 
 ## Spreadsheet Columns
 
@@ -122,6 +142,11 @@ Use a simple spreadsheet as the operational brain:
 - Paid farmer
 - Paid transport
 - Chef paid
+- Farm-side grading photo URLs (handful + shucked)
+- Delivery-side grading photo URLs (handful + shucked)
+- Grading match (yes / no / flagged for review)
+- Escrow status (held / released / disputed)
+- Invoice sent (yes/no + timestamp)
 
 This can be manual first. The automation comes later.
 
@@ -174,8 +199,10 @@ The first milestone is 10 completed deliveries where:
 
 - Supply was confirmed by SMS.
 - Pickup was confirmed by SMS.
+- Farm-side grading photos were captured and graded.
 - At least one logistics handoff was confirmed.
-- The chef confirmed delivery.
+- The chef confirmed delivery and delivery-side grading photos were captured.
+- Escrow released automatically based on grading match, with no manual chasing.
 - Any issue was recoverable because the order number was known.
 
 After 10 deliveries, Agripals can decide whether to add:
@@ -185,14 +212,15 @@ After 10 deliveries, Agripals can decide whether to add:
 - QR codes for depots
 - Label printers for frequent farmers
 - A lightweight web dashboard
-- Automated weekly supply checks
+- Automated weekly supply checks (texting farmers directly for stock/grade/availability — see `docs/go-to-market-strategy.md`)
+- A Databricks pipeline analyzing grading and delivery data across farmers and logistics providers to solve the consistent-supply problem at scale
 
 ## Immediate Next Steps
 
 1. Build the spreadsheet.
 2. Write the first chef SMS.
 3. Write the first farmer SMS.
-4. Identify one Mustang Logistics contact who can help trace an order.
+4. Identify one Bay Area logistics partner contact who can help trace an order.
 5. Run one 5-dozen test order.
 6. Underwrite the first order so the farmer and chef feel no risk.
 7. Record every failure point.
