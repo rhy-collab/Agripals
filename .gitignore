@@ -32,4 +32,3 @@ data/*.csv
 *.bak
 *.bak[0-9]*
 index.html.bak*
-.fuse_hidden*
