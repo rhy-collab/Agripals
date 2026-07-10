@@ -28,3 +28,8 @@ dist/
 # Data (keep small CSVs, ignore large dumps)
 data/*.csv
 !data/sample*.csv
+.next/
+*.bak
+*.bak[0-9]*
+index.html.bak*
+.fuse_hidden*

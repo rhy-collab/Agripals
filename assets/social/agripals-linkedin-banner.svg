@@ -1,0 +1,67 @@
+<svg width="1200" height="200" viewBox="0 0 1200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mascotGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4CC499"/>
+      <stop offset="1" stop-color="#2E8564"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F4FAF6"/>
+      <stop offset="1" stop-color="#E7F4EC"/>
+    </linearGradient>
+  </defs>
+
+  <!-- base -->
+  <rect x="0" y="0" width="1200" height="200" fill="url(#bgGrad)"/>
+
+  <!-- rolling hills, full bleed background art -->
+  <path d="M0,145 Q150,115 300,138 T600,132 T900,142 T1200,122 L1200,200 L0,200 Z" fill="#DCEFE1" opacity="0.85"/>
+  <path d="M0,165 Q200,140 400,160 T800,158 T1200,150 L1200,200 L0,200 Z" fill="#C6E9D3" opacity="0.75"/>
+  <path d="M0,183 Q250,168 500,181 T1000,179 T1200,176 L1200,200 L0,200 Z" fill="#AEE0C0" opacity="0.65"/>
+
+  <!-- dotted route: farm -> truck -> restaurant -->
+  <path d="M190,82 C270,58 300,128 380,108 C430,95 410,72 430,100 C450,128 495,66 600,78"
+        fill="none" stroke="#2E8564" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 13" opacity="0.85"/>
+
+  <!-- farm marker -->
+  <text x="190" y="30" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="800" letter-spacing="1.5" fill="#2E8564">TOMALES BAY</text>
+  <circle cx="190" cy="80" r="32" fill="#FFFFFF" stroke="#2E8564" stroke-width="4"/>
+  <path d="M178,86c0-10 6-18 12-18s12,8 12,18c0,7 -6,10 -12,10s-12,-3 -12,-10z" fill="#8C8B72"/>
+  <path d="M182,80c3,-4 9,-4 12,0" stroke="#5c5b47" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+
+  <!-- truck marker -->
+  <circle cx="430" cy="100" r="27" fill="#2E8564"/>
+  <g transform="translate(413,90)">
+    <rect x="0" y="6" width="20" height="10" rx="1.5" fill="#FFFFFF"/>
+    <path d="M20,9 h7 l5,5 v2 h-12 z" fill="#FFFFFF"/>
+    <circle cx="6" cy="18" r="2.6" fill="#123024"/>
+    <circle cx="24" cy="18" r="2.6" fill="#123024"/>
+  </g>
+  <rect x="368" y="128" width="124" height="26" rx="13" fill="#FFFFFF" stroke="#DCEFE1" stroke-width="1.5"/>
+  <circle cx="384" cy="141" r="4" fill="#4CC499"/>
+  <text x="396" y="145" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="800" letter-spacing="1" fill="#2E8564">IN TRANSIT · NOVATO, CA</text>
+
+  <!-- restaurant marker -->
+  <circle cx="600" cy="76" r="32" fill="#FFFFFF" stroke="#2E8564" stroke-width="4"/>
+  <path d="M600,60c-8,0-14,6-14,14c0,10 14,22 14,22s14,-12 14,-22c0,-8 -6,-14 -14,-14z" fill="#FF9F4D"/>
+  <circle cx="600" cy="74" r="5.5" fill="#FFFFFF"/>
+  <text x="600" y="132" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="800" fill="#12201A">ROSA'S KITCHEN</text>
+
+  <!-- divider -->
+  <rect x="695" y="34" width="1.5" height="132" fill="#B9DEC6" opacity="0.7"/>
+
+  <!-- brand block -->
+  <g transform="translate(722,58)">
+    <line x1="12" y1="3" x2="12" y2="-1.5" stroke="#2E8564" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="12" cy="-3.2" r="1.6" fill="#2E8564"/>
+    <rect x="0" y="3.5" width="24" height="22" rx="10" fill="url(#mascotGrad)"/>
+    <circle cx="7.6" cy="15.5" r="3" fill="#FFFFFF"/>
+    <circle cx="8.6" cy="15.5" r="1.5" fill="#123024"/>
+    <circle cx="17" cy="15.5" r="3" fill="#FFFFFF"/>
+    <circle cx="18" cy="15.5" r="1.5" fill="#123024"/>
+    <path d="M8,20.6q4,3.5 8,0" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <text x="762" y="80" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="800" letter-spacing="-0.5" fill="#123024">Agripals</text>
+  <text x="762" y="107" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#2E8564">Sunlight is the best transparency.</text>
+  <text x="762" y="130" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="13.5" font-weight="500" fill="#68786F">Farm-direct sourcing, powered by AI. No middlemen.</text>
+</svg>
