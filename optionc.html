@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agripals — San Francisco's farm-direct food distributor</title>
+<meta name="description" content="Agripals is San Francisco's farm-direct food distributor. Order by text and we deliver fine produce and seafood straight from the farm and the dock — reliably, on your schedule.">
+<style>
+  :root{
+    --g900:#123024; --g700:#2E8564; --g600:#37A278; --g500:#4CC499; --g100:#DCEFE1;
+    --ink:#12201a; --muted:#5c6b62; --line:rgba(18,32,26,.10); --bg:#f4f8f5; --card:#fff;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{margin:0; color:var(--ink); background:var(--bg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; line-height:1.55}
+  a{color:inherit; text-decoration:none}
+  .wrap{width:100%; max-width:1120px; margin:0 auto; padding:0 clamp(18px,4vw,26px)}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:800; font-size:15px; padding:13px 22px; border-radius:14px; cursor:pointer; border:none; font-family:inherit; transition:transform .12s}
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:linear-gradient(180deg,var(--g500),var(--g700)); color:#fff; box-shadow:0 10px 24px rgba(46,133,100,.28)}
+  .btn-ghost{background:#fff; color:var(--g700); border:1.5px solid var(--g100)}
+  .a-mark{width:34px; height:34px; border-radius:10px; flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; background:linear-gradient(155deg,var(--g500),var(--g700)); color:#fff; font-weight:800; font-size:20px; box-shadow:0 4px 12px rgba(24,51,45,.2)}
+  .pill{display:inline-block; font-size:12.5px; font-weight:800; letter-spacing:.02em; padding:6px 12px; border-radius:999px; color:var(--g700); background:var(--g100)}
+  .kicker{font-size:12.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--g700)}
+
+  .switch{background:var(--g900); color:#bcd4c4; font-size:12.5px; text-align:center; padding:7px 10px}
+  .switch a{color:#fff; font-weight:700; margin:0 4px} .switch a.off{color:#8fae9c; font-weight:500}
+
+  header{position:sticky; top:0; z-index:50; background:rgba(244,248,245,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--line)}
+  .nav{display:flex; align-items:center; gap:14px; height:64px}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px}
+  .nav-links{margin-left:auto; display:flex; align-items:center; gap:22px}
+  .nav-links a{font-weight:600; font-size:14.5px; color:var(--muted)}
+  .nav-links .phone{color:var(--g700); font-weight:800}
+  @media(max-width:780px){ .nav-links a:not(.btn):not(.phone){display:none} }
+
+  .hero{text-align:center; padding:clamp(40px,7vw,76px) 0 clamp(28px,4vw,44px)}
+  h1{font-size:clamp(34px,7vw,64px); line-height:1.02; letter-spacing:-.03em; margin:16px 0 16px; font-weight:850}
+  .lede{font-size:clamp(16px,2.3vw,19px); color:var(--muted); max-width:30em; margin:0 auto 28px}
+  .prompt{max-width:660px; margin:0 auto; background:var(--card); border:1px solid var(--line); border-radius:20px; box-shadow:0 22px 54px rgba(18,48,36,.13); padding:6px; text-align:left}
+  .prompt:focus-within{border-color:var(--g500)}
+  .prompt textarea{width:100%; border:none; resize:none; font-family:inherit; font-size:clamp(15px,2vw,17px); color:var(--ink); background:transparent; padding:16px 16px 4px; line-height:1.5; min-height:58px}
+  .prompt textarea:focus{outline:none}
+  .prompt-bar{display:flex; align-items:center; gap:10px; padding:6px 8px 8px}
+  .bar-spacer{flex:1} .bar-label{font-size:13px; color:var(--muted); font-weight:700}
+  .send{width:44px; height:44px; border:none; border-radius:13px; cursor:pointer; color:#fff; font-size:19px; font-weight:800; background:linear-gradient(180deg,var(--g500),var(--g700))}
+  .chips{display:flex; gap:9px; flex-wrap:wrap; justify-content:center; margin:16px auto 0; max-width:660px}
+  .chip{border:1px solid var(--line); background:#fff; color:var(--ink); font-weight:700; font-size:13px; padding:9px 14px; border-radius:999px; cursor:pointer; font-family:inherit}
+  .chip:hover{border-color:var(--g500); color:var(--g700)}
+  .callrow{margin-top:16px; font-size:14px; color:var(--muted)} .callrow b{color:var(--g700)}
+  .capture{max-width:660px; margin:14px auto 0; background:#fff; border:1px solid var(--g100); border-radius:18px; box-shadow:0 18px 40px rgba(18,48,36,.12); padding:18px; text-align:left; display:none}
+  .capture.show{display:block}
+  .capture .reply{display:flex; gap:12px} .capture .reply p{margin:0; font-size:15px}
+  .cap-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+  .cap-row input{flex:1; min-width:190px; padding:12px 14px; border:1.5px solid var(--line); border-radius:12px; font-size:15px; font-family:inherit}
+  .cap-row input:focus{outline:none; border-color:var(--g500)}
+  .demo{display:inline-block; margin-top:18px; font-size:14px; color:var(--g700); font-weight:700}
+
+  .band{background:var(--g900); color:#fff; padding:30px 0; margin-top:22px}
+  .stats{display:grid; grid-template-columns:1fr; gap:16px; text-align:center}
+  @media(min-width:640px){ .stats{grid-template-columns:repeat(4,1fr)} }
+  .stat .n{font-size:clamp(24px,3.4vw,30px); font-weight:850} .stat .n.mint{color:var(--g500)}
+  .stat .l{font-size:12.5px; opacity:.82; margin-top:2px}
+
+  section.pad{padding:clamp(46px,7vw,66px) 0}
+  h2{font-size:clamp(25px,3.8vw,34px); line-height:1.12; letter-spacing:-.02em; margin:10px 0 8px; font-weight:820}
+  .sub{color:var(--muted); font-size:clamp(15px,2vw,17px); max-width:36em; margin:0 0 26px}
+  .grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:22px; box-shadow:0 10px 26px rgba(18,48,36,.05)}
+  .card .ico{width:44px; height:44px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:22px; background:var(--g100); margin-bottom:12px}
+  .card h3{margin:0 0 6px; font-size:17.5px} .card p{margin:0; color:var(--muted); font-size:14.5px}
+  .step-n{width:30px;height:30px;border-radius:9px;background:var(--g700);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:12px}
+  .quotes{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .quote{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+  .quote .stars{color:#e0a13c;letter-spacing:2px} .quote blockquote{margin:9px 0 12px;font-size:15.5px;line-height:1.5}
+  .quote .who{font-size:13px;color:var(--muted)} .quote .who b{color:var(--ink)}
+  .join{text-align:center; padding:clamp(50px,8vw,72px) 0}
+  form.wl{display:flex; gap:10px; max-width:480px; margin:22px auto 0; flex-wrap:wrap; justify-content:center}
+  form.wl input{flex:1; min-width:200px; padding:14px 16px; border-radius:14px; border:1.5px solid var(--line); font-size:15px; font-family:inherit; background:#fff}
+  form.wl input:focus{outline:none; border-color:var(--g500)}
+  .note{font-size:12.5px;color:var(--muted);margin-top:12px}
+  footer{border-top:1px solid var(--line); padding:26px 0; color:var(--muted); font-size:13.5px}
+  .foot{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+  .foot .brand{color:var(--ink)} .foot .sp{margin-left:auto; display:flex; gap:20px; flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="switch">Preview: <a class="off" href="./index.html">A · Agripals</a> · <a class="off" href="./optionb.html">B · Providores</a> · <a href="./optionc.html">C · Agripals (distributor voice)</a></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="a-mark">A</span> Agripals</a>
+    <nav class="nav-links">
+      <a href="#supply">What we supply</a>
+      <a href="#why">Why chefs choose us</a>
+      <a class="phone" href="tel:+14155550142">(415) 555‑0142</a>
+      <a class="btn btn-primary" href="#join">Open an account</a>
+    </nav>
+  </div>
+</header>
+
+<a id="top"></a>
+<section class="wrap hero">
+  <span class="pill">🌱 San Francisco&rsquo;s farm-direct food distributor</span>
+  <h1>Fresh from the farm,<br>delivered to your kitchen.</h1>
+  <p class="lede">Agripals delivers fine produce and seafood straight from the farm and the dock — ordered by a simple text, and at your door on your schedule.</p>
+
+  <div class="prompt" onclick="document.getElementById('q').focus()">
+    <textarea id="q" placeholder="Place an order — e.g. 6 dozen Grade A Tomales Bay oysters, Tuesday &amp; Thursday, 11am" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendOrder()}"></textarea>
+    <div class="prompt-bar">
+      <span class="bar-spacer"></span>
+      <span class="bar-label">Send order</span>
+      <button class="send" onclick="sendOrder()" aria-label="Send">↑</button>
+    </div>
+  </div>
+  <div class="chips">
+    <button class="chip" onclick="chip('I need oysters this week')">🦪 I need oysters this week</button>
+    <button class="chip" onclick="chip('Set up my standing weekly order')">📋 Set up a standing order</button>
+    <button class="chip" onclick="chip('What are your delivery days?')">🚚 What are your delivery days?</button>
+  </div>
+  <p class="callrow">Prefer to talk? Call the order desk on <b>(415) 555‑0142</b></p>
+
+  <div class="capture" id="capture">
+    <div class="reply"><span class="a-mark">A</span><p id="reply">Thanks — leave your details and we&rsquo;ll confirm your delivery within the hour.</p></div>
+    <form class="cap-row" onsubmit="return capture(event)">
+      <input id="cap-name" type="text" placeholder="Restaurant name">
+      <input id="cap-email" type="email" required placeholder="you@restaurant.com">
+      <button class="btn btn-primary" type="submit">Request delivery →</button>
+    </form>
+  </div>
+  <a class="demo" href="./App-Prototype/">or try the live ordering demo →</a>
+</section>
+
+<div class="band">
+  <div class="wrap stats">
+    <div class="stat"><div class="n mint">180+</div><div class="l">Bay Area restaurants served</div></div>
+    <div class="stat"><div class="n">6 days</div><div class="l">Delivery, Mon–Sat</div></div>
+    <div class="stat"><div class="n">2pm</div><div class="l">Cut-off for next-day</div></div>
+    <div class="stat"><div class="n">Farm-direct</div><div class="l">Honest pricing, no middleman</div></div>
+  </div>
+</div>
+
+<section class="pad" id="supply">
+  <div class="wrap">
+    <div class="kicker">What we supply</div>
+    <h2>Sourced direct. Graded by hand.</h2>
+    <p class="sub">We buy straight from the farms and day-boats we know by name — so you always know where your ingredients came from.</p>
+    <div class="grid" style="margin-top:20px">
+      <div class="card"><div class="ico">🦪</div><h3>Oysters &amp; shellfish</h3><p>Tomales Bay, Hog Island and the North Coast — delivered fresh on ice.</p></div>
+      <div class="card"><div class="ico">🐟</div><h3>Day-boat fish</h3><p>Off the dock to your pass, often within a day of landing.</p></div>
+      <div class="card"><div class="ico">🥬</div><h3>Farm produce</h3><p>Seasonal fruit and vegetables from Northern California growers.</p></div>
+      <div class="card"><div class="ico">🍋</div><h3>Specialty &amp; provisions</h3><p>Citrus, herbs, dairy and the dry goods that round out your order.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="why" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="kicker">Why chefs choose us</div>
+    <h2>The dependable name in the kitchen.</h2>
+    <div class="grid" style="margin-top:22px">
+      <div class="card"><div class="ico">⏰</div><h3>On time, every time</h3><p>Fixed delivery windows and a same-day cut-off you can plan your prep around.</p></div>
+      <div class="card"><div class="ico">✅</div><h3>Quality you can stand behind</h3><p>Every order is graded and quality-checked, and traceable right back to the farm.</p></div>
+      <div class="card"><div class="ico">💬</div><h3>One point of contact</h3><p>Order by text with a real team who knows your kitchen. We handle the rest.</p></div>
+      <div class="card"><div class="ico">💸</div><h3>Honest, farm-direct pricing</h3><p>We cut out the middlemen and pass the saving on. No games, no hidden fees.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad">
+  <div class="wrap">
+    <div class="kicker">How ordering works</div>
+    <h2>Three steps. No apps to learn.</h2>
+    <div class="grid" style="margin-top:22px">
+      <div class="card"><div class="step-n">1</div><h3>Send your order</h3><p>Text us what you need — a photo of your list works too. Or call the order desk.</p></div>
+      <div class="card"><div class="step-n">2</div><h3>We source it direct</h3><p>Straight from the farm and dock, graded and packed cold for your kitchen.</p></div>
+      <div class="card"><div class="step-n">3</div><h3>Delivered on your schedule</h3><p>Across SF, the Peninsula, the East Bay and Marin — six days a week.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="kicker">In the kitchens we serve</div>
+    <h2>Chefs don&rsquo;t switch back.</h2>
+    <div class="quotes" style="margin-top:22px">
+      <div class="quote"><div class="stars">★★★★★</div><blockquote>&ldquo;They&rsquo;ve never missed a delivery, and the oysters are the best we&rsquo;ve had.&rdquo;</blockquote><div class="who"><b>Marco Bianchi</b> · Exec Chef, The Ferry House</div></div>
+      <div class="quote"><div class="stars">★★★★★</div><blockquote>&ldquo;I text my order at night and it&rsquo;s at the door by morning. Easiest supplier we deal with.&rdquo;</blockquote><div class="who"><b>Elena Rossi</b> · Owner, Rosa&rsquo;s Kitchen</div></div>
+      <div class="quote"><div class="stars">★★★★★</div><blockquote>&ldquo;Farm-direct pricing without the hassle. They do the running around so we don&rsquo;t.&rdquo;</blockquote><div class="who"><b>James Okafor</b> · Head Chef, Bayfront Grill</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="join" id="join">
+  <div class="wrap">
+    <div class="kicker">Open an account</div>
+    <h2>Let&rsquo;s get your kitchen supplied.</h2>
+    <p class="sub" style="margin:8px auto 0">Tell us about your restaurant and we&rsquo;ll set you up with an account and a first delivery — usually within a day.</p>
+    <form class="wl" onsubmit="return joinWaitlist(event)">
+      <input id="wl-email" type="email" required placeholder="you@restaurant.com">
+      <button class="btn btn-primary" type="submit">Open my account →</button>
+    </form>
+    <p class="note" id="wl-note">Or call the order desk on (415) 555‑0142 · 5am–4pm, Mon–Sat.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span class="brand" style="display:flex; align-items:center; gap:9px; font-weight:800"><span class="a-mark" style="width:26px;height:26px;border-radius:8px;font-size:15px">A</span> Agripals</span>
+    <span>Farm-direct food distributor · San Francisco</span>
+    <span class="sp">
+      <a href="tel:+14155550142">(415) 555‑0142</a>
+      <a href="./App-Prototype/">Ordering demo</a>
+      <a href="mailto:orders@agripals.co">Contact</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  var lastOrder='';
+  function replyFor(t){ t=(t||'').toLowerCase();
+    if(t.indexOf('oyster')>-1) return "Oysters — our specialty. Tomales Bay and Hog Island, delivered fresh six days a week. Leave your details and we&rsquo;ll confirm within the hour.";
+    if(t.indexOf('standing')>-1||t.indexOf('weekly')>-1) return "Happy to set up a standing weekly order. Leave your details and we&rsquo;ll get it scheduled.";
+    if(t.indexOf('deliver')>-1||t.indexOf('day')>-1) return "We deliver Monday to Saturday across SF and the Bay Area, with a 2pm cut-off for next day. Leave your details and we&rsquo;ll confirm your window.";
+    return "Thanks — leave your details and we&rsquo;ll confirm your delivery within the hour."; }
+  function show(v){ lastOrder=(v||'').trim(); document.getElementById('reply').innerHTML=replyFor(lastOrder);
+    document.getElementById('capture').classList.add('show'); setTimeout(function(){document.getElementById('cap-name').focus();},200); }
+  function sendOrder(){ show(document.getElementById('q').value); }
+  function chip(t){ document.getElementById('q').value=t; show(t); }
+  function mail(subj,lines){ window.location.href="mailto:orders@agripals.co?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(lines.join("\n")); }
+  function capture(e){ e.preventDefault();
+    mail("New order enquiry",["Restaurant: "+document.getElementById('cap-name').value,"Email: "+document.getElementById('cap-email').value, lastOrder?("Order: "+lastOrder):""]);
+    document.getElementById('reply').textContent="Thanks — opening your email to confirm. Send it and we&rsquo;ll be right back to you."; return false; }
+  function joinWaitlist(e){ e.preventDefault();
+    mail("Open an account",["Email: "+document.getElementById('wl-email').value]);
+    document.getElementById('wl-note').textContent="Thanks — opening your email. Send it and we&rsquo;ll set up your account.";
+    document.getElementById('wl-note').style.color="#2E8564"; return false; }
+</script>
+</body>
+</html>
