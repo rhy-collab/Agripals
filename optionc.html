@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agripals — The AI rebuilding the food supply chain</title>
-<meta name="description" content="Agripals is the bleeding-edge AI cutting out every middleman between the farm and your kitchen — realigning a $330B supply chain so chefs get impossible farm-direct deals, delivered.">
+<meta name="description" content="Agripals is the bleeding-edge AI cutting the markup out of the chain between the farm and your kitchen — realigning a $330B market so chefs get impossible farm-direct deals, delivered.">
 <style>
   :root{
     --bg:#050f0a; --bg2:#0a1a12; --panel:rgba(255,255,255,.05); --border:rgba(255,255,255,.11);
@@ -123,7 +123,7 @@
 <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
 
 <div class="switch">Preview: <a class="off" href="./index.html">A · Agripals</a> · <a class="off" href="./optionb.html">B · Providores (old-school)</a> · <a href="./optionc.html">C · Agripals (AI hype)</a></div>
-<div class="ticker"><div><span>⚡ <b>LIVE:</b> Royal Miyagi oysters — $0.70 ea</span><span>🔥 20% cheaper than wholesale</span><span>🚀 0 middlemen</span><span>🛰️ AI-routed last-mile</span><span>🌊 SF · Bay Area</span><span>⚡ <b>LIVE:</b> Royal Miyagi oysters — $0.70 ea</span><span>🔥 20% cheaper than wholesale</span><span>🚀 0 middlemen</span><span>🛰️ AI-routed last-mile</span><span>🌊 SF · Bay Area</span></div></div>
+<div class="ticker"><div><span>⚡ <b>LIVE:</b> Royal Miyagi oysters — $0.70 ea</span><span>🔥 5–20% cheaper than wholesale</span><span>🚀 AI-orchestrated chain</span><span>🛰️ AI-routed last-mile</span><span>🌊 SF · Bay Area</span><span>⚡ <b>LIVE:</b> Royal Miyagi oysters — $0.70 ea</span><span>🔥 5–20% cheaper than wholesale</span><span>🚀 AI-orchestrated chain</span><span>🛰️ AI-routed last-mile</span><span>🌊 SF · Bay Area</span></div></div>
 
 <header>
   <div class="wrap nav">
@@ -143,7 +143,7 @@
     <div>
       <span class="chip">⚡ Bleeding-edge AI × Agriculture</span>
       <h1>The AI <span class="grad">rebuilding</span> the food supply chain.</h1>
-      <p class="lede">Agripals uses AI to cut out <b>every middleman</b> between the farm and your kitchen — realigning a <b>$330B</b> supply chain so chefs get impossible farm-direct deals, delivered. This is the most advanced thing to hit food since refrigeration.</p>
+      <p class="lede">Agripals uses AI to strip the markup out of the chain between the farm and your kitchen — realigning a <b>$330B</b> market so chefs get impossible farm-direct deals, delivered. This is the most advanced thing to hit food since refrigeration.</p>
 
       <div class="console">
         <div class="console-top"><div class="dots"><i></i><i></i><i></i></div><span class="k mono">agripals · place an order</span></div>
@@ -152,11 +152,11 @@
           <span class="live"><span class="pulse"></span> AI is live · sourcing farm-direct</span>
           <button class="send" onclick="sendOrder()" aria-label="Send">↑</button>
         </div>
-        <div class="airow" id="airow"></div>
+        <div class="airow" id="airow"><div class="aibub"><b>Hey chef 👋</b> Today&rsquo;s deal is <b>Royal Miyagi oysters — $0.70 apiece.</b> Text me to grab it — or drop your number below.</div></div>
       </div>
 
       <div class="callbox">
-        <p><b>Want us to get in touch?</b> Just drop your mobile number and we&rsquo;ll <b>give you a call</b> on how to access this deal — and take part in the AI revolution.</p>
+        <p><b>Want us to get in touch?</b> Add your mobile number and we&rsquo;ll <b>give you a call</b> to see if we can tee up this deal for you.</p>
         <form class="call-row" onsubmit="return getCall(event)">
           <input id="ph" type="tel" inputmode="tel" placeholder="Your mobile number" required>
           <button class="btn btn-glow" type="submit">Get the call →</button>
@@ -185,8 +185,8 @@
 
 <div class="metrics">
   <div class="wrap metrics-grid">
-    <div class="metric"><div class="n grad">~20%</div><div class="l">Cheaper than wholesale</div></div>
-    <div class="metric"><div class="n grad">0</div><div class="l">Middlemen in the chain</div></div>
+    <div class="metric"><div class="n grad">5–20%</div><div class="l">Cheaper than wholesale</div></div>
+    <div class="metric"><div class="n grad">$0</div><div class="l">Our CapEx — no trucks or warehouses</div></div>
     <div class="metric"><div class="n grad">$330B</div><div class="l">Market being realigned</div></div>
     <div class="metric"><div class="n grad">24/7</div><div class="l">AI sourcing &amp; routing</div></div>
   </div>
@@ -199,7 +199,7 @@
     <p class="sub">One AI does the entire job a room full of wholesalers used to — instantly, and for a fraction of the cost.</p>
     <div class="grid" style="margin-top:22px">
       <div class="card"><div class="ico">📸</div><div class="step">01</div><h3>Text it your order</h3><p>Snap your menu or type what you need. The AI reads it and turns it into a clean, structured order.</p></div>
-      <div class="card"><div class="ico">🧠</div><div class="step">02</div><h3>AI sources direct</h3><p>It finds the farm and the dock, negotiates the price, and cuts out every middleman in milliseconds.</p></div>
+      <div class="card"><div class="ico">🧠</div><div class="step">02</div><h3>AI sources direct</h3><p>It finds the farm and the dock, agrees the price, and strips the markup out of the chain in milliseconds.</p></div>
       <div class="card"><div class="ico">🛰️</div><div class="step">03</div><h3>AI routes the last mile</h3><p>Delivery is dispatched and tracked autonomously — the exact edge wholesalers used to hold.</p></div>
     </div>
   </div>
@@ -254,7 +254,7 @@
     var q=document.getElementById('q'); var v=(q.value||'').trim(); if(!v) return;
     var t=v.toLowerCase(), reply;
     if(t.indexOf('oyster')>-1||t.indexOf('miyagi')>-1) reply="⚡ On it — Royal Miyagis are live at <b>$0.70 apiece</b>, farm-direct. Drop your number below and we&rsquo;ll call to lock in your delivery.";
-    else if(t.indexOf('save')>-1||t.indexOf('cost')>-1) reply="⚡ We can beat your wholesale price by ~20% on that. Leave your number and we&rsquo;ll call with the exact figures.";
+    else if(t.indexOf('save')>-1||t.indexOf('cost')>-1) reply="⚡ We can beat your wholesale price by 5–20% on that. Leave your number and we&rsquo;ll call with the exact figures.";
     else reply="⚡ Sourcing that farm-direct now. Leave your number below and we&rsquo;ll call you to set it up.";
     document.getElementById('airow').innerHTML='';
     addBub(reply);

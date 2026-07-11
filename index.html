@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agripals — Farm-direct produce for chefs</title>
-<meta name="description" content="Agripals is the farm-direct assistant for chefs. Snap a photo of your menu and get produce straight from the farm — fresher, and around 20% cheaper. No middleman.">
+<meta name="description" content="Agripals is the farm-direct assistant for chefs. Snap a photo of your menu and get produce straight from the farm — fresher, and farm-direct — often 5–20% cheaper.">
 <meta property="og:title" content="Agripals — Fresh from the farm, straight to your kitchen.">
 <meta property="og:description" content="Tell one assistant what you're cooking and get produce direct from the growers. Fresher food, farm-direct prices.">
 <meta property="og:type" content="website">
@@ -140,7 +140,7 @@
 <section class="wrap hero">
   <span class="eyebrow pill pill-green">🌱 Farm-direct produce for chefs</span>
   <h1>Fresh from the farm,<br>straight to your kitchen.</h1>
-  <p class="lede">Tell Agripals what you&rsquo;re cooking. Get it direct from the growers — fresher, and around 20% cheaper.</p>
+  <p class="lede">Tell Agripals what you&rsquo;re cooking. Get it direct from the growers — fresher, and often 5–20% cheaper.</p>
 
   <!-- the box, front & centre -->
   <div class="prompt" onclick="document.getElementById('q').focus()">
@@ -178,7 +178,7 @@
 <div class="band">
   <div class="wrap stats">
     <div class="stat"><div class="n amber">$330B</div><div class="l">US restaurants spend on food a year</div></div>
-    <div class="stat"><div class="n mint">~20%</div><div class="l">Typical saving, going farm-direct</div></div>
+    <div class="stat"><div class="n mint">5–20%</div><div class="l">Typical saving, going farm-direct</div></div>
     <div class="stat"><div class="n">1 text</div><div class="l">All it takes — no portals, no forms</div></div>
   </div>
 </div>
@@ -226,7 +226,7 @@
     <div class="grid" style="margin-top:22px">
       <div class="card"><div class="step-n">1</div><h3>Scan your menu</h3><p>Snap a photo — Agripals reads what you buy.</p></div>
       <div class="card"><div class="step-n">2</div><h3>We find your farms</h3><p>Agripals matches your items to farms that can supply them.</p></div>
-      <div class="card"><div class="step-n">3</div><h3>You save ~20%</h3><p>Farm-direct pricing, delivered — you just approve and cook.</p></div>
+      <div class="card"><div class="step-n">3</div><h3>You save 5–20%</h3><p>Farm-direct pricing, delivered — you just approve and cook.</p></div>
     </div>
   </div>
 </section>
@@ -285,8 +285,8 @@
   function onPhoto(){ document.getElementById('q').value = document.getElementById('q').value || 'Here is my menu — what can I get farm-direct?'; promptSend(); }
   function replyFor(text){
     var t=(text||'').toLowerCase();
-    if(t.indexOf('oyster')>-1) return "🦪 Oysters are exactly where we start — direct from Tomales Bay, usually ~20% under wholesale. Leave your email and I&rsquo;ll line up quotes for your kitchen.";
-    if(t.indexOf('save')>-1||t.indexOf('cost')>-1||t.indexOf('%')>-1) return "Most kitchens save around 20% on the items I find — from a single photo of your menu. Drop your email and I&rsquo;ll show you your numbers.";
+    if(t.indexOf('oyster')>-1) return "🦪 Oysters are exactly where we start — direct from Tomales Bay, usually 5–20% under wholesale. Leave your email and I&rsquo;ll line up quotes for your kitchen.";
+    if(t.indexOf('save')>-1||t.indexOf('cost')>-1||t.indexOf('%')>-1) return "Most kitchens save 5–20% on the items I find — from a single photo of your menu. Drop your email and I&rsquo;ll show you your numbers.";
     if(t.indexOf('menu')>-1||t.indexOf('scan')>-1||t.indexOf('photo')>-1) return "Perfect — it all starts with your menu. Leave your email and I&rsquo;ll get you set up, or try the live demo below.";
     return "Love it — leave your email and I&rsquo;ll get you set up first in your area.";
   }
