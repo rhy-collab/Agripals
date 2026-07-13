@@ -1,0 +1,17 @@
+# Keep the public Cloudflare site to just the landing pages, the prototype, and images.
+# Never publicly serve repo internals or business/investor materials.
+.git/
+assets/
+docs/
+ops/
+agripals-live/
+Button/
+Drop down/
+Drop down works/
+Hamburger-landing-page/
+Landing-page/
+Mobile/
+*.pptx
+*.md
+*.bak
+.fuse_hidden*
