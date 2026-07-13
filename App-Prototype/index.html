@@ -475,6 +475,36 @@
   .chat-head .titles{ flex:1; min-width:0; }
   .chat-head .titles strong{ display:block; font-size:15px; letter-spacing:-.01em; }
   .chat-head .titles span{ display:block; font-size:11.5px; color:var(--muted); }
+  .chat-mode-toggle{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    padding:5px;
+    margin:0 0 12px;
+    border:1px solid var(--glass-border);
+    border-radius:16px;
+    background:var(--glass-light);
+    -webkit-backdrop-filter:blur(16px) saturate(160%);
+    backdrop-filter:blur(16px) saturate(160%);
+    box-shadow:0 6px 16px rgba(18,48,36,.08), inset 0 1px 0 rgba(255,255,255,.48);
+  }
+  .chat-mode-toggle button{
+    min-height:38px;
+    border:0;
+    border-radius:12px;
+    background:transparent;
+    color:var(--muted);
+    font:inherit;
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+    transition:all .18s cubic-bezier(.2,.8,.2,1);
+  }
+  .chat-mode-toggle button.active{
+    background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.72));
+    color:var(--green-900);
+    box-shadow:0 5px 14px rgba(18,48,36,.12), inset 0 1px 0 rgba(255,255,255,.8);
+  }
 
   .chat-body{ display:flex; flex-direction:column; gap:10px; }
   .bubble{ max-width:82%; border-radius:20px; padding:12px 15px; font-size:13.5px; line-height:1.45; box-shadow:0 3px 10px rgba(24,51,45,.05); }
@@ -1174,6 +1204,10 @@
                 <div class="mini-logo"><svg width="44" height="44" viewBox="0 0 48 48"><use href="#agripal-mascot"/></svg></div>
                 <div class="titles"><strong id="r-chat-title">Agripals</strong><span id="r-chat-sub">Your farm-direct assistant · orders, invoices &amp; more</span></div>
               </div>
+            </div>
+            <div class="chat-mode-toggle" aria-label="Choose who to message">
+              <button id="r-mode-agripals" class="active" type="button" onclick="switchRestaurantChat('agripals')">Talk to Agripals</button>
+              <button id="r-mode-logistics" type="button" onclick="switchRestaurantChat('logistics')">Key logistics partner</button>
             </div>
             <div class="chat-body" id="r-chat-body"></div>
             <div class="chat-compose">
@@ -1962,43 +1996,85 @@
   /* ---------- Messages / chat ---------- */
   var chatScripts = {
     restaurant: {
-      seed: [
-        "Hi Chef! 👋 I'm Agripals — your farm-direct assistant.",
-        "I've had a quick look at Rosa's Kitchen on Mission St — coastal Californian, seafood-forward. Love it. 🌊",
-        "To get you the best farm-direct prices, first things first: could you send me your menu? A photo or a link is perfect — I'll read through exactly what you're cooking with. 📋"
-      ],
-      steps: [
-        {
-          user: "Sure — here's the menu 📷",
-          bot: [
-            "Amazing, thank you! Give me a sec to go through it… 🔎",
-            "Right — I can already see four things I can get you straight from the farm: oysters, wild prawns, yellowfin tuna and Meyer lemons.",
-            "This is exactly where I've seen chefs save the most — and I've got farmers ready to go on all four. 🌾",
-            "Want me to create a Bid for these four? That puts them out to the farms so they compete for your order."
+      modes: {
+        agripals: {
+          title: "Agripals",
+          sub: "Your farm-direct assistant · orders, invoices & more",
+          label: "Message Agripals…",
+          seed: [
+            "Hi Chef! 👋 I'm Agripals — your farm-direct assistant.",
+            "I've had a quick look at Rosa's Kitchen on Mission St — coastal Californian, seafood-forward. Love it. 🌊",
+            "To get you the best farm-direct prices, first things first: could you send me your menu? A photo or a link is perfect — I'll read through exactly what you're cooking with. 📋"
+          ],
+          steps: [
+            {
+              user: "Sure — here's the menu 📷",
+              bot: [
+                "Amazing, thank you! Give me a sec to go through it… 🔎",
+                "Right — I can already see four things I can get you straight from the farm: oysters, wild prawns, yellowfin tuna and Meyer lemons.",
+                "This is exactly where I've seen chefs save the most — and I've got farmers ready to go on all four. 🌾",
+                "Want me to create a Bid for these four? That puts them out to the farms so they compete for your order."
+              ]
+            },
+            {
+              user: "Yes please — create the Bids.",
+              reveal: {
+                topic: "4 items",
+                subject: "Oysters · Prawns · Tuna · Lemons",
+                badge: "Bids in progress",
+                preview: "Agripals is putting your 4 items out to the farms.",
+                card: { title: "Bids understood", rows: [["Items","Oysters · Wild Prawns · Yellowfin Tuna · Meyer Lemons"],["Sourcing","Direct from local farms"],["Goal","Fresher product, farm-direct price"]] }
+              },
+              bot: [
+                "On it! 🌾 Sending all four out to the farms now.",
+                "Oysters usually move fastest — I'd expect quotes back within a day.",
+                "I'll ping you the moment they land so you can compare and pick the best."
+              ]
+            },
+            {
+              user: "Perfect — thanks Agripals.",
+              bot: ["Anytime, Chef. 🙌 I'll keep the farms honest and chase down the best price for you."],
+              cta: { label: "View My Bids →", screen: "r-rfqs", nav: "nav-r-rfqs" },
+              badgeDone: "Quotes on the way"
+            }
           ]
         },
-        {
-          user: "Yes please — create the Bids.",
-          reveal: {
-            topic: "4 items",
-            subject: "Oysters · Prawns · Tuna · Lemons",
-            badge: "Bids in progress",
-            preview: "Agripals is putting your 4 items out to the farms.",
-            card: { title: "Bids understood", rows: [["Items","Oysters · Wild Prawns · Yellowfin Tuna · Meyer Lemons"],["Sourcing","Direct from local farms"],["Goal","Fresher product, farm-direct price"]] }
-          },
-          bot: [
-            "On it! 🌾 Sending all four out to the farms now.",
-            "Oysters usually move fastest — I'd expect quotes back within a day.",
-            "I'll ping you the moment they land so you can compare and pick the best."
+        logistics: {
+          title: "Key logistics partner",
+          sub: "Farm pickup · cold-chain timing · delivery updates",
+          label: "Message logistics partner…",
+          seed: [
+            "Hi Rosa's Kitchen — this is your SF logistics partner for Agripals farm drops.",
+            "I've got the Royal Miyagi oyster run pencilled for tomorrow morning: farm pickup at 8:10am, Mission delivery window 11:30am–12:15pm.",
+            "You can message me here for delivery timing, handoff notes, receiving contact changes, or cold-chain questions."
+          ],
+          steps: [
+            {
+              user: "Can you confirm the oysters stay cold the whole way?",
+              reveal: {
+                topic: "Oyster delivery",
+                subject: "Pickup 8:10am · delivery 11:30–12:15",
+                badge: "Logistics live",
+                preview: "Key logistics partner is coordinating tomorrow's cold-chain oyster run.",
+                card: { title: "Delivery run", rows: [["Pickup","Ocean Crystal Seafood · 8:10am"],["Delivery","Rosa's Kitchen · 11:30am–12:15pm"],["Cold chain","Insulated totes · temperature photo at handoff"]] }
+              },
+              bot: [
+                "Yes — oysters travel in insulated totes with gel packs, and I'll send a photo at pickup and delivery.",
+                "If the restaurant is busy, just tell me who should receive them and I'll update the driver notes."
+              ]
+            },
+            {
+              user: "Use Marco as the receiving contact.",
+              bot: [
+                "Done — Marco is now the receiving contact for tomorrow.",
+                "Driver note added: call Marco on arrival, kitchen entrance on Valencia side, no front-door drop."
+              ],
+              cta: { label: "View Delivery Status →", screen: "r-order-track", nav: "nav-r-orders" },
+              badgeDone: "Delivery scheduled"
+            }
           ]
-        },
-        {
-          user: "Perfect — thanks Agripals.",
-          bot: ["Anytime, Chef. 🙌 I'll keep the farms honest and chase down the best price for you."],
-          cta: { label: "View My Bids →", screen: "r-rfqs", nav: "nav-r-rfqs" },
-          badgeDone: "Quotes on the way"
         }
-      ]
+      }
     },
     wholesaler: {
       seed: [
@@ -2032,9 +2108,50 @@
     restaurant: { panel:'restaurant', body:'r-chat-body', screen:'r-chat',       nav:'nav-r-messages', prefix:'r-msg-', title:'r-chat-title', sub:'r-chat-sub', send:'r-chat-send', label:'r-chat-compose-label' },
     wholesaler: { panel:'wholesaler', body:'w-chat-body', screen:'w-chat',       nav:'nav-w-messages', prefix:'w-msg-', title:'w-chat-title', sub:'w-chat-sub', send:'w-chat-send', label:'w-chat-compose-label' }
   };
-  var chatProgress = { restaurant: 0, wholesaler: 0 };
-  var chatOpened = { restaurant: false, wholesaler: false };
-  var chatBusy = { restaurant: false, wholesaler: false };
+  var restaurantChatMode = 'agripals';
+  var chatProgress = { restaurant: { agripals: 0, logistics: 0 }, wholesaler: 0 };
+  var chatOpened = { restaurant: { agripals: false, logistics: false }, wholesaler: false };
+  var chatBusy = { restaurant: { agripals: false, logistics: false }, wholesaler: false };
+
+  function activeMode(app){
+    return app === 'restaurant' ? restaurantChatMode : null;
+  }
+
+  function activeScript(app){
+    if(app === 'restaurant') return chatScripts.restaurant.modes[restaurantChatMode];
+    return chatScripts[app];
+  }
+
+  function getChatProgress(app){
+    return app === 'restaurant' ? chatProgress.restaurant[restaurantChatMode] : chatProgress[app];
+  }
+
+  function setChatProgress(app, value){
+    if(app === 'restaurant') chatProgress.restaurant[restaurantChatMode] = value;
+    else chatProgress[app] = value;
+  }
+
+  function getChatOpened(app){
+    return app === 'restaurant' ? chatOpened.restaurant[restaurantChatMode] : chatOpened[app];
+  }
+
+  function setChatOpened(app, value){
+    if(app === 'restaurant') chatOpened.restaurant[restaurantChatMode] = value;
+    else chatOpened[app] = value;
+  }
+
+  function getChatBusy(app){
+    return app === 'restaurant' ? chatBusy.restaurant[restaurantChatMode] : chatBusy[app];
+  }
+
+  function setChatBusy(app, value){
+    if(app === 'restaurant') chatBusy.restaurant[restaurantChatMode] = value;
+    else chatBusy[app] = value;
+  }
+
+  function chatStorageKey(app){
+    return app === 'restaurant' ? app + '-' + restaurantChatMode : app;
+  }
 
   function chatBodyId(app){ return chatCfg[app].body; }
   function chatScreenId(app){ return chatCfg[app].screen; }
@@ -2057,14 +2174,14 @@
     var body = document.getElementById(chatBodyId(app));
     var t = document.createElement('div');
     t.className = 'bubble assistant typing';
-    t.id = app + '-typing';
+    t.id = chatStorageKey(app) + '-typing';
     t.innerHTML = '<span></span><span></span><span></span>';
     body.appendChild(t);
     scrollChat(app);
   }
 
   function removeTyping(app){
-    var t = document.getElementById(app + '-typing');
+    var t = document.getElementById(chatStorageKey(app) + '-typing');
     if(t) t.remove();
   }
 
@@ -2113,20 +2230,40 @@
   function openChat(app){
     var cfg = chatCfg[app];
     showScreen(cfg.panel, cfg.screen, { nav: cfg.nav });
-    if(!chatOpened[app]){
-      chatOpened[app] = true;
-      var seed = chatScripts[app].seed;
+    if(app === 'restaurant') syncRestaurantChatMode();
+    if(!getChatOpened(app)){
+      setChatOpened(app, true);
+      var seed = activeScript(app).seed;
+      var seedMode = activeMode(app);
       seed.forEach(function(t, i){
-        setTimeout(function(){ addBubble(app, 'assistant', t); }, i * 500);
+        setTimeout(function(){
+          if(app !== 'restaurant' || restaurantChatMode === seedMode){
+            addBubble(app, 'assistant', t);
+          }
+        }, i * 500);
       });
     }
   }
 
+  function renderRestaurantChatHistory(){
+    var body = document.getElementById(chatCfg.restaurant.body);
+    var script = activeScript('restaurant');
+    var progress = getChatProgress('restaurant');
+    body.innerHTML = '';
+    script.seed.forEach(function(t){ addBubble('restaurant', 'assistant', t); });
+    script.steps.slice(0, progress).forEach(function(step){
+      addBubble('restaurant', 'user', step.user);
+      if(step.reveal){ addCard('restaurant', step.reveal.card); }
+      step.bot.forEach(function(t){ addBubble('restaurant', 'assistant', t); });
+      if(step.cta){ addCta('restaurant', step.cta); }
+    });
+  }
+
   function advanceChat(app){
-    var steps = chatScripts[app].steps;
-    var progress = chatProgress[app];
-    if(chatBusy[app] || progress >= steps.length) return;
-    chatBusy[app] = true;
+    var steps = activeScript(app).steps;
+    var progress = getChatProgress(app);
+    if(getChatBusy(app) || progress >= steps.length) return;
+    setChatBusy(app, true);
     var step = steps[progress];
 
     addBubble(app, 'user', step.user);
@@ -2144,9 +2281,9 @@
           if(i === step.bot.length - 1){
             if(step.cta){ addCta(app, step.cta); }
             if(step.badgeDone){ updateInbox(app, null, step.badgeDone); }
-            chatProgress[app] = progress + 1;
-            chatBusy[app] = false;
-            if(chatProgress[app] >= steps.length){
+            setChatProgress(app, progress + 1);
+            setChatBusy(app, false);
+            if(getChatProgress(app) >= steps.length){
               var sendBtn = document.getElementById(chatCfg[app].send);
               if(sendBtn){ sendBtn.disabled = true; sendBtn.style.opacity = .4; }
               var label = document.getElementById(chatCfg[app].label);
@@ -2156,6 +2293,42 @@
         }, i * 550);
       });
     }, 700);
+  }
+
+  function syncRestaurantChatMode(){
+    var script = activeScript('restaurant');
+    document.getElementById('r-mode-agripals').classList.toggle('active', restaurantChatMode === 'agripals');
+    document.getElementById('r-mode-logistics').classList.toggle('active', restaurantChatMode === 'logistics');
+    document.getElementById(chatCfg.restaurant.title).textContent = script.title;
+    document.getElementById(chatCfg.restaurant.sub).textContent = script.sub;
+    var label = document.getElementById(chatCfg.restaurant.label);
+    if(label) label.textContent = getChatProgress('restaurant') >= script.steps.length ? "You're all caught up" : script.label;
+    var sendBtn = document.getElementById(chatCfg.restaurant.send);
+    if(sendBtn){
+      var done = getChatProgress('restaurant') >= script.steps.length;
+      sendBtn.disabled = done;
+      sendBtn.style.opacity = done ? .4 : 1;
+    }
+  }
+
+  function switchRestaurantChat(mode){
+    if(mode === restaurantChatMode) return;
+    restaurantChatMode = mode;
+    syncRestaurantChatMode();
+    if(!getChatOpened('restaurant')){
+      document.getElementById(chatCfg.restaurant.body).innerHTML = '';
+      setChatOpened('restaurant', true);
+      var seedMode = restaurantChatMode;
+      activeScript('restaurant').seed.forEach(function(t, i){
+        setTimeout(function(){
+          if(restaurantChatMode === seedMode){
+            addBubble('restaurant', 'assistant', t);
+          }
+        }, i * 420);
+      });
+    } else {
+      renderRestaurantChatHistory();
+    }
   }
 
   /* ---------- landing header, chat & Clerk-style auth (v2) ---------- */
