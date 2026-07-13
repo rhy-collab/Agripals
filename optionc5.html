@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&amp;display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="./hero-oyster.jpg" fetchpriority="high">
 <style>
   :root{
     --g900:#0e2a20; --g700:#2E8564; --g500:#4CC499; --hair:rgba(255,255,255,.22);
@@ -20,10 +21,11 @@
   .serif{font-family:"Playfair Display",Georgia,serif}
 
   /* full-bleed darkened oyster-farm photo */
-  .stage{position:relative; min-height:100svh; display:flex; flex-direction:column;
-    background:
-      linear-gradient(180deg, rgba(6,20,15,.30) 0%, rgba(6,20,15,.55) 45%, rgba(6,20,15,.86) 100%),
-      url('./_dsc7679.jpg') center/cover no-repeat;}
+  .stage{position:relative; min-height:100svh; display:flex; flex-direction:column; background-color:#0b241b;
+    background-image:
+      linear-gradient(180deg, rgba(5,18,13,.50) 0%, rgba(5,18,13,.70) 42%, rgba(5,18,13,.93) 100%),
+      url('./hero-oyster.jpg');
+    background-size:cover; background-position:center; background-repeat:no-repeat;}
 
   .switch{position:relative; z-index:3; text-align:center; padding:9px 10px; font-size:12px; color:rgba(255,255,255,.7)}
   .switch a{color:#fff; margin:0 5px; font-weight:600} .switch a.off{color:rgba(255,255,255,.55); font-weight:500}
@@ -43,15 +45,12 @@
   .dot{width:8px;height:8px;border-radius:50%;background:#ff5a4d;box-shadow:0 0 0 0 rgba(255,90,77,.6);animation:pulse 1.7s infinite}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,90,77,.6)}70%{box-shadow:0 0 0 9px rgba(255,90,77,0)}100%{box-shadow:0 0 0 0 rgba(255,90,77,0)}}
 
-  .from{margin-top:20px; font-size:12.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.72)}
-  .name{margin:7px 0 0; font-size:clamp(27px,7.5vw,40px); font-weight:800; line-height:1.02; text-shadow:0 2px 20px rgba(0,0,0,.35)}
-  .price{font-family:"Playfair Display",serif; font-weight:800; font-size:clamp(72px,22vw,120px); line-height:.92; margin:10px 0 0;
-    text-shadow:0 6px 30px rgba(0,0,0,.4)}
-  .price span{font-family:-apple-system,sans-serif; font-size:18px; font-weight:600; color:rgba(255,255,255,.82)}
-  .specs{margin:14px 0 0; font-size:13.5px; font-weight:600; color:rgba(255,255,255,.82)}
-  .specs i{font-style:normal; opacity:.5; margin:0 8px}
+  .pitch{margin:22px 0 0; font-size:clamp(30px,7.6vw,46px); font-weight:800; line-height:1.16; letter-spacing:-.015em;
+    max-width:13.5em; text-shadow:0 3px 26px rgba(0,0,0,.55)}
+  .pitch b{font-weight:800; white-space:nowrap}
+  .pitch .price{font-family:"Playfair Display",serif; font-weight:800; font-size:1.14em; white-space:nowrap; color:#8ff0c8}
 
-  form{margin-top:26px; width:100%; display:flex; flex-direction:column; gap:10px}
+  form{margin-top:30px; width:100%; display:flex; flex-direction:column; gap:10px}
   input{width:100%; padding:17px 18px; border:none; border-radius:16px; background:rgba(255,255,255,.96); color:#12201a;
     font-family:inherit; font-size:16px; box-shadow:0 12px 30px rgba(0,0,0,.28)}
   input::placeholder{color:#8a978d}
@@ -80,16 +79,13 @@
   <main class="center">
     <span class="live"><span class="dot"></span> Today&rsquo;s deal · San Francisco</span>
 
-    <div class="from">British Columbia · Pacific strain</div>
-    <div class="name">Royal Miyagi Oysters</div>
-    <div class="price serif">$0.70 <span>apiece</span></div>
-    <div class="specs">Min. 10 dozen <i>·</i> delivered unshucked <i>·</i> 7 days a week</div>
+    <p class="pitch">Fresh Royal Miyagi oysters — <span class="price">70¢ each</span>, delivered unshucked seven days a week, plus a <b>free sample</b> when you text.</p>
 
     <form onsubmit="return claim(event)">
       <input id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="Your mobile number" required>
       <button class="btn" type="submit">Text me the deal →</button>
     </form>
-    <p class="note" id="note">Free sample? Text <a href="sms:0485945947734?&amp;body=SAMPLE">SAMPLE to 0485 945 947 734</a></p>
+    <p class="note" id="note">We&rsquo;ll text you today&rsquo;s deal &amp; your free sample.</p>
   </main>
 </div>
 
