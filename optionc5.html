@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agripals — Today's deal: Royal Miyagi oysters, $0.70 apiece</title>
+<meta name="description" content="Agripals is the farm-direct food wholesaler for chefs. Order produce & seafood by text — fresher, cheaper, delivered daily. Today: Royal Miyagi oysters, $0.70 apiece.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#f1f7f2; --bg2:#e7f0e9; --ink:#12201a; --soft:#5c6b62; --faint:#8a978d;
+    --g900:#123024; --g700:#2E8564; --g500:#4CC499; --g100:#DCEFE1;
+    --card:#ffffff; --hair:#e6ede8;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{margin:0; color:var(--ink); background:linear-gradient(180deg,var(--bg1),var(--bg2)); background-attachment:fixed;
+    font-family:-apple-system,"SF Pro Text",BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; -webkit-font-smoothing:antialiased; line-height:1.5}
+  a{color:inherit; text-decoration:none}
+  .serif{font-family:"Playfair Display",Georgia,serif}
+  .wrap{width:100%; max-width:600px; margin:0 auto; padding:0 20px}
+
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%;
+    font-size:17px; font-weight:800; padding:16px 22px; border:none; cursor:pointer; font-family:inherit; border-radius:16px; color:#fff;
+    background:linear-gradient(180deg,var(--g500),var(--g700));
+    box-shadow:0 10px 26px rgba(46,133,100,.36), inset 0 1px 0 rgba(255,255,255,.32); transition:transform .12s}
+  .btn:active{transform:scale(.98)}
+  .a-mark{width:34px;height:34px;border-radius:10px;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+    background:linear-gradient(155deg,var(--g500),var(--g700)); color:#fff; font-weight:800; font-size:20px; box-shadow:0 4px 12px rgba(24,51,45,.22)}
+  .pill{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+    padding:6px 12px; border-radius:999px}
+  .pill-live{background:#fff; color:#c0392b; box-shadow:inset 0 0 0 1px var(--hair)}
+  .dot{width:8px;height:8px;border-radius:50%;background:#e23b3b;box-shadow:0 0 0 0 rgba(226,59,59,.5);animation:pulse 1.7s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(226,59,59,.5)}70%{box-shadow:0 0 0 8px rgba(226,59,59,0)}100%{box-shadow:0 0 0 0 rgba(226,59,59,0)}}
+
+  .switch{text-align:center; padding:8px 10px; font-size:12px; color:var(--faint); background:rgba(255,255,255,.55)}
+  .switch a{color:var(--ink); margin:0 5px; font-weight:600} .switch a.off{color:var(--faint); font-weight:500}
+
+  /* informative header (no form / no login) */
+  header{position:sticky; top:0; z-index:40; background:rgba(241,247,242,.78);
+    -webkit-backdrop-filter:saturate(180%) blur(18px); backdrop-filter:saturate(180%) blur(18px); border-bottom:1px solid var(--hair)}
+  .nav{display:flex; align-items:center; gap:11px; height:64px}
+  .nav .brand{font-weight:800; font-size:19px}
+  .nav .val{margin-left:auto; font-size:12.5px; color:var(--soft); text-align:right; line-height:1.25; font-weight:600}
+  .nav .val b{color:var(--g700)}
+  @media(max-width:520px){ .nav .val{font-size:11px} }
+
+  /* value strapline band */
+  .strap{text-align:center; padding:22px 0 6px}
+  .strap h1{margin:0; font-size:clamp(20px,4.6vw,26px); font-weight:800; letter-spacing:-.01em}
+  .strap p{margin:6px auto 0; max-width:24em; color:var(--soft); font-size:15px}
+
+  /* HERO = today's deal (the main thing) */
+  .deal{margin:16px 0 8px; background:var(--card); border-radius:26px; padding:26px 22px 22px; text-align:center; position:relative; overflow:hidden;
+    box-shadow:0 2px 3px rgba(18,48,36,.05), 0 22px 46px rgba(18,48,36,.13)}
+  .deal::before{content:""; position:absolute; inset:0 0 auto 0; height:42%; background:linear-gradient(180deg,rgba(255,255,255,.65),transparent); pointer-events:none}
+  .deal .live{display:inline-flex; align-items:center; gap:8px; margin-bottom:14px}
+  .deal .from{font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--faint)}
+  .deal h2{margin:6px 0 0; font-size:clamp(26px,6vw,34px); font-weight:800; letter-spacing:-.01em}
+  .deal .price{font-family:"Playfair Display",serif; font-weight:800; font-size:clamp(54px,15vw,78px); line-height:1; margin:10px 0 2px; color:var(--g900)}
+  .deal .price span{font-family:-apple-system,sans-serif; font-size:17px; font-weight:600; color:var(--soft)}
+  .deal .taste{color:var(--soft); font-size:15.5px; font-style:italic; margin:8px auto 16px; max-width:26em}
+  .deal .tags{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:20px}
+  .deal .tag{font-size:12.5px; font-weight:700; color:var(--g700); background:var(--g100); padding:8px 13px; border-radius:999px}
+  .cta{margin-top:2px}
+  .cta .row{display:flex; gap:9px}
+  .cta input{flex:1; min-width:0; padding:16px 16px; border:none; border-radius:16px; background:#f1f6f2; font-family:inherit; font-size:16px; box-shadow:inset 0 0 0 1px var(--hair)}
+  .cta input:focus{outline:none; box-shadow:inset 0 0 0 2px var(--g500)}
+  .cta .row .btn{width:auto; flex:0 0 auto; padding:16px 20px}
+  .cta .note{margin:12px 2px 0; font-size:13px; color:var(--faint)}
+  .cta .note a{color:var(--g700); font-weight:700}
+
+  /* value reinforcement */
+  .vals{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0 6px}
+  .vals div{background:rgba(255,255,255,.8); box-shadow:inset 0 0 0 1px var(--hair); border-radius:16px; padding:14px 15px}
+  .vals .h{font-weight:800; font-size:15px} .vals .s{font-size:13px; color:var(--soft); margin-top:2px}
+
+  .list{background:var(--card); border-radius:20px; padding:4px 20px; margin:12px 0 6px; box-shadow:0 12px 30px rgba(18,48,36,.07)}
+  .list .r{display:flex; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid var(--hair); font-size:15.5px}
+  .list .r:last-child{border-bottom:none}
+  .list .r .ic{width:30px;height:30px;border-radius:9px;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .list .r b{font-weight:700} .list .r .v{margin-left:auto; color:var(--soft); font-weight:600; font-size:14.5px}
+
+  .sec{padding:16px 0}
+  footer{text-align:center; padding:26px 0 40px; color:var(--faint); font-size:13px}
+  footer .fb{display:inline-flex; align-items:center; gap:8px; font-weight:800; color:var(--ink); font-size:17px; margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<div class="switch">
+  <a class="off" href="./index.html">A</a> ·
+  <a class="off" href="./optionb.html">B</a> ·
+  <a class="off" href="./optionb5.html">B.5</a> ·
+  <a class="off" href="./optionc.html">C</a> ·
+  <a href="./optionc5.html">C.5 · Deal-first</a>
+</div>
+
+<!-- informative header, no form/login -->
+<header>
+  <div class="wrap nav">
+    <span class="a-mark">A</span>
+    <span class="brand">Agripals</span>
+    <span class="val">The farm-direct food wholesaler for chefs.<br><b>Order produce &amp; seafood by text.</b></span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="strap">
+    <h1>Fresher food, farm-direct, delivered daily.</h1>
+    <p>We source straight from the farm and the dock — you just text us what you need.</p>
+  </div>
+
+  <!-- HERO: today's deal is the main thing -->
+  <div class="deal">
+    <div class="live"><span class="pill pill-live"><span class="dot"></span> Today&rsquo;s deal · San Francisco</span></div>
+    <div class="from">British Columbia · Pacific strain</div>
+    <h2>Royal Miyagi Oysters</h2>
+    <div class="price serif">$0.70 <span>apiece</span></div>
+    <p class="taste">Creamy and sweet, with a clean melon finish. Farm-direct, this week only.</p>
+    <div class="tags"><span class="tag">Min. 10 dozen</span><span class="tag">Delivered unshucked</span><span class="tag">7 days a week</span></div>
+
+    <div class="cta">
+      <div class="row">
+        <input id="ph" type="tel" inputmode="tel" placeholder="Your mobile number" required>
+        <button class="btn" onclick="claim()">Text me the deal →</button>
+      </div>
+      <p class="note" id="note">We&rsquo;ll text you today&rsquo;s deal &amp; the deals of the day · <a href="./App-Prototype/">see the app</a></p>
+    </div>
+  </div>
+
+  <!-- value reinforcement -->
+  <div class="vals">
+    <div><div class="h">🌱 Farm-direct</div><div class="s">Straight from the source — often 5–20% cheaper.</div></div>
+    <div><div class="h">🐟 Fresher</div><div class="s">Fewer stops, better product on the plate.</div></div>
+    <div><div class="h">💬 Just text</div><div class="s">No apps, no portals. Order like a message.</div></div>
+    <div><div class="h">🚚 Every day</div><div class="s">Delivered 7 days a week across the Bay.</div></div>
+  </div>
+
+  <div class="list">
+    <div class="r"><span class="ic">📸</span><b>Order</b><span class="v">Text or snap your menu</span></div>
+    <div class="r"><span class="ic">🌾</span><b>We source</b><span class="v">Farm &amp; dock direct</span></div>
+    <div class="r"><span class="ic">🕑</span><b>Cut-off</b><span class="v">2 p.m. for next day</span></div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="fb"><span class="a-mark" style="width:26px;height:26px;border-radius:8px;font-size:15px">A</span> Agripals</div><br>
+  Farm-direct food, ordered by text · San Francisco
+</footer>
+
+<script>
+  function claim(){
+    var num=document.getElementById('ph').value.trim();
+    if(!num){ document.getElementById('ph').focus(); return; }
+    var n=document.getElementById('note'); n.innerHTML="✓ You&rsquo;re in — we&rsquo;ll text you today&rsquo;s deal shortly."; n.style.color="#2E8564";
+    window.location.href="mailto:rhys.coombes@gmail.com?subject="+encodeURIComponent("Text me today's deal — Royal Miyagi oysters")+"&body="+encodeURIComponent("Mobile: "+num+"\nInterested in: Royal Miyagi oysters ($0.70 apiece, min 10 dozen)");
+  }
+</script>
+</body>
+</html>
