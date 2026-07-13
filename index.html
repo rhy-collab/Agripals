@@ -131,7 +131,7 @@
       <a href="#how">How it works</a>
       <a href="#kitchen">Why chefs</a>
       <a href="./App-Prototype/">Live demo</a>
-      <a class="btn btn-primary" href="#join">Join the waitlist</a>
+      <a class="btn btn-primary" href="./App-Prototype/">Get started →</a>
     </nav>
   </div>
 </header>
@@ -299,10 +299,9 @@
   }
   function submitEmail(email, noteEl){
     if(!email) return;
-    noteEl.textContent = "Thanks! Opening your email to confirm — hit send and you're on the list.";
+    noteEl.textContent = "You're in — opening the app…";
     noteEl.style.color = "#2E8564";
-    var body = "Please add me to the Agripals waitlist: " + email + (lastPrompt ? ("\n\nWhat I need: " + lastPrompt) : "");
-    window.location.href = "mailto:rhys.coombes@gmail.com?subject=" + encodeURIComponent("Agripals waitlist") + "&body=" + encodeURIComponent(body);
+    window.location.href = "./App-Prototype/";
   }
   function capture(e){ e.preventDefault(); submitEmail(document.getElementById('cap-email').value.trim(), document.getElementById('cap-note')); return false; }
   function joinWaitlist(e){ e.preventDefault(); submitEmail(document.getElementById('wl-email').value.trim(), document.getElementById('wl-note')); return false; }
