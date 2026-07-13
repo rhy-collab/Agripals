@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agripals — Farm-direct produce for chefs</title>
+<meta name="description" content="Agripals is the farm-direct assistant for chefs. Snap a photo of your menu and get produce straight from the farm — fresher, and farm-direct — often 5–20% cheaper.">
+<meta property="og:title" content="Agripals — Fresh from the farm, straight to your kitchen.">
+<meta property="og:description" content="Tell one assistant what you're cooking and get produce direct from the growers. Fresher food, farm-direct prices.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --g900:#123024; --g700:#2E8564; --g600:#37A278; --g500:#4CC499; --g100:#DCEFE1;
+    --ink:#12201a; --muted:#5c6b62; --line:rgba(18,32,26,.10);
+    --bg:#f4f8f5; --card:#ffffff; --amber:#FF9F4D; --amberink:#a5610d;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{margin:0; color:var(--ink); background:var(--bg);
+    background-image:radial-gradient(rgba(18,48,36,.05) 1px, transparent 1px); background-size:22px 22px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.55}
+  a{color:inherit; text-decoration:none}
+  .wrap{width:100%; max-width:1120px; margin:0 auto; padding:0 clamp(18px,4vw,26px)}
+
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:800; font-size:15px;
+    padding:13px 22px; border-radius:14px; cursor:pointer; border:none; font-family:inherit; transition:transform .12s ease}
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:linear-gradient(180deg,var(--g500),var(--g700)); color:#fff; box-shadow:0 10px 24px rgba(46,133,100,.28)}
+  .btn-ghost{background:#fff; color:var(--g700); border:1.5px solid var(--g100)}
+  .a-mark{width:34px; height:34px; border-radius:10px; flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center;
+    background:linear-gradient(155deg,var(--g500),var(--g700)); color:#fff; font-weight:800; font-size:20px; box-shadow:0 4px 12px rgba(24,51,45,.2)}
+  .pill{display:inline-block; font-size:12.5px; font-weight:800; letter-spacing:.02em; padding:6px 12px; border-radius:999px}
+  .pill-green{color:var(--g700); background:var(--g100)}
+  .pill-amber{color:var(--amberink); background:#FCEBD8}
+  .kicker{font-size:12.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--g700)}
+
+  header{position:sticky; top:0; z-index:50; background:rgba(244,248,245,.82);
+    backdrop-filter:saturate(160%) blur(14px); -webkit-backdrop-filter:saturate(160%) blur(14px); border-bottom:1px solid var(--line)}
+  .nav{display:flex; align-items:center; gap:14px; height:64px}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px; letter-spacing:-.01em}
+  .nav-links{margin-left:auto; display:flex; align-items:center; gap:24px}
+  .nav-links a{font-weight:600; font-size:14.5px; color:var(--muted)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav .btn{padding:9px 16px; font-size:14px}
+  @media(max-width:720px){ .nav-links a:not(.btn){display:none} }
+
+  /* HERO — headline + prompt box front & centre */
+  .hero{text-align:center; padding:clamp(40px,8vw,84px) 0 clamp(30px,5vw,54px)}
+  .hero .eyebrow{margin-bottom:20px}
+  h1{font-size:clamp(38px,8.4vw,84px); line-height:.98; letter-spacing:-.035em; margin:0 0 18px; font-weight:850}
+  .lede{font-size:clamp(16px,2.4vw,20px); color:var(--muted); max-width:26em; margin:0 auto 30px}
+
+  .prompt{max-width:680px; margin:0 auto; background:var(--card); border:1px solid var(--line);
+    border-radius:22px; box-shadow:0 24px 60px rgba(18,48,36,.14); padding:6px; text-align:left;
+    transition:box-shadow .2s ease, border-color .2s ease}
+  .prompt:focus-within{border-color:var(--g500); box-shadow:0 24px 60px rgba(18,48,36,.18)}
+  .prompt textarea{width:100%; border:none; resize:none; font-family:inherit; font-size:clamp(16px,2vw,18px);
+    color:var(--ink); background:transparent; padding:18px 18px 6px; line-height:1.5; min-height:64px}
+  .prompt textarea:focus{outline:none}
+  .prompt textarea::placeholder{color:#9aa8a0}
+  .prompt-bar{display:flex; align-items:center; gap:10px; padding:8px 10px 10px}
+  .attach{width:40px; height:40px; border-radius:12px; border:1px solid var(--line); background:#fff; display:flex; align-items:center;
+    justify-content:center; font-size:18px; cursor:pointer; flex:0 0 auto}
+  .bar-spacer{flex:1}
+  .bar-label{font-size:13px; color:var(--muted); font-weight:700}
+  .send{width:46px; height:46px; border:none; border-radius:14px; cursor:pointer; color:#fff; font-size:20px; font-weight:800; flex:0 0 auto;
+    background:linear-gradient(180deg,var(--g500),var(--g700)); box-shadow:0 8px 18px rgba(46,133,100,.32)}
+  .send:active{transform:scale(.94)}
+  .chips{display:flex; gap:9px; flex-wrap:wrap; justify-content:center; margin:18px auto 0; max-width:680px}
+  .chip{border:1px solid var(--line); background:#fff; color:var(--ink); font-weight:700; font-size:13px; padding:9px 14px; border-radius:999px; cursor:pointer; font-family:inherit}
+  .chip:hover{border-color:var(--g500); color:var(--g700)}
+  .hero .demo-link{display:inline-block; margin-top:22px; font-size:14px; color:var(--g700); font-weight:700}
+
+  /* capture panel (revealed on send) */
+  .capture{max-width:680px; margin:14px auto 0; background:var(--card); border:1px solid var(--g100); border-radius:20px;
+    box-shadow:0 20px 44px rgba(18,48,36,.12); padding:20px; text-align:left; display:none}
+  .capture.show{display:block; animation:pop .25s ease}
+  @keyframes pop{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)}}
+  .capture .reply{display:flex; gap:12px; align-items:flex-start; margin-bottom:14px}
+  .capture .reply p{margin:0; font-size:15px}
+  .capture-row{display:flex; gap:10px; flex-wrap:wrap}
+  .capture input{flex:1; min-width:200px; padding:13px 15px; border-radius:13px; border:1.5px solid var(--line); font-size:15px; font-family:inherit}
+  .capture input:focus{outline:none; border-color:var(--g500)}
+
+  .band{background:var(--g900); color:#fff; padding:32px 0; margin-top:26px}
+  .stats{display:grid; grid-template-columns:1fr; gap:16px; text-align:center}
+  @media(min-width:640px){ .stats{grid-template-columns:repeat(3,1fr)} }
+  .stat .n{font-size:clamp(28px,4vw,34px); font-weight:850; letter-spacing:-.02em}
+  .stat .n.amber{color:#ffcf9a} .stat .n.mint{color:var(--g500)}
+  .stat .l{font-size:13px; opacity:.82; margin-top:2px}
+
+  section.pad{padding:clamp(46px,7vw,68px) 0}
+  h2{font-size:clamp(26px,4vw,34px); line-height:1.12; letter-spacing:-.02em; margin:10px 0 8px; font-weight:820}
+  .sub{color:var(--muted); font-size:clamp(15px,2vw,17px); max-width:36em; margin:0 0 28px}
+  .grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:22px; box-shadow:0 10px 26px rgba(18,48,36,.05)}
+  .card .ico{width:44px; height:44px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:22px; background:var(--g100); margin-bottom:14px}
+  .card .ico.amber{background:#FCEBD8}
+  .card h3{margin:0 0 6px; font-size:17.5px}
+  .card p{margin:0; color:var(--muted); font-size:14.5px}
+  .step-n{width:30px; height:30px; border-radius:9px; background:var(--g700); color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:15px; margin-bottom:14px}
+  .callout{background:linear-gradient(155deg,rgba(76,196,153,.16),rgba(220,239,225,.5)); border:1px solid #bfe0cb}
+  .meet{display:grid; grid-template-columns:1fr; gap:18px; align-items:start}
+  @media(min-width:820px){ .meet{grid-template-columns:1fr 1fr} }
+  .assistant{display:flex; gap:14px}
+  .assistant .a-mark{width:52px; height:52px; border-radius:15px; font-size:28px}
+  .sf{background:linear-gradient(155deg,var(--g600),var(--g900)); color:#fff; border-radius:26px; padding:clamp(26px,5vw,40px); display:flex; align-items:center; gap:24px; flex-wrap:wrap}
+  .sf .big{font-size:clamp(21px,3vw,26px); font-weight:820; letter-spacing:-.01em; margin:0 0 6px}
+  .sf p{margin:0; opacity:.92; max-width:40em}
+  .join{text-align:center; padding:clamp(52px,8vw,74px) 0}
+  .join h2{font-size:clamp(28px,5vw,40px)}
+  form.wl{display:flex; gap:10px; max-width:480px; margin:22px auto 0; flex-wrap:wrap; justify-content:center}
+  form.wl input{flex:1; min-width:220px; padding:14px 16px; border-radius:14px; border:1.5px solid var(--line); font-size:15px; font-family:inherit; background:#fff}
+  form.wl input:focus{outline:none; border-color:var(--g500)}
+  .wl-note{font-size:12.5px; color:var(--muted); margin-top:12px}
+  .farmer-line{margin-top:20px; font-size:13.5px; color:var(--muted)}
+  .farmer-line a{color:var(--g700); font-weight:700}
+  footer{border-top:1px solid var(--line); padding:28px 0; color:var(--muted); font-size:13.5px}
+  .foot{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+  .foot .brand{color:var(--ink)}
+  .foot .sp{margin-left:auto; display:flex; gap:20px; flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="a-mark">A</span> Agripals</a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#kitchen">Why chefs</a>
+      <a href="./App-Prototype/">Live demo</a>
+      <a class="btn btn-primary" href="./App-Prototype/">Get started →</a>
+    </nav>
+  </div>
+</header>
+
+<a id="top"></a>
+<section class="wrap hero">
+  <span class="eyebrow pill pill-green">🌱 Farm-direct produce for chefs</span>
+  <h1>Fresh from the farm,<br>straight to your kitchen.</h1>
+  <p class="lede">Tell Agripals what you&rsquo;re cooking. Get it direct from the growers — fresher, and often 5–20% cheaper.</p>
+
+  <!-- the box, front & centre -->
+  <div class="prompt" onclick="document.getElementById('q').focus()">
+    <textarea id="q" rows="1" placeholder="What do you need this week? e.g. Grade A Tomales Bay oysters, 6 dozen…" oninput="autthrow(this)" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();promptSend()}"></textarea>
+    <div class="prompt-bar">
+      <label class="attach" title="Attach a photo of your menu">📸<input type="file" accept="image/*" style="display:none" onchange="onPhoto()"></label>
+      <span class="bar-spacer"></span>
+      <span class="bar-label">Ask Agripals</span>
+      <button class="send" onclick="promptSend()" aria-label="Send">↑</button>
+    </div>
+  </div>
+
+  <div class="chips">
+    <button class="chip" onclick="chipFill('Scan my menu and find what I can get farm-direct')">📸 Scan my menu</button>
+    <button class="chip" onclick="chipFill('I need oysters this week')">🦪 I need oysters this week</button>
+    <button class="chip" onclick="chipFill('How much can I save going farm-direct?')">💸 How much can I save?</button>
+  </div>
+
+  <!-- revealed after send -->
+  <div class="capture" id="capture">
+    <div class="reply">
+      <span class="a-mark">A</span>
+      <p id="reply-text">Love it — leave your email and I&rsquo;ll get you set up first in your area.</p>
+    </div>
+    <form class="capture-row" onsubmit="return capture(event)">
+      <input id="cap-email" type="email" required placeholder="you@restaurant.com" aria-label="Email address">
+      <button class="btn btn-primary" type="submit">Join the waitlist →</button>
+    </form>
+    <p class="wl-note" id="cap-note">We&rsquo;re opening kitchen by kitchen — no spam, just a note when we reach you.</p>
+  </div>
+
+  <a class="demo-link" href="./App-Prototype/">or try the live demo →</a>
+</section>
+
+<div class="band">
+  <div class="wrap stats">
+    <div class="stat"><div class="n amber">$330B</div><div class="l">US restaurants spend on food a year</div></div>
+    <div class="stat"><div class="n mint">5–20%</div><div class="l">Typical saving, going farm-direct</div></div>
+    <div class="stat"><div class="n">1 text</div><div class="l">All it takes — no portals, no forms</div></div>
+  </div>
+</div>
+
+<section class="pad" id="kitchen">
+  <div class="wrap">
+    <div class="kicker">What&rsquo;s in it for your kitchen</div>
+    <h2>Chef&rsquo;s best friend.</h2>
+    <div class="grid" style="margin-top:22px">
+      <div class="card"><div class="ico">💸</div><h3>Pay less for the same food</h3><p>Going direct to the farm cuts the cost of what you&rsquo;re already buying.</p></div>
+      <div class="card"><div class="ico amber">🌾</div><h3>Know exactly where it&rsquo;s from</h3><p>The actual farm, not a faceless supplier — full provenance on every item.</p></div>
+      <div class="card"><div class="ico">🐟</div><h3>Fresher, because it&rsquo;s direct</h3><p>Fewer stops between the farm and your pass means a better product.</p></div>
+      <div class="card"><div class="ico amber">☀️</div><h3>A story your diners will love</h3><p>Tell them the farm your oysters came from — guests remember that.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="kicker">Meet Agripals</div>
+    <h2>Your farm-direct assistant.</h2>
+    <p class="sub">No software to learn. You just text Agripals like you&rsquo;d text a mate, and it handles the rest.</p>
+    <div class="meet">
+      <div class="card">
+        <div class="assistant">
+          <span class="a-mark">A</span>
+          <div>
+            <h3 style="margin:2px 0 3px; font-size:18px">Agripals <span class="pill pill-green" style="font-size:11px; padding:3px 9px; vertical-align:middle">Live now</span></h3>
+            <p style="margin:0 0 8px; color:var(--g700); font-weight:700; font-size:13.5px">Your whole back office, in one chat</p>
+            <p style="margin:0; color:var(--muted); font-size:14.5px">Send your menu and Agripals finds the farms, agrees the price, and books your deliveries. It tracks your orders and keeps your invoices and credit in order, so you can stay in the kitchen.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card callout" style="display:flex; align-items:center">
+        <p style="margin:0; font-size:17px; font-weight:700; color:var(--ink)">One assistant, always on, doing the admin for you — so you spend your time cooking, not chasing suppliers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="how">
+  <div class="wrap">
+    <div class="kicker">How it works</div>
+    <h2>Three steps. No software to learn.</h2>
+    <div class="grid" style="margin-top:22px">
+      <div class="card"><div class="step-n">1</div><h3>Scan your menu</h3><p>Snap a photo — Agripals reads what you buy.</p></div>
+      <div class="card"><div class="step-n">2</div><h3>We find your farms</h3><p>Agripals matches your items to farms that can supply them.</p></div>
+      <div class="card"><div class="step-n">3</div><h3>You save 5–20%</h3><p>Farm-direct pricing, delivered — you just approve and cook.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+      <div class="card">
+        <span class="pill pill-green" style="margin-bottom:10px">✅ Always know it&rsquo;s good</span>
+        <h3 style="font-size:19px; margin:2px 0 6px">Checked from farm to door.</h3>
+        <p style="margin:0; color:var(--muted); font-size:15px">Every order is quality-checked on the way to you and matched against what you ordered. What lands in your kitchen is fresh, graded, and traceable back to the farm.</p>
+      </div>
+      <div class="sf">
+        <div style="flex:1; min-width:230px">
+          <p class="big">📍 Starting in San Francisco.</p>
+          <p>We&rsquo;re kicking off with oysters — direct from Northern California farms into SF kitchens — with more seafood and produce right behind it. If you run an SF restaurant, you&rsquo;re exactly who we built this for.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="join" id="join" style="background:#fff; border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="kicker">Ready when you are</div>
+    <h2>Sign up as a chef.</h2>
+    <p class="sub" style="margin:8px auto 0">Send us your menu and we&rsquo;ll show you what we can bring you straight from the farm.</p>
+    <form class="wl" onsubmit="return joinWaitlist(event)">
+      <input id="wl-email" type="email" required placeholder="you@restaurant.com" aria-label="Email address">
+      <button class="btn btn-primary" type="submit">Get early access →</button>
+    </form>
+    <p class="wl-note" id="wl-note">No spam — just a note when we open in your city.</p>
+    <p class="farmer-line">Are you a farmer? <a href="mailto:rhys.coombes@gmail.com?subject=Agripals%20for%20farmers">Partner with us →</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span class="brand" style="display:flex; align-items:center; gap:9px; font-weight:800"><span class="a-mark" style="width:26px;height:26px;border-radius:8px;font-size:15px">A</span> Agripals</span>
+    <span>© 2026 Agripals</span>
+    <span class="sp">
+      <a href="./App-Prototype/">Live demo</a>
+      <a href="#how">How it works</a>
+      <a href="mailto:rhys.coombes@gmail.com">Contact</a>
+      <a href="./optionb.html" style="border:1px solid var(--line); padding:6px 13px; border-radius:999px; font-weight:800; color:var(--g700);">⚑ Landing page A/B testing</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  var lastPrompt = '';
+  function autthrow(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,160)+'px'; }
+  function chipFill(text){
+    var q=document.getElementById('q'); q.value=text; autthrow(q); q.focus();
+  }
+  function onPhoto(){ document.getElementById('q').value = document.getElementById('q').value || 'Here is my menu — what can I get farm-direct?'; promptSend(); }
+  function replyFor(text){
+    var t=(text||'').toLowerCase();
+    if(t.indexOf('oyster')>-1) return "🦪 Oysters are exactly where we start — direct from Tomales Bay, usually 5–20% under wholesale. Leave your email and I&rsquo;ll line up quotes for your kitchen.";
+    if(t.indexOf('save')>-1||t.indexOf('cost')>-1||t.indexOf('%')>-1) return "Most kitchens save 5–20% on the items I find — from a single photo of your menu. Drop your email and I&rsquo;ll show you your numbers.";
+    if(t.indexOf('menu')>-1||t.indexOf('scan')>-1||t.indexOf('photo')>-1) return "Perfect — it all starts with your menu. Leave your email and I&rsquo;ll get you set up, or try the live demo below.";
+    return "Love it — leave your email and I&rsquo;ll get you set up first in your area.";
+  }
+  function promptSend(){
+    var q=document.getElementById('q'); var v=(q.value||'').trim();
+    lastPrompt = v;
+    document.getElementById('reply-text').innerHTML = replyFor(v);
+    var cap=document.getElementById('capture'); cap.classList.add('show');
+    setTimeout(function(){ document.getElementById('cap-email').focus(); }, 260);
+  }
+  function submitEmail(email, noteEl){
+    if(!email) return;
+    noteEl.textContent = "You're in — opening the app…";
+    noteEl.style.color = "#2E8564";
+    window.location.href = "./App-Prototype/";
+  }
+  function capture(e){ e.preventDefault(); submitEmail(document.getElementById('cap-email').value.trim(), document.getElementById('cap-note')); return false; }
+  function joinWaitlist(e){ e.preventDefault(); submitEmail(document.getElementById('wl-email').value.trim(), document.getElementById('wl-note')); return false; }
+</script>
+</body>
+</html>
