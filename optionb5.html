@@ -3,203 +3,100 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Providores — Fresh, farm-direct, delivered daily</title>
-<meta name="description" content="Providores — San Francisco's produce & seafood purveyor. Order by text, delivered seven days a week.">
+<title>Providores — Today's deal: Royal Miyagi oysters, $0.70 apiece</title>
+<meta name="description" content="Providores — San Francisco. Royal Miyagi oysters, $0.70 apiece. Text your mobile for today's deal.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&amp;display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg1:#f6f4ee; --bg2:#eeebe2; --ink:#1b1a17; --soft:#6b675e; --faint:#9a968b;
-    --card:#ffffff; --line:#ececff00; --hair:#eae7dd; --accent:#1b1a17;
-  }
+  :root{ --ink:#1b1a17; --hair:rgba(255,255,255,.22); }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
-  html{scroll-behavior:smooth}
-  body{margin:0; color:var(--ink); background:linear-gradient(180deg,var(--bg1),var(--bg2)); background-attachment:fixed;
-    font-family:-apple-system,"SF Pro Text",BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; -webkit-font-smoothing:antialiased; line-height:1.5}
+  html,body{height:100%}
+  body{margin:0; color:#fff; font-family:-apple-system,"SF Pro Text",BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.5}
   a{color:inherit; text-decoration:none}
   .serif{font-family:"Playfair Display",Georgia,serif}
-  .wrap{width:100%; max-width:560px; margin:0 auto; padding:0 20px}   /* phone-first, iOS feel */
 
-  /* glossy iOS button */
-  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%;
-    font-size:16px; font-weight:700; letter-spacing:.01em; padding:15px 22px; border:none; cursor:pointer; font-family:inherit;
-    border-radius:16px; color:#fff; background:linear-gradient(180deg,#3a3833,#1b1a17);
-    box-shadow:0 8px 20px rgba(27,26,23,.28), inset 0 1px 0 rgba(255,255,255,.22); transition:transform .12s, box-shadow .2s}
-  .btn:active{transform:scale(.98)}
-  .btn.ghost{background:rgba(255,255,255,.7); color:var(--ink); box-shadow:0 2px 8px rgba(27,26,23,.08), inset 0 0 0 1px var(--hair)}
-  .pill{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
-    padding:6px 12px; border-radius:999px; background:var(--ink); color:#fff}
-  .kicker{font-size:12.5px; font-weight:800; letter-spacing:.22em; text-transform:uppercase; color:var(--faint)}
+  /* full-bleed darkened oyster-farm photo */
+  .stage{position:relative; min-height:100svh; display:flex; flex-direction:column;
+    background:
+      linear-gradient(180deg, rgba(14,14,12,.28) 0%, rgba(14,14,12,.54) 45%, rgba(14,14,12,.88) 100%),
+      url('./_dsc7679.jpg') center/cover no-repeat;}
 
-  /* switcher */
-  .switch{text-align:center; padding:8px 10px; font-size:12px; color:var(--faint); background:rgba(255,255,255,.5)}
-  .switch a{color:var(--ink); margin:0 5px; font-weight:600} .switch a.off{color:var(--faint); font-weight:500}
+  .switch{position:relative; z-index:3; text-align:center; padding:9px 10px; font-size:12px; color:rgba(255,255,255,.7)}
+  .switch a{color:#fff; margin:0 5px; font-weight:600} .switch a.off{color:rgba(255,255,255,.55); font-weight:500}
 
-  /* frosted header */
-  header{position:sticky; top:0; z-index:40; background:rgba(246,244,238,.72);
-    -webkit-backdrop-filter:saturate(180%) blur(18px); backdrop-filter:saturate(180%) blur(18px); border-bottom:1px solid var(--hair)}
-  .nav{display:flex; align-items:center; height:58px}
+  .top{position:relative; z-index:3; display:flex; align-items:baseline; gap:10px; padding:6px 22px 0}
   .brand{font-size:22px; font-weight:800; letter-spacing:.01em}
-  .brand small{display:block; font-family:-apple-system,sans-serif; font-size:8.5px; font-weight:700; letter-spacing:.26em; text-transform:uppercase; color:var(--faint); margin-top:1px}
-  .nav .call{margin-left:auto; font-size:14px; font-weight:700; color:var(--ink); background:rgba(255,255,255,.7); padding:9px 15px; border-radius:12px; box-shadow:inset 0 0 0 1px var(--hair)}
+  .brand small{font-family:-apple-system,sans-serif; font-size:9px; font-weight:700; letter-spacing:.26em; text-transform:uppercase; color:rgba(255,255,255,.7); margin-left:2px}
 
-  /* card */
-  .card{background:var(--card); border-radius:24px; padding:22px;
-    box-shadow:0 1px 2px rgba(27,26,23,.05), 0 16px 34px rgba(27,26,23,.09); position:relative; overflow:hidden}
-  .card::before{content:""; position:absolute; inset:0 0 auto 0; height:44%; background:linear-gradient(180deg,rgba(255,255,255,.6),transparent); pointer-events:none} /* gloss sheen */
+  .center{position:relative; z-index:3; flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;
+    text-align:center; padding:24px 22px 40px; width:100%; max-width:520px; margin:0 auto}
 
-  /* hero */
-  .hero{padding:30px 0 8px; text-align:center}
-  .hero h1{margin:14px 0 8px; font-weight:800; font-size:clamp(30px,8vw,42px); line-height:1.05; letter-spacing:-.01em}
-  .hero .sub{margin:0 auto 22px; max-width:22em; color:var(--soft); font-size:16.5px}
+  .live{display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+    padding:7px 14px; border-radius:999px; background:rgba(255,255,255,.14); color:#fff;
+    box-shadow:inset 0 0 0 1px var(--hair); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px)}
+  .dot{width:8px;height:8px;border-radius:50%;background:#ff5a4d;box-shadow:0 0 0 0 rgba(255,90,77,.6);animation:pulse 1.7s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,90,77,.6)}70%{box-shadow:0 0 0 9px rgba(255,90,77,0)}100%{box-shadow:0 0 0 0 rgba(255,90,77,0)}}
 
-  /* deal card */
-  .deal{margin-top:6px; text-align:left}
-  .deal .top{display:flex; align-items:center; justify-content:space-between; margin-bottom:8px}
-  .deal .ill{width:64px; height:58px; flex:0 0 auto}
-  .deal h3{margin:4px 0 0; font-size:22px; font-weight:800}
-  .deal .from{font-size:12px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--faint)}
-  .deal .price{font-family:"Playfair Display",serif; font-weight:800; font-size:40px; margin:6px 0 2px}
-  .deal .price span{font-family:-apple-system,sans-serif; font-size:15px; font-weight:600; color:var(--soft)}
-  .deal .desc{color:var(--soft); font-size:14.5px; margin:6px 0 14px}
-  .deal .tags{display:flex; gap:7px; flex-wrap:wrap; margin-bottom:16px}
-  .deal .tag{font-size:12px; font-weight:700; color:var(--soft); background:#f3f1ea; padding:6px 11px; border-radius:999px}
+  .from{margin-top:20px; font-size:12.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.72)}
+  .name{margin:7px 0 0; font-size:clamp(27px,7.5vw,40px); font-weight:800; line-height:1.02; text-shadow:0 2px 20px rgba(0,0,0,.35)}
+  .price{font-family:"Playfair Display",serif; font-weight:800; font-size:clamp(72px,22vw,120px); line-height:.92; margin:10px 0 0;
+    text-shadow:0 6px 30px rgba(0,0,0,.4)}
+  .price span{font-family:-apple-system,sans-serif; font-size:18px; font-weight:600; color:rgba(255,255,255,.82)}
+  .specs{margin:14px 0 0; font-size:13.5px; font-weight:600; color:rgba(255,255,255,.82)}
+  .specs i{font-style:normal; opacity:.5; margin:0 8px}
 
-  /* CTA */
-  .cta{margin-top:14px}
-  .cta .row{display:flex; gap:9px}
-  .cta input{flex:1; min-width:0; padding:15px 16px; border:none; border-radius:16px; background:#f2f0e9; font-family:inherit; font-size:16px; box-shadow:inset 0 0 0 1px var(--hair)}
-  .cta input:focus{outline:none; box-shadow:inset 0 0 0 2px var(--ink)}
-  .cta .row .btn{width:auto; flex:0 0 auto; padding:15px 20px}
-  .cta .note{margin:11px 2px 0; font-size:12.5px; color:var(--faint); text-align:center}
-  .cta .note a{color:var(--ink); font-weight:700}
-
-  /* carry pills */
-  .carry{display:flex; gap:9px; justify-content:center; flex-wrap:wrap; margin:6px 0}
-  .carry span{font-size:14px; font-weight:600; background:rgba(255,255,255,.75); box-shadow:inset 0 0 0 1px var(--hair); padding:9px 14px; border-radius:14px}
-
-  /* iOS list card */
-  .list{padding:4px 20px}
-  .list .r{display:flex; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid var(--hair); font-size:15.5px}
-  .list .r:last-child{border-bottom:none}
-  .list .r .ic{width:30px; height:30px; border-radius:9px; background:#f2f0e9; display:flex; align-items:center; justify-content:center; font-size:15px; flex:0 0 auto}
-  .list .r b{font-weight:700} .list .r .v{margin-left:auto; color:var(--soft); font-weight:600; font-size:14.5px}
-
-  /* quote */
-  .quote{text-align:center; padding:6px 8px}
-  .quote p{font-family:"Playfair Display",serif; font-style:italic; font-size:20px; line-height:1.4; margin:0 0 10px}
-  .quote .by{font-size:12.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--faint)}
-
-  .sec{padding:22px 0}
-  .center{text-align:center}
-  footer{text-align:center; padding:26px 0 40px; color:var(--faint); font-size:13px}
-  footer .fb{font-family:"Playfair Display",serif; font-size:20px; color:var(--ink); font-weight:800}
+  form{margin-top:26px; width:100%; display:flex; flex-direction:column; gap:10px}
+  input{width:100%; padding:17px 18px; border:none; border-radius:16px; background:rgba(255,255,255,.96); color:var(--ink);
+    font-family:inherit; font-size:16px; box-shadow:0 12px 30px rgba(0,0,0,.28)}
+  input::placeholder{color:#9a968b}
+  input:focus{outline:none; box-shadow:0 0 0 3px rgba(255,255,255,.65), 0 12px 30px rgba(0,0,0,.28)}
+  .btn{width:100%; min-height:56px; font-size:17px; font-weight:800; border:none; cursor:pointer; font-family:inherit; border-radius:16px; color:#fff;
+    background:linear-gradient(180deg,#3a3833,#1b1a17);
+    box-shadow:0 12px 30px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.22); transition:transform .12s}
+  .btn:active{transform:scale(.98)}
+  .note{margin:13px 2px 0; font-size:13px; color:rgba(255,255,255,.78)}
+  .note a{color:#fff; font-weight:700; border-bottom:1px solid rgba(255,255,255,.5)}
 </style>
 </head>
 <body>
+<div class="stage">
 
-<div class="switch">
-  <a class="off" href="./index.html">A</a> ·
-  <a class="off" href="./optionb.html">B</a> ·
-  <a href="./optionb5.html">B.5 · Providores</a> ·
-  <a class="off" href="./optionc.html">C</a> ·
-  <a class="off" href="./optionc5.html">C.5</a>
-</div>
-
-<header>
-  <div class="wrap nav">
-    <div class="brand serif">Providores<small>San Francisco</small></div>
-    <a class="call" href="tel:+14155550142">Call</a>
+  <div class="switch">
+    <a class="off" href="./index.html">A</a> ·
+    <a class="off" href="./optionb.html">B</a> ·
+    <a href="./optionb5.html">B.5 · Providores</a> ·
+    <a class="off" href="./optionc.html">C</a> ·
+    <a class="off" href="./optionc5.html">C.5</a>
   </div>
-</header>
 
-<div class="wrap">
+  <div class="top"><span class="brand serif">Providores<small>San Francisco</small></span></div>
 
-  <section class="hero">
-    <span class="kicker">Farm &amp; dock direct</span>
-    <h1 class="serif">Fresh, delivered daily.</h1>
-    <p class="sub">Produce &amp; seafood, straight from the source. Order by text — we deliver seven days a week.</p>
+  <main class="center">
+    <span class="live"><span class="dot"></span> Today&rsquo;s deal · San Francisco</span>
 
-    <!-- deal card -->
-    <div class="card deal">
-      <div class="top">
-        <div>
-          <div class="from">Today&rsquo;s deal · British Columbia</div>
-          <h3>Royal Miyagi Oysters</h3>
-        </div>
-        <svg class="ill" viewBox="0 0 90 82" aria-hidden="true">
-          <g fill="none" stroke="#1b1a17" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M45 8 C66 11 80 30 77 51 C75 65 60 76 45 77 C30 76 15 65 13 51 C10 30 24 11 45 8 Z"/>
-            <path d="M45 12 C37 32 32 52 30 72"/>
-            <path d="M45 12 C48 32 50 52 52 73"/>
-            <path d="M45 12 C56 30 66 50 71 68"/>
-            <path d="M45 12 C31 30 21 50 16 68"/>
-            <path d="M24 60 C38 71 55 71 68 60" stroke-width=".9"/>
-            <path d="M20 46 C37 57 56 57 72 46" stroke-width=".8"/>
-          </g>
-        </svg>
-      </div>
-      <div class="price serif">$0.70 <span>apiece</span></div>
-      <p class="desc">Creamy and sweet, with a clean melon finish.</p>
-      <div class="tags"><span class="tag">Min. 10 dozen</span><span class="tag">Delivered unshucked</span><span class="tag">7 days a week</span></div>
+    <div class="from">British Columbia · Pacific strain</div>
+    <div class="name serif">Royal Miyagi Oysters</div>
+    <div class="price serif">$0.70 <span>apiece</span></div>
+    <div class="specs">Min. 10 dozen <i>·</i> delivered unshucked <i>·</i> 7 days a week</div>
 
-      <div class="cta">
-        <div class="row">
-          <input id="ph" type="tel" inputmode="tel" placeholder="Your mobile number" required>
-          <button class="btn" onclick="claim()">Text me →</button>
-        </div>
-        <p class="note" id="note">Get the deals of the day by text · <a href="./App-Prototype/">see the demo</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec">
-    <div class="carry">
-      <span>🦪 Oysters</span><span>🐟 Day-boat fish</span><span>🥬 Produce</span><span>🍋 Citrus</span>
-    </div>
-  </section>
-
-  <!-- iOS list -->
-  <section class="sec">
-    <div class="card list" style="padding:4px 20px">
-      <div class="r"><span class="ic">🚚</span><b>Delivery</b><span class="v">Every day, 7 days</span></div>
-      <div class="r"><span class="ic">🕑</span><b>Order by</b><span class="v">2 p.m. for next day</span></div>
-      <div class="r"><span class="ic">🌾</span><b>Sourced</b><span class="v">Farm &amp; dock direct</span></div>
-      <div class="r"><span class="ic">❄️</span><b>Kept</b><span class="v">Cold-chain to your door</span></div>
-    </div>
-  </section>
-
-  <section class="sec quote">
-    <p>&ldquo;Never a missed delivery — and the best oysters we&rsquo;ve served.&rdquo;</p>
-    <div class="by">Marco Bianchi · The Ferry House</div>
-  </section>
-
-  <!-- contact -->
-  <section class="sec">
-    <div class="card center" style="text-align:center">
-      <span class="kicker">Open an account</span>
-      <h2 class="serif" style="margin:8px 0 4px; font-weight:800; font-size:26px">Get your kitchen supplied.</h2>
-      <p style="color:var(--soft); margin:0 0 16px; font-size:15px">Tell us your restaurant — first delivery usually within a day.</p>
-      <a class="btn" href="tel:+14155550142" style="margin-bottom:10px">📞 Call the order desk</a>
-      <a class="btn ghost" href="mailto:orders@providores.co?subject=Open%20an%20account">Open an account by email</a>
-      <p style="color:var(--faint); font-size:12.5px; margin:14px 0 0">(415) 555‑0142 · 5am–4pm, seven days<br>2095 Jerrold Ave, San Francisco</p>
-    </div>
-  </section>
-
+    <form onsubmit="return claim(event)">
+      <input id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="Your mobile number" required>
+      <button class="btn" type="submit">Text me the deal →</button>
+    </form>
+    <p class="note" id="note">Free sample? Text <a href="sms:0485945947734?&amp;body=SAMPLE">SAMPLE to 0485 945 947 734</a></p>
+  </main>
 </div>
-
-<footer>
-  <div class="fb serif">Providores</div>
-  Fine provisions · San Francisco · since 2019
-</footer>
 
 <script>
-  function claim(){
+  function claim(e){
+    e.preventDefault();
     var num=document.getElementById('ph').value.trim();
-    if(!num){ document.getElementById('ph').focus(); return; }
-    var n=document.getElementById('note'); n.innerHTML="✓ You&rsquo;re on the list — we&rsquo;ll text you today&rsquo;s deals."; n.style.color="#1b1a17";
-    window.location.href="mailto:orders@providores.co?subject="+encodeURIComponent("Text me the deals of the day")+"&body="+encodeURIComponent("Mobile: "+num+"\nInterested in: Royal Miyagi oysters ($0.70 ea, min 10 dozen)");
+    if(!num){ document.getElementById('ph').focus(); return false; }
+    var n=document.getElementById('note'); n.innerHTML="✓ You&rsquo;re in — we&rsquo;ll text you today&rsquo;s deal shortly."; n.style.color="#eae7dd";
+    window.location.href="mailto:rhys.coombes@gmail.com?subject="+encodeURIComponent("Text me today's deal — Royal Miyagi oysters")+"&body="+encodeURIComponent("Mobile: "+num+"\nInterested in: Royal Miyagi oysters ($0.70 apiece, min 10 dozen)");
+    return false;
   }
 </script>
 </body>

@@ -3,170 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agripals - Today's deal: Royal Miyagi oysters, $0.70 apiece</title>
-<meta name="description" content="Agripals is the farm-direct food wholesaler for chefs. Today: Royal Miyagi oysters, $0.70 apiece. Text for the deal or a free sample.">
+<title>Agripals — Today's deal: Royal Miyagi oysters, $0.70 apiece</title>
+<meta name="description" content="Royal Miyagi oysters, $0.70 apiece. Text your mobile for today's deal.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&amp;display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg1:#f4f8f2; --bg2:#eaf2ec; --ink:#12201a; --soft:#617168; --faint:#8a978d;
-    --g900:#123024; --g700:#2E8564; --g500:#4CC499; --g100:#DCEFE1;
-    --card:#ffffff; --hair:#e6ede8;
+    --g900:#0e2a20; --g700:#2E8564; --g500:#4CC499; --hair:rgba(255,255,255,.22);
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
-  html{scroll-behavior:smooth}
-  body{margin:0; color:var(--ink); background:linear-gradient(180deg,var(--bg1),var(--bg2)); background-attachment:fixed;
-    font-family:-apple-system,"SF Pro Text",BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; -webkit-font-smoothing:antialiased; line-height:1.5}
+  html,body{height:100%}
+  body{margin:0; color:#fff; font-family:-apple-system,"SF Pro Text",BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.5}
   a{color:inherit; text-decoration:none}
   .serif{font-family:"Playfair Display",Georgia,serif}
-  .wrap{width:100%; max-width:600px; margin:0 auto; padding:0 20px}
 
-  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%;
-    min-height:56px; font-size:17px; font-weight:800; padding:16px 22px; border:none; cursor:pointer; font-family:inherit; border-radius:16px; color:#fff;
+  /* full-bleed darkened oyster-farm photo */
+  .stage{position:relative; min-height:100svh; display:flex; flex-direction:column;
+    background:
+      linear-gradient(180deg, rgba(6,20,15,.30) 0%, rgba(6,20,15,.55) 45%, rgba(6,20,15,.86) 100%),
+      url('./_dsc7679.jpg') center/cover no-repeat;}
+
+  .switch{position:relative; z-index:3; text-align:center; padding:9px 10px; font-size:12px; color:rgba(255,255,255,.7)}
+  .switch a{color:#fff; margin:0 5px; font-weight:600} .switch a.off{color:rgba(255,255,255,.55); font-weight:500}
+
+  .top{position:relative; z-index:3; display:flex; align-items:center; gap:10px; padding:6px 22px 0}
+  .a-mark{width:32px;height:32px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;
+    background:linear-gradient(155deg,var(--g500),var(--g700)); color:#fff; font-weight:800; font-size:19px;
+    box-shadow:0 4px 14px rgba(0,0,0,.35)}
+  .top b{font-weight:800; font-size:18px; letter-spacing:.01em}
+
+  .center{position:relative; z-index:3; flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;
+    text-align:center; padding:24px 22px 40px; width:100%; max-width:520px; margin:0 auto}
+
+  .live{display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+    padding:7px 14px; border-radius:999px; background:rgba(255,255,255,.14); color:#fff;
+    box-shadow:inset 0 0 0 1px var(--hair); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px)}
+  .dot{width:8px;height:8px;border-radius:50%;background:#ff5a4d;box-shadow:0 0 0 0 rgba(255,90,77,.6);animation:pulse 1.7s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,90,77,.6)}70%{box-shadow:0 0 0 9px rgba(255,90,77,0)}100%{box-shadow:0 0 0 0 rgba(255,90,77,0)}}
+
+  .from{margin-top:20px; font-size:12.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.72)}
+  .name{margin:7px 0 0; font-size:clamp(27px,7.5vw,40px); font-weight:800; line-height:1.02; text-shadow:0 2px 20px rgba(0,0,0,.35)}
+  .price{font-family:"Playfair Display",serif; font-weight:800; font-size:clamp(72px,22vw,120px); line-height:.92; margin:10px 0 0;
+    text-shadow:0 6px 30px rgba(0,0,0,.4)}
+  .price span{font-family:-apple-system,sans-serif; font-size:18px; font-weight:600; color:rgba(255,255,255,.82)}
+  .specs{margin:14px 0 0; font-size:13.5px; font-weight:600; color:rgba(255,255,255,.82)}
+  .specs i{font-style:normal; opacity:.5; margin:0 8px}
+
+  form{margin-top:26px; width:100%; display:flex; flex-direction:column; gap:10px}
+  input{width:100%; padding:17px 18px; border:none; border-radius:16px; background:rgba(255,255,255,.96); color:#12201a;
+    font-family:inherit; font-size:16px; box-shadow:0 12px 30px rgba(0,0,0,.28)}
+  input::placeholder{color:#8a978d}
+  input:focus{outline:none; box-shadow:0 0 0 3px rgba(76,196,153,.65), 0 12px 30px rgba(0,0,0,.28)}
+  .btn{width:100%; min-height:56px; font-size:17px; font-weight:800; border:none; cursor:pointer; font-family:inherit; border-radius:16px; color:#fff;
     background:linear-gradient(180deg,var(--g500),var(--g700));
-    box-shadow:0 10px 26px rgba(46,133,100,.32), inset 0 1px 0 rgba(255,255,255,.35); transition:transform .12s}
+    box-shadow:0 12px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.35); transition:transform .12s}
   .btn:active{transform:scale(.98)}
-  .a-mark{width:34px;height:34px;border-radius:10px;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
-    background:linear-gradient(155deg,var(--g500),var(--g700)); color:#fff; font-weight:800; font-size:20px; box-shadow:0 4px 12px rgba(24,51,45,.2)}
-  .pill{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
-    padding:6px 12px; border-radius:999px}
-  .pill-live{background:#fff; color:#c0392b; box-shadow:inset 0 0 0 1px var(--hair)}
-  .dot{width:8px;height:8px;border-radius:50%;background:#e23b3b;box-shadow:0 0 0 0 rgba(226,59,59,.5);animation:pulse 1.7s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(226,59,59,.5)}70%{box-shadow:0 0 0 8px rgba(226,59,59,0)}100%{box-shadow:0 0 0 0 rgba(226,59,59,0)}}
-
-  .switch{text-align:center; padding:8px 10px; font-size:12px; color:var(--faint); background:rgba(255,255,255,.55)}
-  .switch a{color:var(--ink); margin:0 5px; font-weight:600} .switch a.off{color:var(--faint); font-weight:500}
-
-  /* informative header (no form / no login) */
-  header{position:sticky; top:0; z-index:40; background:rgba(244,248,242,.8);
-    -webkit-backdrop-filter:saturate(180%) blur(18px); backdrop-filter:saturate(180%) blur(18px); border-bottom:1px solid var(--hair)}
-  .nav{display:flex; align-items:center; gap:11px; height:64px}
-  .nav .brand{font-weight:800; font-size:19px; flex:0 0 auto}
-  .nav .val{margin-left:auto; min-width:0; font-size:12.5px; color:var(--soft); text-align:right; line-height:1.25; font-weight:600}
-  .nav .val b{color:var(--g700)}
-
-  main{padding:22px 0 0}
-  .hero-img{display:block; width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:26px;
-    box-shadow:0 18px 44px rgba(18,48,36,.14), inset 0 1px 0 rgba(255,255,255,.3)}
-  .intro{text-align:center; padding:30px 0 20px}
-  .intro h1{margin:0; font-size:clamp(31px,8vw,46px); line-height:.98; font-weight:800; letter-spacing:0}
-  .intro p{margin:14px auto 0; max-width:25em; color:var(--soft); font-size:16px}
-
-  .deal{background:var(--card); border-radius:26px; padding:27px 22px 24px; text-align:center; position:relative; overflow:hidden;
-    box-shadow:0 2px 3px rgba(18,48,36,.04), 0 22px 46px rgba(18,48,36,.12)}
-  .deal::before{content:""; position:absolute; inset:0 0 auto 0; height:42%; background:linear-gradient(180deg,rgba(255,255,255,.68),transparent); pointer-events:none}
-  .deal > *{position:relative}
-  .deal .live{display:inline-flex; align-items:center; gap:8px; margin-bottom:14px}
-  .deal .from{font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--faint)}
-  .deal h2{margin:6px 0 0; font-size:clamp(26px,6vw,34px); font-weight:800; letter-spacing:0}
-  .deal .price{font-family:"Playfair Display",serif; font-weight:800; font-size:clamp(54px,15vw,78px); line-height:1; margin:10px 0 2px; color:var(--g900)}
-  .deal .price span{font-family:-apple-system,sans-serif; font-size:17px; font-weight:600; color:var(--soft)}
-  .deal .taste{color:var(--soft); font-size:15.5px; font-style:italic; margin:8px auto 17px; max-width:26em}
-  .deal .tags{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
-  .deal .tag{font-size:12.5px; font-weight:700; color:var(--g700); background:var(--g100); padding:8px 13px; border-radius:999px}
-
-  .cta{padding:18px 0 0}
-  .cta .row{display:flex; gap:9px}
-  .cta input{flex:1; min-width:0; padding:16px 16px; border:none; border-radius:16px; background:#fff; font-family:inherit; font-size:16px;
-    box-shadow:inset 0 0 0 1px var(--hair), 0 8px 22px rgba(18,48,36,.06)}
-  .cta input:focus{outline:none; box-shadow:inset 0 0 0 2px var(--g500), 0 8px 22px rgba(18,48,36,.06)}
-  .cta .row .btn{width:auto; flex:0 0 auto; padding:16px 18px; white-space:nowrap}
-  .cta .note{margin:12px 2px 0; text-align:center; font-size:13px; color:var(--faint)}
-  .cta .note a{color:var(--g700); font-weight:700}
-
-  .sample{display:flex; justify-content:center; padding:18px 0 6px}
-  .sample a{display:inline-flex; align-items:center; justify-content:center; width:100%; min-height:54px; padding:14px 18px; border-radius:999px;
-    border:1px solid rgba(46,133,100,.34); color:var(--g700); background:rgba(255,255,255,.58); font-size:15px; font-weight:800;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.7), 0 10px 24px rgba(18,48,36,.06)}
-  footer{text-align:center; padding:28px 0 42px; color:var(--faint); font-size:13px}
-  footer .fb{display:inline-flex; align-items:center; gap:8px; font-weight:800; color:var(--ink); font-size:17px; margin-bottom:6px}
-
-  @media(max-width:520px){
-    .wrap{padding:0 16px}
-    .nav{gap:10px}
-    .nav .val{font-size:11px; white-space:nowrap}
-    .nav .val span{display:none}
-    main{padding-top:16px}
-    .hero-img{border-radius:22px; aspect-ratio:4/3}
-    .intro{padding:26px 0 18px}
-    .intro h1{font-size:28px; line-height:1.05; max-width:8.5em; margin-left:auto; margin-right:auto}
-    .intro p{font-size:15px; max-width:20em}
-    .pill{font-size:10.5px; letter-spacing:.05em; padding:6px 10px}
-    .deal{padding:27px 18px 24px}
-    .deal .from{font-size:11px; letter-spacing:.1em}
-    .deal h2{font-size:23px}
-    .deal .price{font-size:52px}
-    .deal .price span{display:block; margin-top:4px; font-size:15px}
-    .cta .row{display:grid; grid-template-columns:1fr}
-    .cta .row .btn{width:100%}
-  }
+  .note{margin:13px 2px 0; font-size:13px; color:rgba(255,255,255,.78)}
+  .note a{color:#fff; font-weight:700; border-bottom:1px solid rgba(255,255,255,.5)}
 </style>
 </head>
 <body>
+<div class="stage">
 
-<div class="switch">
-  <a class="off" href="./index.html">A</a> ·
-  <a class="off" href="./optionb.html">B</a> ·
-  <a class="off" href="./optionb5.html">B.5</a> ·
-  <a class="off" href="./optionc.html">C</a> ·
-  <a href="./optionc5.html">C.5 · Deal-first</a>
+  <div class="switch">
+    <a class="off" href="./index.html">A</a> ·
+    <a class="off" href="./optionb.html">B</a> ·
+    <a class="off" href="./optionb5.html">B.5</a> ·
+    <a class="off" href="./optionc.html">C</a> ·
+    <a href="./optionc5.html">C.5 · Deal-first</a>
+  </div>
+
+  <div class="top"><span class="a-mark">A</span><b>Agripals</b></div>
+
+  <main class="center">
+    <span class="live"><span class="dot"></span> Today&rsquo;s deal · San Francisco</span>
+
+    <div class="from">British Columbia · Pacific strain</div>
+    <div class="name">Royal Miyagi Oysters</div>
+    <div class="price serif">$0.70 <span>apiece</span></div>
+    <div class="specs">Min. 10 dozen <i>·</i> delivered unshucked <i>·</i> 7 days a week</div>
+
+    <form onsubmit="return claim(event)">
+      <input id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="Your mobile number" required>
+      <button class="btn" type="submit">Text me the deal →</button>
+    </form>
+    <p class="note" id="note">Free sample? Text <a href="sms:0485945947734?&amp;body=SAMPLE">SAMPLE to 0485 945 947 734</a></p>
+  </main>
 </div>
 
-<!-- informative header, no form/login -->
-<header>
-  <div class="wrap nav">
-    <span class="a-mark">A</span>
-    <span class="brand">Agripals</span>
-    <span class="val"><span>The farm-direct food wholesaler for chefs.<br></span><b>Order by text.</b></span>
-  </div>
-</header>
-
-<main class="wrap">
-  <img
-    class="hero-img"
-    src="https://images.unsplash.com/photo-1778406673048-505c2e70d9c7?auto=format&amp;fit=crop&amp;w=1400&amp;q=80"
-    alt="Oyster farmers tending oyster beds in shallow coastal water"
-    loading="lazy">
-
-  <section class="intro" aria-labelledby="intro-title">
-    <h1 id="intro-title">Today&rsquo;s oyster deal, by text.</h1>
-    <p>Farm-direct seafood for chefs, sourced closer to the water and delivered daily.</p>
-  </section>
-
-  <section class="deal" aria-labelledby="deal-title">
-    <div class="live"><span class="pill pill-live"><span class="dot"></span> Today&rsquo;s deal · San Francisco</span></div>
-    <div class="from">British Columbia · Pacific strain</div>
-    <h2 id="deal-title">Royal Miyagi Oysters</h2>
-    <div class="price serif">$0.70 <span>apiece</span></div>
-    <p class="taste">Creamy and sweet, with a clean melon finish. Farm-direct, this week only.</p>
-    <div class="tags"><span class="tag">Min. 10 dozen</span><span class="tag">Delivered unshucked</span><span class="tag">7 days a week</span></div>
-  </section>
-
-  <section class="cta" aria-label="Text me the deal">
-    <div class="row">
-      <input id="ph" type="tel" inputmode="tel" placeholder="Your mobile number" required>
-      <button class="btn" onclick="claim()">Text me the deal →</button>
-    </div>
-    <p class="note" id="note">We&rsquo;ll text you today&rsquo;s deal &amp; the deals of the day · <a href="./App-Prototype/">see the app</a></p>
-  </section>
-
-  <div class="sample">
-    <a href="sms:0485945947734?&amp;body=SAMPLE">🦪 Free sample — text SAMPLE to 0485 945 947 734</a>
-  </div>
-</main>
-
-<footer>
-  <div class="fb"><span class="a-mark" style="width:26px;height:26px;border-radius:8px;font-size:15px">A</span> Agripals</div><br>
-  Farm-direct food, ordered by text · San Francisco
-</footer>
-
 <script>
-  function claim(){
+  function claim(e){
+    e.preventDefault();
     var num=document.getElementById('ph').value.trim();
-    if(!num){ document.getElementById('ph').focus(); return; }
-    var n=document.getElementById('note'); n.innerHTML="✓ You&rsquo;re in — we&rsquo;ll text you today&rsquo;s deal shortly."; n.style.color="#2E8564";
+    if(!num){ document.getElementById('ph').focus(); return false; }
+    var n=document.getElementById('note'); n.innerHTML="✓ You&rsquo;re in — we&rsquo;ll text you today&rsquo;s deal shortly."; n.style.color="#bff3dd";
     window.location.href="mailto:rhys.coombes@gmail.com?subject="+encodeURIComponent("Text me today's deal — Royal Miyagi oysters")+"&body="+encodeURIComponent("Mobile: "+num+"\nInterested in: Royal Miyagi oysters ($0.70 apiece, min 10 dozen)");
+    return false;
   }
 </script>
 </body>
