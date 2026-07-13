@@ -825,7 +825,7 @@
   .sec-label{ font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
     color:var(--muted); margin:16px 2px 8px; }
 
-  /* ---------- RFQ explainer ---------- */
+  /* ---------- Bid explainer ---------- */
   .explain{ background:linear-gradient(160deg, var(--green-100), rgba(255,255,255,.72));
     border:1px solid var(--border); border-radius:18px; padding:15px 16px; margin-bottom:12px; }
   .explain-head{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
@@ -1235,45 +1235,73 @@
             <div class="checkitem"><div class="checkbox">✓</div><div class="grow"><div class="title">Yellowfin Tuna — Sushi Grade</div><div class="desc">~10 lbs / week · currently $19.50/lb</div></div></div>
             <div class="checkitem"><div class="checkbox">✓</div><div class="grow"><div class="title">Atlantic Salmon Fillet — Skin-On</div><div class="desc">~12 lbs / week · currently $10.75/lb</div></div></div>
             <p class="muted" style="margin:14px 0 18px;">Agripals takes these straight to the farms — notifying matched farms directly and posting an open request so any farmer on the network can quote.</p>
-            <button class="btn btn-primary" onclick="showScreen('restaurant','r-rfq-sent')">Generate RFQs →</button>
+            <button class="btn btn-primary" onclick="showScreen('restaurant','r-rfq-sent')">Generate Bids →</button>
           </div>
 
-          <!-- RFQ sent -->
+          <!-- Bid sent -->
           <div class="screen" id="r-rfq-sent" data-nav="false">
             <div style="text-align:center; padding-top:40px;">
               <div class="check-anim">
                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
               </div>
-              <h2 style="font-size:19px;">4 RFQs sent</h2>
+              <h2 style="font-size:19px;">4 Bids sent</h2>
               <p class="muted" style="max-width:250px;margin:8px auto 24px;">Matched farms were notified instantly, and your request is now open to every farmer on the network — fresher product, farm-direct price.</p>
               <p class="muted">Typical response time: <strong style="color:var(--text)">24–48 hrs</strong></p>
-              <button class="btn btn-primary" style="margin-top:20px;" onclick="showScreen('restaurant','r-rfqs',{nav:'nav-r-rfqs'})">View My RFQs →</button>
+              <button class="btn btn-primary" style="margin-top:20px;" onclick="showScreen('restaurant','r-rfqs',{nav:'nav-r-rfqs'})">View My Bids →</button>
             </div>
           </div>
 
-          <!-- RFQs list -->
+          <!-- Bids list -->
           <div class="screen" id="r-rfqs" data-nav="true">
-            <div class="app-header"><h2>My RFQs</h2></div>
+            <div class="app-header"><h2>Bids</h2></div>
             <div class="explain">
               <div class="explain-head">
                 <div class="ava"><svg width="30" height="30" viewBox="0 0 48 48"><use href="#agripal-mascot"/></svg></div>
-                <strong>What's an RFQ?</strong>
+                <strong>What's a Bid?</strong>
               </div>
-              <p><strong>RFQ = Request for Quote.</strong> When you request an item — say Wild-Caught Prawns, 15 lbs/week — Agripals sends it out to every farmer and supplier on the platform. Whoever can supply it accepts the job and delivers to you for an agreed period. If a farmer can no longer supply, it automatically passes to the next best one — so you're never left short. The whole point: a fresher, better product straight from the source — at a farm-direct price, with full traceability to the farm it came from.</p>
-              <span class="by"><svg width="15" height="15" viewBox="0 0 48 48"><use href="#agripal-mascot"/></svg> Managed by Agripals · logistics &amp; organisation</span>
+              <p><strong>A bid is a request for an item</strong> — say Wild-Caught Prawns, 15 lbs/week — that goes out to every farm on the platform to compete for. Here's the good bit: <strong>restaurants near you can join your bid, and you can join theirs.</strong> The more kitchens on a bid, the bigger the order — and the better the price everyone gets.</p>
+              <span class="by"><svg width="15" height="15" viewBox="0 0 48 48"><use href="#agripal-mascot"/></svg> Better prices, together · powered by Agripals</span>
             </div>
-            <div class="sec-label">Open requests</div>
-            <div class="card" style="cursor:pointer;" onclick="showScreen('restaurant','r-quote-detail')">
-              <div class="row-between"><h3>Wild-Caught Prawns, 15 lbs/week</h3><span class="pill pill-orange">2 quotes</span></div>
-              <p class="muted">Tap to compare quotes and accept one</p>
+            <div class="seg" id="bids-seg">
+              <button class="seg-btn active" onclick="segTab('bids','current')">My Bids</button>
+              <button class="seg-btn" onclick="segTab('bids','past')">Bids Near Me</button>
             </div>
-            <div class="card">
-              <div class="row-between"><h3>Yellowfin Tuna, 10 lbs/week</h3><span class="pill pill-gray">Awaiting quotes</span></div>
-              <p class="muted">Sent to 5 farmers · 3 hours ago</p>
+            <div id="bids-current">
+              <div class="card" style="cursor:pointer;" onclick="showScreen('restaurant','r-quote-detail')">
+                <div class="row-between"><h3>Wild-Caught Prawns, 15 lbs/week</h3><span class="pill pill-orange">2 quotes</span></div>
+                <p class="muted">Tap to compare quotes and accept one</p>
+              </div>
+              <div class="card">
+                <div class="row-between"><h3>Yellowfin Tuna, 10 lbs/week</h3><span class="pill pill-gray">Awaiting quotes</span></div>
+                <p class="muted">Sent to 5 farmers · 3 hours ago</p>
+              </div>
+              <div class="card">
+                <div class="row-between"><h3>Atlantic Salmon Fillet, 12 lbs/week</h3><span class="pill pill-gray">Awaiting quotes</span></div>
+                <p class="muted">Sent to 4 farmers · 3 hours ago</p>
+              </div>
             </div>
-            <div class="card">
-              <div class="row-between"><h3>Atlantic Salmon Fillet, 12 lbs/week</h3><span class="pill pill-gray">Awaiting quotes</span></div>
-              <p class="muted">Sent to 4 farmers · 3 hours ago</p>
+            <div id="bids-past" style="display:none;">
+              <div class="sec-label">📍 Within 100m of Rosa's Kitchen — join to unlock the price</div>
+              <div class="card">
+                <div class="row-between"><h3>🦪 Royal Miyagi Oysters</h3><span class="pill pill-green">$0.69/dz</span></div>
+                <p class="muted">Toy Soldier · 2136 Mission St · 55m away · 3 kitchens in</p>
+                <button class="btn btn-primary" style="width:100%;margin-top:11px;" onclick="joinBid(this)">＋ Join this bid</button>
+              </div>
+              <div class="card">
+                <div class="row-between"><h3>🐟 Bluefin Tuna, 10 lbs/week</h3><span class="pill pill-green">$16.00/lb</span></div>
+                <p class="muted">Toy Soldier · 2136 Mission St · 55m away · 2 kitchens in</p>
+                <button class="btn btn-primary" style="width:100%;margin-top:11px;" onclick="joinBid(this)">＋ Join this bid</button>
+              </div>
+              <div class="card">
+                <div class="row-between"><h3>🦪 Mussels, 5 lbs/week</h3><span class="pill pill-green">$4.50/lb</span></div>
+                <p class="muted">Della Plaza · 2125 Mission St · 40m away · 4 kitchens in</p>
+                <button class="btn btn-primary" style="width:100%;margin-top:11px;" onclick="joinBid(this)">＋ Join this bid</button>
+              </div>
+              <div class="card">
+                <div class="row-between"><h3>🦪 Clams, 5 lbs/week</h3><span class="pill pill-green">$5.00/lb</span></div>
+                <p class="muted">Della Plaza · 2125 Mission St · 40m away · 4 kitchens in</p>
+                <button class="btn btn-primary" style="width:100%;margin-top:11px;" onclick="joinBid(this)">＋ Join this bid</button>
+              </div>
             </div>
           </div>
 
@@ -1527,7 +1555,7 @@
           <div class="nav-item" id="nav-r-orders" onclick="showScreen('restaurant','r-orders',{nav:'nav-r-orders'})">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M4.5 7l1.4 12a2 2 0 0 0 2 1.8h8.2a2 2 0 0 0 2-1.8L19.5 7M8.5 7V5.2A2.2 2.2 0 0 1 10.7 3h2.6a2.2 2.2 0 0 1 2.2 2.2V7"/></svg>Orders</div>
           <div class="nav-item" id="nav-r-rfqs" onclick="showScreen('restaurant','r-rfqs',{nav:'nav-r-rfqs'})">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5"/></svg>RFQs</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5"/></svg>Bids</div>
           <div class="nav-item" id="nav-r-invoices" onclick="showScreen('restaurant','r-invoices',{nav:'nav-r-invoices'})">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>Invoices</div>
           <div class="nav-item" id="nav-r-profile" onclick="showScreen('restaurant','r-profile',{nav:'nav-r-profile'})">
@@ -1556,7 +1584,7 @@
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a2405" stroke-width="2"><path d="M3 17h13V6H3z"/><path d="M16 10h4l3 3v4h-7z"/><circle cx="7.5" cy="19.5" r="1.5"/><circle cx="17.5" cy="19.5" r="1.5"/></svg>
               </div>
               <h2 style="font-size:20px;">Wholesaler / Farmer App</h2>
-              <p class="muted" style="max-width:260px;margin:8px auto 24px;">See open RFQs near you, send a quote in one tap, and manage deliveries.</p>
+              <p class="muted" style="max-width:260px;margin:8px auto 24px;">See open Bids near you, send a quote in one tap, and manage deliveries.</p>
               <button class="btn btn-primary" onclick="showScreen('wholesaler','w-messages',{nav:'nav-w-messages'})">Get Started →</button>
             </div>
           </div>
@@ -1599,15 +1627,15 @@
             </div>
           </div>
 
-          <!-- Open RFQs list -->
+          <!-- Open Bids list -->
           <div class="screen" id="w-rfqs-list" data-nav="true">
-            <div class="app-header"><h2>Open RFQs Near You</h2></div>
+            <div class="app-header"><h2>Open Bids Near You</h2></div>
             <div class="stat-grid">
-              <div class="stat-box"><div class="num">8</div><div class="lbl">Open RFQs nearby</div></div>
+              <div class="stat-box"><div class="num">8</div><div class="lbl">Open Bids nearby</div></div>
               <div class="stat-box alt"><div class="num">8</div><div class="lbl">Active customers</div></div>
             </div>
             <div class="card">
-              <div class="row-between"><h3>New RFQs for you</h3><span class="pill pill-orange">6 new</span></div>
+              <div class="row-between"><h3>New Bids for you</h3><span class="pill pill-orange">6 new</span></div>
               <div class="list-item" onclick="showScreen('wholesaler','w-rfq-detail')">
                 <div class="icon-badge orange">🦪</div>
                 <div class="grow"><div class="title">Tomales Bay Miyagi Oysters, Grade A</div><div class="desc">Rosa's Kitchen · 6 dozen/wk</div></div>
@@ -1644,7 +1672,7 @@
           <div class="screen" id="w-rfq-detail" data-nav="false">
             <div class="app-header">
               <div class="back-btn" onclick="showScreen('wholesaler','w-rfqs-list',{nav:'nav-w-rfqs'})">←</div>
-              <div><h2>RFQ Details</h2><div class="sub">Open request · posted 3h ago</div></div>
+              <div><h2>Bid Details</h2><div class="sub">Open request · posted 3h ago</div></div>
             </div>
             <div class="card">
               <h3>Rosa's Kitchen — Mission St, SF</h3>
@@ -1677,7 +1705,7 @@
               <div class="check-anim"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
               <h2 style="font-size:19px;">Quote sent to Rosa's Kitchen</h2>
               <p class="muted" style="max-width:250px;margin:8px auto 24px;">You'll be notified if they accept. Keep an eye on your Orders tab.</p>
-              <button class="btn btn-primary" onclick="showScreen('wholesaler','w-rfqs-list',{nav:'nav-w-rfqs'})">Back to RFQs</button>
+              <button class="btn btn-primary" onclick="showScreen('wholesaler','w-rfqs-list',{nav:'nav-w-rfqs'})">Back to Bids</button>
             </div>
           </div>
 
@@ -1716,7 +1744,7 @@
           <div class="nav-item active" id="nav-w-messages" onclick="showScreen('wholesaler','w-messages',{nav:'nav-w-messages'})">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Messages</div>
           <div class="nav-item" id="nav-w-rfqs" onclick="showScreen('wholesaler','w-rfqs-list',{nav:'nav-w-rfqs'})">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v5H4zM4 12h16v8H4z"/></svg>RFQs</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v5H4zM4 12h16v8H4z"/></svg>Bids</div>
           <div class="nav-item" id="nav-w-orders" onclick="showScreen('wholesaler','w-orders',{nav:'nav-w-orders'})">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h13V6H3z"/><path d="M16 10h4l3 3v4h-7z"/><circle cx="7.5" cy="19.5" r="1.5"/><circle cx="17.5" cy="19.5" r="1.5"/></svg>Orders</div>
           <div class="nav-item" id="nav-w-stock" onclick="showScreen('wholesaler','w-stock',{nav:'nav-w-stock'})">
@@ -1735,7 +1763,7 @@
       </div>
       <div class="admin-tabs">
         <div class="admin-tab active" id="atab-a-overview" onclick="showAdmin('a-overview')">Overview</div>
-        <div class="admin-tab" id="atab-a-rfqs" onclick="showAdmin('a-rfqs')">RFQs</div>
+        <div class="admin-tab" id="atab-a-rfqs" onclick="showAdmin('a-rfqs')">Bids</div>
         <div class="admin-tab" id="atab-a-wholesalers" onclick="showAdmin('a-wholesalers')">Wholesalers</div>
         <div class="admin-tab" id="atab-a-restaurants" onclick="showAdmin('a-restaurants')">Restaurants</div>
         <div class="admin-tab" id="atab-a-farmdrops" onclick="showAdmin('a-farmdrops')">Farm Drops</div>
@@ -1746,14 +1774,14 @@
           <div class="metric-grid">
             <div class="metric-card"><div class="num">14</div><div class="lbl">Restaurants onboarded</div><div class="delta">▲ +6 this week</div></div>
             <div class="metric-card"><div class="num">9</div><div class="lbl">Wholesalers / farmers</div><div class="delta">▲ +2 this week</div></div>
-            <div class="metric-card"><div class="num">37</div><div class="lbl">RFQs generated</div><div class="delta">▲ +15 this week</div></div>
+            <div class="metric-card"><div class="num">37</div><div class="lbl">Bids generated</div><div class="delta">▲ +15 this week</div></div>
             <div class="metric-card"><div class="num">21%</div><div class="lbl">Avg. cost savings</div><div class="delta">▲ +3pt vs last week</div></div>
             <div class="metric-card"><div class="num">10</div><div class="lbl">Deliveries completed</div><div class="delta">Oyster MVP milestone hit</div></div>
             <div class="metric-card"><div class="num">2</div><div class="lbl">Active farm drops</div><div class="delta">1 forming</div></div>
           </div>
           <div class="two-col">
             <div class="card">
-              <h3>RFQs generated per week</h3>
+              <h3>Bids generated per week</h3>
               <div class="bars">
                 <div class="bar" style="height:30%;"><div class="fill" style="height:100%;"></div><span class="lab">Wk1</span></div>
                 <div class="bar" style="height:45%;"><div class="fill" style="height:100%;"></div><span class="lab">Wk2</span></div>
@@ -1775,7 +1803,7 @@
         </div>
 
         <div class="admin-panel" id="a-rfqs">
-          <h3 style="margin-top:0;">Recent RFQ activity</h3>
+          <h3 style="margin-top:0;">Recent Bid activity</h3>
           <div class="table-wrap">
           <table>
             <tr><th>Restaurant</th><th>Item</th><th>Status</th><th>Best Quote</th><th>Savings</th></tr>
@@ -1859,6 +1887,8 @@
   }
 
   function askCredit(btn){ btn.textContent = "✓ Request sent — we'll be in touch"; btn.disabled = true; btn.style.opacity = .7; }
+
+  function joinBid(btn){ btn.textContent = "✓ Joined — price unlocked"; btn.disabled = true; btn.style.opacity = .75; }
 
   function segTab(group, which){
     var cur = which === 'current';
@@ -1945,17 +1975,17 @@
             "Amazing, thank you! Give me a sec to go through it… 🔎",
             "Right — I can already see four things I can get you straight from the farm: oysters, wild prawns, yellowfin tuna and Meyer lemons.",
             "This is exactly where I've seen chefs save the most — and I've got farmers ready to go on all four. 🌾",
-            "Want me to create an RFQ for these four? That puts them out to the farms so they compete for your order."
+            "Want me to create a Bid for these four? That puts them out to the farms so they compete for your order."
           ]
         },
         {
-          user: "Yes please — create the RFQs.",
+          user: "Yes please — create the Bids.",
           reveal: {
             topic: "4 items",
             subject: "Oysters · Prawns · Tuna · Lemons",
-            badge: "RFQs in progress",
+            badge: "Bids in progress",
             preview: "Agripals is putting your 4 items out to the farms.",
-            card: { title: "RFQs understood", rows: [["Items","Oysters · Wild Prawns · Yellowfin Tuna · Meyer Lemons"],["Sourcing","Direct from local farms"],["Goal","Fresher product, farm-direct price"]] }
+            card: { title: "Bids understood", rows: [["Items","Oysters · Wild Prawns · Yellowfin Tuna · Meyer Lemons"],["Sourcing","Direct from local farms"],["Goal","Fresher product, farm-direct price"]] }
           },
           bot: [
             "On it! 🌾 Sending all four out to the farms now.",
@@ -1966,7 +1996,7 @@
         {
           user: "Perfect — thanks Agripals.",
           bot: ["Anytime, Chef. 🙌 I'll keep the farms honest and chase down the best price for you."],
-          cta: { label: "View My RFQs →", screen: "r-rfqs", nav: "nav-r-rfqs" },
+          cta: { label: "View My Bids →", screen: "r-rfqs", nav: "nav-r-rfqs" },
           badgeDone: "Quotes on the way"
         }
       ]
