@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agripals — Today's deal: Royal Miyagi oysters, $0.70 apiece</title>
-<meta name="description" content="Royal Miyagi oysters, $0.70 apiece. Text your mobile for today's deal.">
+<title>Agripals — Today's deal: Royal Miyagi oysters, $0.75 apiece</title>
+<meta name="description" content="Royal Miyagi oysters, $0.75 apiece. Text your mobile for today's deal.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&amp;display=swap" rel="stylesheet">
@@ -37,14 +37,16 @@
   .top b{font-weight:800; font-size:18px; letter-spacing:.01em}
 
   .center{position:relative; z-index:3; flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;
-    text-align:center; padding:24px 22px 40px; width:100%; max-width:520px; margin:0 auto}
+    text-align:center; padding:18px 22px 28px; width:100%; max-width:520px; margin:0 auto}
 
-  .pitch{margin:0; font-size:clamp(30px,7.6vw,46px); font-weight:800; line-height:1.16; letter-spacing:-.015em;
+  .pitch{margin:0; font-size:clamp(31px,7.8vw,46px); font-weight:800; line-height:1.12; letter-spacing:-.015em;
     max-width:13.5em; text-shadow:0 3px 26px rgba(0,0,0,.55)}
   .pitch b{font-weight:800; white-space:nowrap}
   .pitch .price{font-family:"Playfair Display",serif; font-weight:800; font-size:1.14em; white-space:nowrap; color:#8ff0c8}
+  .pitch .sample-copy{display:block; margin-top:14px; font-size:.74em; line-height:1.18}
+  .pitch .sample-copy a{color:#8ff0c8; white-space:nowrap}
 
-  form{margin-top:30px; width:100%; display:flex; flex-direction:column; gap:10px}
+  form{margin-top:24px; width:100%; display:flex; flex-direction:column; gap:10px}
   input{width:100%; padding:17px 18px; border:none; border-radius:16px; background:rgba(255,255,255,.96); color:#12201a;
     font-family:inherit; font-size:16px; box-shadow:0 12px 30px rgba(0,0,0,.28)}
   input::placeholder{color:#8a978d}
@@ -53,11 +55,15 @@
     background:linear-gradient(180deg,var(--g500),var(--g700));
     box-shadow:0 12px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.35); transition:transform .12s}
   .btn:active{transform:scale(.98)}
-  .note{margin:13px 2px 0; font-size:13px; color:rgba(255,255,255,.78)}
-  .note a{color:#fff; font-weight:700; border-bottom:1px solid rgba(255,255,255,.5)}
-  .sample-link{display:inline-flex; align-items:center; justify-content:center; margin-top:14px; min-height:44px; padding:10px 16px;
-    border-radius:999px; color:#fff; font-size:14px; font-weight:800; background:rgba(255,255,255,.11);
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.34); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
+  @media (max-width:480px){
+    .switch{font-size:11px; padding-top:8px}
+    .top{padding:4px 18px 0}
+    .center{justify-content:flex-start; padding-top:54px}
+    .pitch{font-size:clamp(29px,9.2vw,39px); max-width:10.8em}
+    .pitch .sample-copy{font-size:.66em; margin-top:12px}
+    form{margin-top:22px}
+    input,.btn{border-radius:15px}
+  }
 </style>
 </head>
 <body>
@@ -74,14 +80,12 @@
   <div class="top"><span class="a-mark">A</span><b>Agripals</b></div>
 
   <main class="center">
-    <p class="pitch">Fresh Royal Miyagi oysters — <span class="price">70¢ each</span>, delivered unshucked seven days a week. Text <b>SAMPLE</b> to <a href="sms:+14152166182?&amp;body=SAMPLE">+1 415 216 6182</a>, or add your mobile below for a quick callback to organise your order.</p>
+    <p class="pitch">Fresh Royal Miyagi oysters — <span class="price">75¢ each</span>, delivered unshucked seven days a week.<span class="sample-copy">Text <b>SAMPLE</b> to <a href="sms:+14152166182?&amp;body=SAMPLE">+1 415 216 6182</a>, or add your mobile below for a quick callback to organise your order.</span></p>
 
     <form onsubmit="return claim(event)">
       <input id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="Add your mobile — first sample free" required>
       <button class="btn" type="submit">Text me the deal →</button>
     </form>
-    <a class="sample-link" href="sms:+14152166182?&amp;body=SAMPLE">🦪 Free sample — text SAMPLE to +1 415 216 6182</a>
-    <p class="note" id="note">We&rsquo;ll text you today&rsquo;s deal &amp; your free sample.</p>
   </main>
 </div>
 
@@ -90,8 +94,8 @@
     e.preventDefault();
     var num=document.getElementById('ph').value.trim();
     if(!num){ document.getElementById('ph').focus(); return false; }
-    var n=document.getElementById('note'); n.innerHTML="✓ You&rsquo;re in — we&rsquo;ll text you today&rsquo;s deal shortly."; n.style.color="#bff3dd";
-    window.location.href="mailto:rhys.coombes@gmail.com?subject="+encodeURIComponent("Text me today's deal — Royal Miyagi oysters")+"&body="+encodeURIComponent("Mobile: "+num+"\nInterested in: Royal Miyagi oysters ($0.70 apiece, min 10 dozen)");
+    var btn=document.querySelector('.btn'); if(btn){ btn.textContent="Opening message..."; }
+    window.location.href="mailto:rhys.coombes@gmail.com?subject="+encodeURIComponent("Text me today's deal — Royal Miyagi oysters")+"&body="+encodeURIComponent("Mobile: "+num+"\nInterested in: Royal Miyagi oysters ($0.75 apiece, min 10 dozen)");
     return false;
   }
 </script>
