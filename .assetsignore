@@ -15,3 +15,5 @@ Mobile/
 *.md
 *.bak
 .fuse_hidden*
+agripals landing D/
+node_modules/

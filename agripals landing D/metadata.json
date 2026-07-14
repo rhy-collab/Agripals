@@ -1,0 +1,6 @@
+{
+  "name": "Agripals",
+  "description": "Direct farm supply for chefs. Order via SMS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
