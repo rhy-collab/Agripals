@@ -39,13 +39,7 @@
   .center{position:relative; z-index:3; flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;
     text-align:center; padding:24px 22px 40px; width:100%; max-width:520px; margin:0 auto}
 
-  .live{display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
-    padding:7px 14px; border-radius:999px; background:rgba(255,255,255,.14); color:#fff;
-    box-shadow:inset 0 0 0 1px var(--hair); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px)}
-  .dot{width:8px;height:8px;border-radius:50%;background:#ff5a4d;box-shadow:0 0 0 0 rgba(255,90,77,.6);animation:pulse 1.7s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,90,77,.6)}70%{box-shadow:0 0 0 9px rgba(255,90,77,0)}100%{box-shadow:0 0 0 0 rgba(255,90,77,0)}}
-
-  .pitch{margin:22px 0 0; font-size:clamp(30px,7.6vw,46px); font-weight:800; line-height:1.16; letter-spacing:-.015em;
+  .pitch{margin:0; font-size:clamp(30px,7.6vw,46px); font-weight:800; line-height:1.16; letter-spacing:-.015em;
     max-width:13.5em; text-shadow:0 3px 26px rgba(0,0,0,.55)}
   .pitch b{font-weight:800; white-space:nowrap}
   .pitch .price{font-family:"Playfair Display",serif; font-weight:800; font-size:1.14em; white-space:nowrap; color:#8ff0c8}
@@ -61,6 +55,9 @@
   .btn:active{transform:scale(.98)}
   .note{margin:13px 2px 0; font-size:13px; color:rgba(255,255,255,.78)}
   .note a{color:#fff; font-weight:700; border-bottom:1px solid rgba(255,255,255,.5)}
+  .sample-link{display:inline-flex; align-items:center; justify-content:center; margin-top:14px; min-height:44px; padding:10px 16px;
+    border-radius:999px; color:#fff; font-size:14px; font-weight:800; background:rgba(255,255,255,.11);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.34); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px)}
 </style>
 </head>
 <body>
@@ -77,14 +74,13 @@
   <div class="top"><span class="a-mark">A</span><b>Agripals</b></div>
 
   <main class="center">
-    <span class="live"><span class="dot"></span> Today&rsquo;s deal · San Francisco</span>
-
-    <p class="pitch">Fresh Royal Miyagi oysters — <span class="price">70¢ each</span>, delivered unshucked seven days a week, plus a <b>free sample</b> when you text.</p>
+    <p class="pitch">Fresh Royal Miyagi oysters — <span class="price">70¢ each</span>, delivered unshucked seven days a week. Text <b>SAMPLE</b> to <a href="sms:+14152166182?&amp;body=SAMPLE">+1 415 216 6182</a>, or add your mobile below for a quick callback to organise your order.</p>
 
     <form onsubmit="return claim(event)">
-      <input id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="Your mobile number" required>
+      <input id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="Add your mobile — first sample free" required>
       <button class="btn" type="submit">Text me the deal →</button>
     </form>
+    <a class="sample-link" href="sms:+14152166182?&amp;body=SAMPLE">🦪 Free sample — text SAMPLE to +1 415 216 6182</a>
     <p class="note" id="note">We&rsquo;ll text you today&rsquo;s deal &amp; your free sample.</p>
   </main>
 </div>
