@@ -918,6 +918,34 @@
   <div class="role-tab" id="tab-app-admin" onclick="showApp('app-admin')">📊 Admin</div>
 </div>
 
+<style>
+  /* Support "?" button + in-app support chat */
+  .phone-screen{position:relative;}
+  .help-fab{position:absolute;top:44px;right:12px;z-index:60;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.92);color:var(--green-700,#2E8564);font-weight:800;font-size:16px;font-family:inherit;
+    box-shadow:0 3px 10px rgba(0,0,0,.18), inset 0 0 0 1px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;}
+  .help-fab:active{transform:scale(.94);}
+  .help-admin{margin-left:auto;border:none;cursor:pointer;background:rgba(255,255,255,.16);color:#fff;font-weight:700;font-size:12px;
+    padding:6px 12px;border-radius:999px;font-family:inherit;}
+  .support-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
+    background:rgba(15,30,24,.5);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);padding:20px;}
+  .support-modal.active{display:flex;}
+  .support-sheet{width:100%;max-width:360px;background:#fff;border-radius:20px;overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.35);display:flex;flex-direction:column;max-height:80vh;}
+  .support-head{display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1px solid var(--border,#e6ede8);}
+  .support-head strong{display:block;font-size:14.5px;}
+  .support-head span{display:block;font-size:11.5px;color:var(--muted,#7a8a80);}
+  .support-x{margin-left:auto;border:none;background:none;font-size:15px;cursor:pointer;color:var(--muted,#7a8a80);}
+  .support-body{padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;background:#f6f9f6;flex:1;min-height:180px;}
+  .support-msg{max-width:82%;padding:9px 12px;border-radius:14px;font-size:13.5px;line-height:1.4;}
+  .support-msg.bot{align-self:flex-start;background:#fff;box-shadow:inset 0 0 0 1px var(--border,#e6ede8);}
+  .support-msg.you{align-self:flex-end;background:linear-gradient(180deg,var(--green-500,#4CC499),var(--green-700,#2E8564));color:#fff;}
+  .support-compose{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border,#e6ede8);}
+  .support-compose input{flex:1;border:none;border-radius:12px;background:#f0f3f0;padding:11px 13px;font-size:14px;font-family:inherit;box-shadow:inset 0 0 0 1px var(--border,#e6ede8);}
+  .support-compose input:focus{outline:none;box-shadow:inset 0 0 0 2px var(--green-500,#4CC499);}
+  .support-compose button{border:none;border-radius:12px;width:44px;background:linear-gradient(180deg,var(--green-500,#4CC499),var(--green-700,#2E8564));color:#fff;font-size:16px;cursor:pointer;}
+</style>
+
 <div class="stage">
 
   <!-- ============ LANDING PAGE ============ -->
@@ -1179,7 +1207,6 @@
           <!-- Messages -->
           <div class="screen" id="r-messages" data-nav="true">
             <div class="app-header"><h2>Messages</h2></div>
-            <button class="btn btn-primary" onclick="showScreen('restaurant','r-scan')" style="margin-bottom:14px;">📸 Scan your menu to begin</button>
             <div class="inbox-row" onclick="openChat('restaurant')">
               <div class="inbox-head">
                 <div class="inbox-ava"><svg width="40" height="40" viewBox="0 0 48 48"><use href="#agripal-mascot"/></svg></div>
@@ -1188,9 +1215,9 @@
                     <span class="who">Agripals</span>
                     <span class="badge-new" id="r-msg-badge">New</span>
                   </div>
-                  <h3 id="r-msg-topic">Let's get you set up</h3>
+                  <h3 id="r-msg-topic">Agripals</h3>
                   <p class="subject-line" id="r-msg-subject">Your farm-direct assistant</p>
-                  <p class="preview" id="r-msg-preview">Send your menu and I'll find what I can get you straight from the farm.</p>
+                  <p class="preview" id="r-msg-preview">Take a photo of your menu and I'll show you what I can supply from our farm list.</p>
                 </div>
               </div>
             </div>
@@ -1224,9 +1251,9 @@
             </div>
 
             <div class="card" style="text-align:left; background:var(--green-100); border-color:#bfe0cb;">
-              <span class="pill pill-green" style="margin-bottom:9px;">⚡ AI-powered haggling</span>
-              <h3 style="font-size:15.5px; margin-bottom:6px;">Straight from the farm — we'll haggle for you</h3>
-              <p class="muted" style="margin:0;">Scan a menu, price list, or supplier invoice and we'll take it to the farms directly — letting them compete for your order so you get a fresher product, at a better price, and always know which farm it came from.</p>
+              <span class="pill pill-green" style="margin-bottom:9px;">⚡ Menu match</span>
+              <h3 style="font-size:15.5px; margin-bottom:6px;">Straight from the farm — matched to our menu</h3>
+              <p class="muted" style="margin:0;">Scan your menu, a price list, or a supplier invoice and I'll match it against our current farm list — showing you what I can supply this week, fresher and cheaper, always traceable to the farm.</p>
             </div>
 
             <div class="scan-box">
@@ -1248,11 +1275,11 @@
               </div>
               <div class="list-item">
                 <div class="icon-badge orange">2</div>
-                <div class="grow"><div class="title">Match</div><div class="desc">We reach out to farms that grow or catch it</div></div>
+                <div class="grow"><div class="title">Match</div><div class="desc">I match it to our current farm menu</div></div>
               </div>
               <div class="list-item">
                 <div class="icon-badge">3</div>
-                <div class="grow"><div class="title">Bid</div><div class="desc">They compete for your order — you win the lower price</div></div>
+                <div class="grow"><div class="title">Order</div><div class="desc">Confirm and I place your order straight with the farm</div></div>
               </div>
             </div>
           </div>
@@ -1261,107 +1288,20 @@
           <div class="screen" id="r-results" data-nav="false">
             <div class="app-header">
               <div class="back-btn" onclick="showScreen('restaurant','r-scan')">←</div>
-              <div><h2>We found 4 items</h2><div class="sub">Confirm and we'll request quotes</div></div>
+              <div><h2>Here's what we can supply</h2><div class="sub">From our current farm menu, this week</div></div>
             </div>
-            <div class="checkitem"><div class="checkbox">✓</div><div class="grow"><div class="title">Tomales Bay Miyagi Oysters — Grade A</div><div class="desc">~6 dozen / week · currently $23.00/dz</div></div></div>
-            <div class="checkitem"><div class="checkbox">✓</div><div class="grow"><div class="title">Wild-Caught Prawns — 16/20ct</div><div class="desc">~15 lbs / week · currently $8.60/lb</div></div></div>
-            <div class="checkitem"><div class="checkbox">✓</div><div class="grow"><div class="title">Yellowfin Tuna — Sushi Grade</div><div class="desc">~10 lbs / week · currently $19.50/lb</div></div></div>
-            <div class="checkitem"><div class="checkbox">✓</div><div class="grow"><div class="title">Atlantic Salmon Fillet — Skin-On</div><div class="desc">~12 lbs / week · currently $10.75/lb</div></div></div>
-            <p class="muted" style="margin:14px 0 18px;">Agripals takes these straight to the farms — notifying matched farms directly and posting an open request so any farmer on the network can quote.</p>
-            <button class="btn btn-primary" onclick="showScreen('restaurant','r-rfq-sent')">Generate Bids →</button>
-          </div>
-
-          <!-- Bid sent -->
-          <div class="screen" id="r-rfq-sent" data-nav="false">
-            <div style="text-align:center; padding-top:40px;">
-              <div class="check-anim">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
-              </div>
-              <h2 style="font-size:19px;">4 Bids sent</h2>
-              <p class="muted" style="max-width:250px;margin:8px auto 24px;">Matched farms were notified instantly, and your request is now open to every farmer on the network — fresher product, farm-direct price.</p>
-              <p class="muted">Typical response time: <strong style="color:var(--text)">24–48 hrs</strong></p>
-              <button class="btn btn-primary" style="margin-top:20px;" onclick="showScreen('restaurant','r-rfqs',{nav:'nav-r-rfqs'})">View My Bids →</button>
-            </div>
-          </div>
-
-          <!-- Bids list -->
-          <div class="screen" id="r-rfqs" data-nav="true">
-            <div class="app-header"><h2>Bids</h2></div>
-            <div class="explain">
-              <div class="explain-head">
-                <div class="ava"><svg width="30" height="30" viewBox="0 0 48 48"><use href="#agripal-mascot"/></svg></div>
-                <strong>What's a Bid?</strong>
-              </div>
-              <p><strong>A bid is a request for an item</strong> — say Wild-Caught Prawns, 15 lbs/week — that goes out to every farm on the platform to compete for. Here's the good bit: <strong>restaurants near you can join your bid, and you can join theirs.</strong> The more kitchens on a bid, the bigger the order — and the better the price everyone gets.</p>
-              <span class="by"><svg width="15" height="15" viewBox="0 0 48 48"><use href="#agripal-mascot"/></svg> Better prices, together · powered by Agripals</span>
-            </div>
-            <div class="seg" id="bids-seg">
-              <button class="seg-btn active" onclick="segTab('bids','current')">My Bids</button>
-              <button class="seg-btn" onclick="segTab('bids','past')">Bids Near Me</button>
-            </div>
-            <div id="bids-current">
-              <div class="card" style="cursor:pointer;" onclick="showScreen('restaurant','r-quote-detail')">
-                <div class="row-between"><h3>Wild-Caught Prawns, 15 lbs/week</h3><span class="pill pill-orange">2 quotes</span></div>
-                <p class="muted">Tap to compare quotes and accept one</p>
-              </div>
-              <div class="card">
-                <div class="row-between"><h3>Yellowfin Tuna, 10 lbs/week</h3><span class="pill pill-gray">Awaiting quotes</span></div>
-                <p class="muted">Sent to 5 farmers · 3 hours ago</p>
-              </div>
-              <div class="card">
-                <div class="row-between"><h3>Atlantic Salmon Fillet, 12 lbs/week</h3><span class="pill pill-gray">Awaiting quotes</span></div>
-                <p class="muted">Sent to 4 farmers · 3 hours ago</p>
-              </div>
-            </div>
-            <div id="bids-past" style="display:none;">
-              <div class="sec-label">📍 Within 100m of Rosa's Kitchen — join to unlock the price</div>
-              <div class="card">
-                <div class="row-between"><h3>🦪 Royal Miyagi Oysters</h3><span class="pill pill-green">$0.69/dz</span></div>
-                <p class="muted">Toy Soldier · 2136 Mission St · 55m away · 3 kitchens in</p>
-                <button class="btn btn-primary" style="width:100%;margin-top:11px;" onclick="joinBid(this)">＋ Join this bid</button>
-              </div>
-              <div class="card">
-                <div class="row-between"><h3>🐟 Bluefin Tuna, 10 lbs/week</h3><span class="pill pill-green">$16.00/lb</span></div>
-                <p class="muted">Toy Soldier · 2136 Mission St · 55m away · 2 kitchens in</p>
-                <button class="btn btn-primary" style="width:100%;margin-top:11px;" onclick="joinBid(this)">＋ Join this bid</button>
-              </div>
-              <div class="card">
-                <div class="row-between"><h3>🦪 Mussels, 5 lbs/week</h3><span class="pill pill-green">$4.50/lb</span></div>
-                <p class="muted">Della Plaza · 2125 Mission St · 40m away · 4 kitchens in</p>
-                <button class="btn btn-primary" style="width:100%;margin-top:11px;" onclick="joinBid(this)">＋ Join this bid</button>
-              </div>
-              <div class="card">
-                <div class="row-between"><h3>🦪 Clams, 5 lbs/week</h3><span class="pill pill-green">$5.00/lb</span></div>
-                <p class="muted">Della Plaza · 2125 Mission St · 40m away · 4 kitchens in</p>
-                <button class="btn btn-primary" style="width:100%;margin-top:11px;" onclick="joinBid(this)">＋ Join this bid</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Quote comparison -->
-          <div class="screen" id="r-quote-detail" data-nav="false">
-            <div class="app-header">
-              <div class="back-btn" onclick="showScreen('restaurant','r-rfqs',{nav:'nav-r-rfqs'})">←</div>
-              <div><h2>Wild-Caught Prawns — 15 lbs/week</h2><div class="sub">2 farm quotes received</div></div>
-            </div>
-            <div class="quote-card best">
-              <span class="best-flag">Best price · Save 19%</span>
-              <div class="row-between"><h3>Pacific Bay Shrimp Co.</h3><span>★ 4.8</span></div>
-              <p class="muted">$6.95/lb · Delivers Tue &amp; Fri</p>
-              <button class="btn btn-primary btn-sm" style="width:100%;margin-top:8px;" onclick="showScreen('restaurant','r-order-confirmed')">Accept this quote</button>
-            </div>
-            <div class="quote-card">
-              <div class="row-between"><h3>Golden State Wholesale</h3><span>★ 4.5</span></div>
-              <p class="muted">$7.60/lb · Delivers Mon, Wed, Fri</p>
-              <button class="btn btn-outline btn-sm" style="width:100%;margin-top:8px;">Accept this quote</button>
-            </div>
-            <p class="muted" style="text-align:center;">Current supplier price: $8.60/lb</p>
+            <div class="checkitem"><div class="checkbox">✓</div><div class="grow"><div class="title">Royal Miyagi Oysters — Grade A</div><div class="desc">~6 dozen / week · farm-direct $0.70 each</div></div></div>
+            <div class="checkitem"><div class="checkbox">✓</div><div class="grow"><div class="title">Wild-Caught Prawns — 16/20ct</div><div class="desc">~15 lbs / week · farm-direct $6.95/lb</div></div></div>
+            <div class="checkitem"><div class="checkbox">✓</div><div class="grow"><div class="title">Yellowfin Tuna — Sushi Grade</div><div class="desc">~10 lbs / week · farm-direct $16.00/lb</div></div></div>
+            <div class="checkitem"><div class="checkbox">✓</div><div class="grow"><div class="title">Meyer Lemons</div><div class="desc">~8 kg / week · farm-direct $5.20/kg</div></div></div>
+            <p class="muted" style="margin:14px 0 18px;">These are all on our current farm list — confirm and I'll place your order straight with the farms.</p>
+            <button class="btn btn-primary" onclick="showScreen('restaurant','r-order-confirmed')">Place order →</button>
           </div>
 
           <!-- Order confirmed -->
           <div class="screen" id="r-order-confirmed" data-nav="false">
             <div class="app-header">
-              <div class="back-btn" onclick="showScreen('restaurant','r-rfqs',{nav:'nav-r-rfqs'})">←</div>
+              <div class="back-btn" onclick="showScreen('restaurant','r-orders',{nav:'nav-r-orders'})">←</div>
               <h2>Order Confirmed</h2>
             </div>
             <div class="card">
@@ -1531,7 +1471,7 @@
 
           <!-- Profile -->
           <div class="screen" id="r-profile" data-nav="true">
-            <div class="app-header">
+            <div class="app-header" style="padding-right:44px;">
               <h2 id="r-profile-name">Rosa's Kitchen</h2>
               <div class="cog-btn" onclick="showScreen('restaurant','r-settings')" aria-label="Settings">
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -1587,8 +1527,6 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Messages</div>
           <div class="nav-item" id="nav-r-orders" onclick="showScreen('restaurant','r-orders',{nav:'nav-r-orders'})">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M4.5 7l1.4 12a2 2 0 0 0 2 1.8h8.2a2 2 0 0 0 2-1.8L19.5 7M8.5 7V5.2A2.2 2.2 0 0 1 10.7 3h2.6a2.2 2.2 0 0 1 2.2 2.2V7"/></svg>Orders</div>
-          <div class="nav-item" id="nav-r-rfqs" onclick="showScreen('restaurant','r-rfqs',{nav:'nav-r-rfqs'})">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5"/></svg>Bids</div>
           <div class="nav-item" id="nav-r-invoices" onclick="showScreen('restaurant','r-invoices',{nav:'nav-r-invoices'})">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>Invoices</div>
           <div class="nav-item" id="nav-r-profile" onclick="showScreen('restaurant','r-profile',{nav:'nav-r-profile'})">
@@ -1617,7 +1555,7 @@
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3a2405" stroke-width="2"><path d="M3 17h13V6H3z"/><path d="M16 10h4l3 3v4h-7z"/><circle cx="7.5" cy="19.5" r="1.5"/><circle cx="17.5" cy="19.5" r="1.5"/></svg>
               </div>
               <h2 style="font-size:20px;">Wholesaler / Farmer App</h2>
-              <p class="muted" style="max-width:260px;margin:8px auto 24px;">See open Bids near you, send a quote in one tap, and manage deliveries.</p>
+              <p class="muted" style="max-width:260px;margin:8px auto 24px;">See incoming orders near you, confirm in one tap, and manage deliveries.</p>
               <button class="btn btn-primary" onclick="showScreen('wholesaler','w-messages',{nav:'nav-w-messages'})">Get Started →</button>
             </div>
           </div>
@@ -1632,7 +1570,7 @@
               </div>
               <h3 id="w-msg-topic">New message from Agripals</h3>
               <p class="subject-line" id="w-msg-subject">No subject yet</p>
-              <p class="preview" id="w-msg-preview">Agripals is messaging on behalf of a customer looking for a quote.</p>
+              <p class="preview" id="w-msg-preview">Agripals is messaging on behalf of a customer with an order for you.</p>
             </div>
             <div class="inbox-row" onclick="showScreen('wholesaler','w-orders',{nav:'nav-w-orders'})">
               <div class="meta">
@@ -1662,13 +1600,13 @@
 
           <!-- Open Bids list -->
           <div class="screen" id="w-rfqs-list" data-nav="true">
-            <div class="app-header"><h2>Open Bids Near You</h2></div>
+            <div class="app-header"><h2>Orders Near You</h2></div>
             <div class="stat-grid">
-              <div class="stat-box"><div class="num">8</div><div class="lbl">Open Bids nearby</div></div>
+              <div class="stat-box"><div class="num">8</div><div class="lbl">Open orders nearby</div></div>
               <div class="stat-box alt"><div class="num">8</div><div class="lbl">Active customers</div></div>
             </div>
             <div class="card">
-              <div class="row-between"><h3>New Bids for you</h3><span class="pill pill-orange">6 new</span></div>
+              <div class="row-between"><h3>New orders for you</h3><span class="pill pill-orange">6 new</span></div>
               <div class="list-item" onclick="showScreen('wholesaler','w-rfq-detail')">
                 <div class="icon-badge orange">🦪</div>
                 <div class="grow"><div class="title">Tomales Bay Miyagi Oysters, Grade A</div><div class="desc">Rosa's Kitchen · 6 dozen/wk</div></div>
@@ -1705,22 +1643,22 @@
           <div class="screen" id="w-rfq-detail" data-nav="false">
             <div class="app-header">
               <div class="back-btn" onclick="showScreen('wholesaler','w-rfqs-list',{nav:'nav-w-rfqs'})">←</div>
-              <div><h2>Bid Details</h2><div class="sub">Open request · posted 3h ago</div></div>
+              <div><h2>Order request</h2><div class="sub">New order · posted 3h ago</div></div>
             </div>
             <div class="card">
               <h3>Rosa's Kitchen — Mission St, SF</h3>
               <p class="muted">Tomales Bay Miyagi Oysters, Grade A</p>
               <div class="row-between" style="margin-top:10px;"><span class="muted">Quantity</span><span>6 dozen / week</span></div>
               <div class="row-between" style="margin-top:6px;"><span class="muted">Delivery days needed</span><span>Tue, Thu</span></div>
-              <div class="row-between" style="margin-top:6px;"><span class="muted">Other quotes so far</span><span>1 (from a competitor)</span></div>
+              <div class="row-between" style="margin-top:6px;"><span class="muted">Farm-direct price</span><span>$0.70 each</span></div>
             </div>
-            <button class="btn btn-primary" onclick="showScreen('wholesaler','w-submit-quote')">Submit a Quote</button>
+            <button class="btn btn-primary" onclick="showScreen('wholesaler','w-submit-quote')">Confirm &amp; price</button>
           </div>
 
           <div class="screen" id="w-submit-quote" data-nav="false">
             <div class="app-header">
               <div class="back-btn" onclick="showScreen('wholesaler','w-rfq-detail')">←</div>
-              <h2>Submit Quote</h2>
+              <h2>Confirm order</h2>
             </div>
             <div class="field">
               <label>Price per dozen (USD)</label>
@@ -1730,15 +1668,15 @@
               <label>Notes for the restaurant</label>
               <textarea rows="3">Fresh harvest twice weekly, cold-chain delivery included.</textarea>
             </div>
-            <button class="btn btn-primary" onclick="showScreen('wholesaler','w-quote-sent')">Send Quote →</button>
+            <button class="btn btn-primary" onclick="showScreen('wholesaler','w-quote-sent')">Send to Agripals →</button>
           </div>
 
           <div class="screen" id="w-quote-sent" data-nav="false">
             <div style="text-align:center; padding-top:50px;">
               <div class="check-anim"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
-              <h2 style="font-size:19px;">Quote sent to Rosa's Kitchen</h2>
-              <p class="muted" style="max-width:250px;margin:8px auto 24px;">You'll be notified if they accept. Keep an eye on your Orders tab.</p>
-              <button class="btn btn-primary" onclick="showScreen('wholesaler','w-rfqs-list',{nav:'nav-w-rfqs'})">Back to Bids</button>
+              <h2 style="font-size:19px;">Order confirmed for Rosa's Kitchen</h2>
+              <p class="muted" style="max-width:250px;margin:8px auto 24px;">Agripals will book the delivery and notify you. Keep an eye on your Customers tab.</p>
+              <button class="btn btn-primary" onclick="showScreen('wholesaler','w-rfqs-list',{nav:'nav-w-rfqs'})">Back to Orders</button>
             </div>
           </div>
 
@@ -1777,9 +1715,9 @@
           <div class="nav-item active" id="nav-w-messages" onclick="showScreen('wholesaler','w-messages',{nav:'nav-w-messages'})">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>Messages</div>
           <div class="nav-item" id="nav-w-rfqs" onclick="showScreen('wholesaler','w-rfqs-list',{nav:'nav-w-rfqs'})">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v5H4zM4 12h16v8H4z"/></svg>Bids</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M4.5 7l1.4 12a2 2 0 0 0 2 1.8h8.2a2 2 0 0 0 2-1.8L19.5 7M8.5 7V5.2A2.2 2.2 0 0 1 10.7 3h2.6a2.2 2.2 0 0 1 2.2 2.2V7"/></svg>Orders</div>
           <div class="nav-item" id="nav-w-orders" onclick="showScreen('wholesaler','w-orders',{nav:'nav-w-orders'})">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h13V6H3z"/><path d="M16 10h4l3 3v4h-7z"/><circle cx="7.5" cy="19.5" r="1.5"/><circle cx="17.5" cy="19.5" r="1.5"/></svg>Orders</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>Customers</div>
           <div class="nav-item" id="nav-w-stock" onclick="showScreen('wholesaler','w-stock',{nav:'nav-w-stock'})">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8L12 3 3 8m18 0-9 5m9-5v9l-9 5m0-9L3 8m9 5v9M3 8v9l9 5"/></svg>Stock</div>
         </div>
@@ -1796,10 +1734,11 @@
       </div>
       <div class="admin-tabs">
         <div class="admin-tab active" id="atab-a-overview" onclick="showAdmin('a-overview')">Overview</div>
-        <div class="admin-tab" id="atab-a-rfqs" onclick="showAdmin('a-rfqs')">Bids</div>
+        <div class="admin-tab" id="atab-a-rfqs" onclick="showAdmin('a-rfqs')">Orders</div>
         <div class="admin-tab" id="atab-a-wholesalers" onclick="showAdmin('a-wholesalers')">Wholesalers</div>
         <div class="admin-tab" id="atab-a-restaurants" onclick="showAdmin('a-restaurants')">Restaurants</div>
         <div class="admin-tab" id="atab-a-farmdrops" onclick="showAdmin('a-farmdrops')">Farm Drops</div>
+        <div class="admin-tab" id="atab-a-support" onclick="showAdmin('a-support')">Support</div>
       </div>
       <div class="admin-body">
 
@@ -1807,14 +1746,14 @@
           <div class="metric-grid">
             <div class="metric-card"><div class="num">14</div><div class="lbl">Restaurants onboarded</div><div class="delta">▲ +6 this week</div></div>
             <div class="metric-card"><div class="num">9</div><div class="lbl">Wholesalers / farmers</div><div class="delta">▲ +2 this week</div></div>
-            <div class="metric-card"><div class="num">37</div><div class="lbl">Bids generated</div><div class="delta">▲ +15 this week</div></div>
+            <div class="metric-card"><div class="num">37</div><div class="lbl">Orders placed</div><div class="delta">▲ +15 this week</div></div>
             <div class="metric-card"><div class="num">21%</div><div class="lbl">Avg. cost savings</div><div class="delta">▲ +3pt vs last week</div></div>
             <div class="metric-card"><div class="num">10</div><div class="lbl">Deliveries completed</div><div class="delta">Oyster MVP milestone hit</div></div>
             <div class="metric-card"><div class="num">2</div><div class="lbl">Active farm drops</div><div class="delta">1 forming</div></div>
           </div>
           <div class="two-col">
             <div class="card">
-              <h3>Bids generated per week</h3>
+              <h3>Orders per week</h3>
               <div class="bars">
                 <div class="bar" style="height:30%;"><div class="fill" style="height:100%;"></div><span class="lab">Wk1</span></div>
                 <div class="bar" style="height:45%;"><div class="fill" style="height:100%;"></div><span class="lab">Wk2</span></div>
@@ -1836,10 +1775,10 @@
         </div>
 
         <div class="admin-panel" id="a-rfqs">
-          <h3 style="margin-top:0;">Recent Bid activity</h3>
+          <h3 style="margin-top:0;">Recent order activity</h3>
           <div class="table-wrap">
           <table>
-            <tr><th>Restaurant</th><th>Item</th><th>Status</th><th>Best Quote</th><th>Savings</th></tr>
+            <tr><th>Restaurant</th><th>Item</th><th>Status</th><th>Price</th><th>Savings</th></tr>
             <tr><td>Rosa's Kitchen</td><td>Tomales Bay Miyagi Oysters</td><td><span class="pill pill-green">Confirmed</span></td><td>$18.50/dz</td><td>20%</td></tr>
             <tr><td>Rosa's Kitchen</td><td>Wild-Caught Prawns</td><td><span class="pill pill-orange">Reviewing</span></td><td>$6.95/lb</td><td>19%</td></tr>
             <tr><td>Rosa's Kitchen</td><td>Yellowfin Tuna</td><td><span class="pill pill-gray">Awaiting quotes</span></td><td>—</td><td>—</td></tr>
@@ -1888,10 +1827,45 @@
           </div>
         </div>
 
+        <div class="admin-panel" id="a-support">
+          <div class="card" style="background:var(--green-100);border-color:#bfe0cb;">
+            <div class="row-between"><h3 style="margin:0;">Live support</h3><span class="pill pill-green">WhatsApp relay on</span></div>
+            <p class="muted" style="margin:6px 0 0;">Every support message from the "?" button is relayed to the team on WhatsApp — reply from your phone and it lands back in the customer's chat.</p>
+          </div>
+          <h3 style="margin:16px 0 8px;">Open support requests</h3>
+          <div class="table-wrap">
+          <table>
+            <tr><th>From</th><th>App</th><th>Message</th><th>Status</th></tr>
+            <tr><td>Rosa's Kitchen</td><td>Chef</td><td>Can I move my oyster delivery to Fridays?</td><td><span class="pill pill-orange">Awaiting reply</span></td></tr>
+            <tr><td>Steve's Oyster Farm</td><td>Farmer</td><td>How do I update my stock list?</td><td><span class="pill pill-green">Replied</span></td></tr>
+            <tr><td>Harbor Bistro</td><td>Chef</td><td>Invoice #AG-0142 — can I pay by card?</td><td><span class="pill pill-gray">Closed</span></td></tr>
+          </table>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 
+</div>
+
+<!-- In-app support chat (opened by the "?" button on every screen) -->
+<div class="support-modal" id="support-modal" onclick="if(event.target===this)closeSupport()">
+  <div class="support-sheet">
+    <div class="support-head">
+      <div class="mini-logo"><svg width="34" height="34" viewBox="0 0 48 48"><use href="#agripal-mascot"/></svg></div>
+      <div><strong>Agripals Support</strong><span>Typically replies in a few minutes</span></div>
+      <button class="support-x" onclick="closeSupport()" aria-label="Close">✕</button>
+    </div>
+    <div class="support-body" id="support-body">
+      <div class="support-msg bot">Hi 👋 You're chatting with Agripals support. What can we help with?</div>
+      <div class="support-msg bot">Send a message and a real person gets pinged on WhatsApp straight away — they'll reply right here.</div>
+    </div>
+    <div class="support-compose">
+      <input id="support-input" type="text" placeholder="Describe your issue…" onkeydown="if(event.key==='Enter'){event.preventDefault();sendSupport();}">
+      <button onclick="sendSupport()" aria-label="Send">↑</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1990,7 +1964,7 @@
     if(nameEl) nameEl.textContent = restaurant;
     if(contactEl) contactEl.textContent = document.getElementById('wt-firstname').textContent + ' M.';
     if(addressEl) addressEl.textContent = address;
-    showScreen('restaurant', 'r-messages', { nav: 'nav-r-messages' });
+    openChat('restaurant');
   }
 
   /* ---------- Messages / chat ---------- */
@@ -2002,40 +1976,44 @@
           sub: "Your farm-direct assistant · orders, invoices & more",
           label: "Message Agripals…",
           seed: [
-            "Hi Chef! 👋 I'm Agripals — your farm-direct assistant.",
-            "I've had a quick look at Rosa's Kitchen on Mission St — coastal Californian, seafood-forward. Love it. 🌊",
-            "To get you the best farm-direct prices, first things first: could you send me your menu? A photo or a link is perfect — I'll read through exactly what you're cooking with. 📋"
+            "Hi Chef! 👋 I'm Agripals, your farm-direct assistant.",
+            "Please take a photo of your menu so I can figure out what I can supply you from our current menu. 📋"
           ],
           steps: [
             {
               user: "Sure — here's the menu 📷",
-              bot: [
-                "Amazing, thank you! Give me a sec to go through it… 🔎",
-                "Right — I can already see four things I can get you straight from the farm: oysters, wild prawns, yellowfin tuna and Meyer lemons.",
-                "This is exactly where I've seen chefs save the most — and I've got farmers ready to go on all four. 🌾",
-                "Want me to create a Bid for these four? That puts them out to the farms so they compete for your order."
-              ]
-            },
-            {
-              user: "Yes please — create the Bids.",
               reveal: {
-                topic: "4 items",
-                subject: "Oysters · Prawns · Tuna · Lemons",
-                badge: "Bids in progress",
-                preview: "Agripals is putting your 4 items out to the farms.",
-                card: { title: "Bids understood", rows: [["Items","Oysters · Wild Prawns · Yellowfin Tuna · Meyer Lemons"],["Sourcing","Direct from local farms"],["Goal","Fresher product, farm-direct price"]] }
+                topic: "Your farm-direct supply",
+                subject: "4 items on this week's menu",
+                badge: "Ready to order",
+                preview: "Here's what I can get you this week, straight from the farm.",
+                card: { title: "This week — from our farm menu", rows: [["🦪 Royal Miyagi oysters","$0.70 each"],["🦐 Wild prawns","$6.95 / lb"],["🐟 Yellowfin tuna","$16.00 / lb"],["🍋 Meyer lemons","$5.20 / kg"]] }
               },
               bot: [
-                "On it! 🌾 Sending all four out to the farms now.",
-                "Oysters usually move fastest — I'd expect quotes back within a day.",
-                "I'll ping you the moment they land so you can compare and pick the best."
+                "Thanks! Reading your menu now… 🔎",
+                "Good news — four things on your menu are on our current farm list this week.",
+                "Here's what I can supply you, farm-direct — fresher, and cheaper than you're paying now. 🌾",
+                "Want me to place the order with the farms?"
               ]
             },
             {
-              user: "Perfect — thanks Agripals.",
-              bot: ["Anytime, Chef. 🙌 I'll keep the farms honest and chase down the best price for you."],
-              cta: { label: "View My Bids →", screen: "r-rfqs", nav: "nav-r-rfqs" },
-              badgeDone: "Quotes on the way"
+              user: "Yes please — place the order.",
+              reveal: {
+                topic: "Your farm-direct order",
+                subject: "4 items · this week",
+                badge: "Order placed",
+                preview: "Your order's in — I'll keep you posted right here.",
+                card: { title: "Order placed", rows: [["🦪 Royal Miyagi oysters","$0.70 each"],["🦐 Wild prawns","$6.95 / lb"],["🐟 Yellowfin tuna","$16.00 / lb"],["🍋 Meyer lemons","$5.20 / kg"]] }
+              },
+              bot: [
+                "Done! ✅ Your order's in with the farms — I'll keep you posted right here as it moves.",
+                "📦 Picked at Steve's Oyster Farm — graded Grade A.",
+                "❄️ Packed cold and boxed for delivery.",
+                "🚚 In transit — driver's near Novato, ETA 8:30am.",
+                "✅ Delivered to Rosa's Kitchen. Enjoy, Chef! 🦪"
+              ],
+              cta: { label: "Track my order →", screen: "r-order-track", nav: "nav-r-orders" },
+              badgeDone: "Delivered ✓"
             }
           ]
         },
@@ -2376,6 +2354,41 @@
       input.value = '';
     }
   }
+
+  /* ---------- In-app support ("?" button → chat, relayed to team on WhatsApp) ---------- */
+  function openSupport(){
+    document.getElementById('support-modal').classList.add('active');
+    setTimeout(function(){ var i=document.getElementById('support-input'); if(i) i.focus(); }, 60);
+  }
+  function closeSupport(){ document.getElementById('support-modal').classList.remove('active'); }
+  function sendSupport(){
+    var i=document.getElementById('support-input'); var t=i.value.trim(); if(!t) return;
+    var body=document.getElementById('support-body');
+    var u=document.createElement('div'); u.className='support-msg you'; u.textContent=t;
+    body.appendChild(u); i.value=''; body.scrollTop=body.scrollHeight;
+    setTimeout(function(){
+      var r=document.createElement('div'); r.className='support-msg bot';
+      r.textContent="Thanks — got it. A team member's just been pinged on WhatsApp and will reply right here. 🙌";
+      body.appendChild(r); body.scrollTop=body.scrollHeight;
+    }, 800);
+  }
+  /* mount the "?" support control on every app */
+  (function mountHelp(){
+    ['app-restaurant','app-wholesaler'].forEach(function(id){
+      var ps=document.querySelector('#'+id+' .phone-screen');
+      if(ps && !ps.querySelector('.help-fab')){
+        var b=document.createElement('button');
+        b.className='help-fab'; b.type='button'; b.setAttribute('aria-label','Support'); b.textContent='?';
+        b.onclick=openSupport; ps.appendChild(b);
+      }
+    });
+    var at=document.querySelector('#app-admin .admin-topbar');
+    if(at && !at.querySelector('.help-admin')){
+      var a=document.createElement('button');
+      a.className='help-admin'; a.type='button'; a.textContent='? Support';
+      a.onclick=openSupport; at.appendChild(a);
+    }
+  })();
 </script>
 
 </body>
