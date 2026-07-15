@@ -1,0 +1,1165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agripals — Prototype</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%23078539%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M11%2020A7%207%200%200%201%209.8%206.1C15.5%205%2017%204.48%2019%202c1%202%202%204.18%202%208%200%205.5-4.78%2010-10%2010Z%27/%3E%3Cpath%20d%3D%27M2%2021c0-3%201.85-5.36%205.08-6C9.5%2014.52%2012%2013%2013%2012%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ Design system — same as the Agripals landing app ============ */
+:root{
+  --green-700:#15803d; --green-600:#16a34a; --green-300:#86efac; --green-50:#f0fdf4;
+  --ink:#0f172a; --s800:#1e293b; --s700:#334155; --s500:#64748b; --s400:#94a3b8;
+  --s300:#cbd5e1; --s200:#e2e8f0; --s100:#f1f5f9; --s50:#f8fafc;
+  --amber:#d97706;
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ background:#fafafa; color:var(--ink); font-family:"Inter",ui-sans-serif,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+::selection{ background:#bbf7d0; }
+button{ font-family:inherit; cursor:pointer; background:none; border:none; color:inherit; }
+input,textarea,select{ font-family:inherit; color:var(--ink); }
+svg.ic{ width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex:0 0 auto; }
+
+/* ============ App shell ============ */
+.shell{ max-width:80rem; margin:0 auto; background:#fff; min-height:100vh; border-left:1px solid var(--s100); border-right:1px solid var(--s100); box-shadow:0 1px 2px rgba(0,0,0,.03); }
+
+/* Top switcher — minimal text tabs */
+.switcher{ display:flex; align-items:center; justify-content:space-between; padding:20px 24px; border-bottom:1px solid var(--s100); position:sticky; top:0; background:rgba(255,255,255,.92); backdrop-filter:blur(8px); z-index:50; }
+.switcher .brand{ display:flex; align-items:center; gap:8px; color:var(--green-700); font-weight:800; font-size:20px; letter-spacing:-.02em; }
+.switcher .brand svg{ width:24px; height:24px; }
+.switcher nav{ display:flex; gap:4px; }
+.switcher nav button{ font-size:14px; font-weight:600; color:var(--s500); padding:6px 12px; transition:color .15s; }
+.switcher nav button:hover{ color:var(--ink); }
+.switcher nav button.active{ color:var(--green-700); font-weight:800; text-decoration:underline; text-decoration-color:var(--green-300); text-decoration-thickness:2px; text-underline-offset:5px; }
+
+.view{ display:none; }
+.view.active{ display:block; }
+
+/* ============ Landing (agripals.com) ============ */
+.lp{ position:relative; overflow:hidden; }
+.lp-bg{ position:absolute; inset:0; pointer-events:none; z-index:0; color:var(--s100); opacity:.6; }
+.lp-bg svg{ position:absolute; stroke:currentColor; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.lp-header{ display:flex; align-items:center; justify-content:space-between; padding:24px 24px; position:relative; z-index:2; }
+.lp-header .logo{ display:flex; align-items:center; gap:8px; color:var(--green-700); font-weight:800; font-size:26px; letter-spacing:-.02em; }
+.lp-header .logo svg{ width:30px; height:30px; }
+.lp-header .access{ font-size:15px; font-weight:600; color:var(--s500); transition:color .15s; }
+.lp-header .access:hover{ color:var(--green-700); }
+
+.lp-main{ padding:64px 24px 24px; position:relative; z-index:2; }
+.deal-label{ font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--s400); margin-bottom:18px; }
+.deal-stage{ position:relative; height:196px; }
+.deal{ position:absolute; inset:0; opacity:0; transform:translateY(8px); transition:opacity .4s ease, transform .4s ease; pointer-events:none; }
+.deal.on{ opacity:1; transform:translateY(0); }
+.deal .price{ font-size:104px; line-height:1; font-weight:900; letter-spacing:-.05em; color:var(--ink); margin-left:-4px; }
+.deal .name{ font-size:30px; font-weight:500; letter-spacing:-.02em; color:var(--s800); margin-top:10px; }
+.deal .name span{ color:var(--s500); font-weight:400; font-size:24px; margin-left:6px; }
+.deal-dots{ display:flex; gap:8px; margin-top:14px; }
+.deal-dots button{ height:6px; width:8px; border-radius:999px; background:var(--s200); transition:all .5s; }
+.deal-dots button:hover{ background:var(--s300); }
+.deal-dots button.on{ width:32px; background:var(--green-700); }
+
+.lp-head2{ font-size:38px; letter-spacing:-.02em; line-height:1.2; margin:36px 0 8px; }
+.lp-head2 .u{ font-weight:800; color:var(--green-700); text-decoration:underline; text-decoration-color:var(--green-300); text-underline-offset:5px; }
+.lp-head2 .m{ font-weight:500; color:var(--s700); }
+
+.cta{ background:#fff; padding:28px 24px 32px; border-top:1px solid var(--s200); position:relative; z-index:2; }
+.cta form{ display:flex; align-items:flex-end; gap:16px; max-width:48rem; }
+.cta input{ flex:1; min-width:0; padding:8px 0; font-size:20px; font-weight:500; background:transparent; border:none; border-bottom:2px solid var(--s200); border-radius:0; outline:none; transition:border-color .15s; }
+.cta input::placeholder{ color:var(--s400); }
+.cta input:focus{ border-color:var(--ink); }
+.btn-black{ background:var(--ink); color:#fff; font-weight:700; letter-spacing:.03em; font-size:17px; padding:14px 32px; border-radius:0; white-space:nowrap; transition:background .15s, transform .05s; box-shadow:0 1px 2px rgba(0,0,0,.05); }
+.btn-black:hover{ background:#000; }
+.btn-black:active{ transform:scale(.99); }
+.cta .note{ font-size:14px; color:var(--s500); font-weight:500; margin-top:18px; max-width:48rem; }
+
+.divider{ height:8px; background:var(--s50); width:100%; }
+
+.features{ padding:64px 24px; }
+.features .eyebrow{ font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--s400); }
+.features h2{ font-size:28px; font-weight:800; letter-spacing:-.02em; margin:10px 0 40px; }
+.features .grid{ display:grid; grid-template-columns:1fr; gap:40px; }
+@media(min-width:768px){ .features .grid{ grid-template-columns:repeat(4,1fr); gap:32px; } }
+.feature .chip{ display:inline-flex; padding:16px; background:var(--green-50); border-radius:16px; margin-bottom:16px; }
+.feature .chip svg{ width:28px; height:28px; stroke:var(--green-700); }
+.feature h3{ font-size:17px; font-weight:700; margin-bottom:8px; }
+.feature p{ font-size:15px; color:var(--s500); font-weight:500; line-height:1.6; }
+
+.lp-footer{ padding:48px 24px; text-align:center; color:var(--s400); font-size:14px; }
+.lp-footer a{ color:var(--green-700); font-weight:600; text-decoration:underline; text-decoration-color:var(--green-300); text-underline-offset:3px; }
+.lp-footer .cr{ margin-top:24px; }
+
+@media(min-width:768px){
+  .lp-header,.lp-main,.cta,.features{ padding-left:80px; padding-right:80px; }
+  .lp-main{ padding-top:96px; }
+  .deal .price{ font-size:130px; }
+  .deal .name{ font-size:36px; } .deal .name span{ font-size:28px; }
+  .deal-stage{ height:230px; }
+  .lp-head2{ font-size:44px; }
+}
+
+/* ============ Phone frame ============ */
+.stage{ display:flex; justify-content:center; padding:48px 16px 72px; background:var(--s50); min-height:calc(100vh - 73px); }
+.phone{ position:relative; width:392px; max-width:100%; background:#fff; border:1px solid var(--s200); border-radius:32px; overflow:hidden; display:flex; flex-direction:column; height:780px; box-shadow:0 1px 3px rgba(0,0,0,.05); }
+.statusbar{ display:flex; justify-content:space-between; padding:14px 24px 8px; font-size:12px; font-weight:600; color:var(--s400); }
+.screens{ flex:1; overflow:hidden; position:relative; display:flex; flex-direction:column; min-height:0; }
+.screen{ display:none; flex:1; overflow-y:auto; padding:8px 24px 32px; flex-direction:column; min-height:0; }
+.screen.active{ display:flex; }
+.screen::-webkit-scrollbar{ width:0; }
+
+.app-header{ display:flex; align-items:center; gap:12px; padding:10px 0 18px; }
+.app-header h2{ font-size:22px; font-weight:800; letter-spacing:-.02em; }
+.app-header .sub{ font-size:13px; color:var(--s500); font-weight:500; margin-top:2px; }
+.back{ color:var(--s400); padding:4px; margin-left:-6px; transition:color .15s; }
+.back:hover{ color:var(--ink); }
+.back svg{ width:22px; height:22px; }
+
+.eyebrow{ font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--s400); }
+.eyebrow.green{ color:var(--green-700); }
+.eyebrow.amber{ color:var(--amber); }
+.muted{ color:var(--s500); font-size:13.5px; font-weight:500; line-height:1.55; }
+
+.block{ padding:18px 0; border-bottom:1px solid var(--s100); }
+.block:last-child{ border-bottom:none; }
+.block h3{ font-size:15.5px; font-weight:700; letter-spacing:-.01em; }
+.row-between{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+
+.btn-primary{ display:block; width:100%; background:var(--ink); color:#fff; font-weight:700; letter-spacing:.02em; font-size:15px; padding:15px; border-radius:0; margin-top:20px; transition:background .15s, transform .05s; }
+.btn-primary:hover{ background:#000; }
+.btn-primary:active{ transform:scale(.99); }
+.btn-text{ display:block; width:100%; text-align:center; margin-top:14px; font-size:14px; font-weight:700; color:var(--green-700); padding:8px; }
+.btn-text:hover{ text-decoration:underline; text-decoration-color:var(--green-300); text-underline-offset:4px; }
+
+.list-row{ display:flex; gap:14px; align-items:flex-start; padding:14px 0; border-bottom:1px solid var(--s100); }
+.list-row:last-child{ border-bottom:none; }
+.list-row .chip{ display:flex; align-items:center; justify-content:center; padding:10px; background:var(--green-50); border-radius:12px; }
+.list-row .chip svg{ width:20px; height:20px; stroke:var(--green-700); }
+.list-row .t{ font-size:14.5px; font-weight:700; }
+.list-row .d{ font-size:13px; color:var(--s500); font-weight:500; margin-top:2px; line-height:1.5; }
+.list-row .chev{ margin-left:auto; color:var(--s300); align-self:center; }
+.list-row.tap{ cursor:pointer; }
+.list-row.tap:hover .t{ color:var(--green-700); }
+
+.num-chip{ display:flex; align-items:center; justify-content:center; width:40px; height:40px; background:var(--green-50); border-radius:12px; color:var(--green-700); font-weight:800; font-size:15px; flex:0 0 auto; }
+
+.tag{ font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
+.tag.green{ color:var(--green-700); }
+.tag.amber{ color:var(--amber); }
+.tag.gray{ color:var(--s400); }
+
+.field label{ display:block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--s400); margin:20px 0 2px; }
+.field input,.field textarea,.field select{ width:100%; padding:8px 0; font-size:16px; font-weight:500; background:transparent; border:none; border-bottom:2px solid var(--s200); border-radius:0; outline:none; transition:border-color .15s; resize:none; }
+.field input:focus,.field textarea:focus,.field select:focus{ border-color:var(--ink); }
+.field ::placeholder{ color:var(--s400); }
+
+.check-row{ display:flex; align-items:center; gap:12px; padding:13px 0; border-bottom:1px solid var(--s100); cursor:pointer; font-size:14.5px; font-weight:600; color:var(--s700); }
+.check-row .box{ width:20px; height:20px; border:2px solid var(--s300); display:flex; align-items:center; justify-content:center; color:transparent; transition:all .15s; flex:0 0 auto; }
+.check-row .box svg{ width:13px; height:13px; stroke-width:3; }
+.check-row.on .box{ background:var(--green-700); border-color:var(--green-700); color:#fff; }
+
+.seg{ display:flex; gap:4px; margin-bottom:6px; }
+.seg button{ font-size:13px; font-weight:600; color:var(--s400); padding:6px 12px 8px 0; margin-right:8px; }
+.seg button.active{ color:var(--green-700); font-weight:800; text-decoration:underline; text-decoration-color:var(--green-300); text-decoration-thickness:2px; text-underline-offset:5px; }
+
+.bottom-nav{ display:flex; border-top:1px solid var(--s200); background:#fff; flex:0 0 auto; }
+.bottom-nav button{ flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; padding:12px 4px 14px; font-size:10.5px; font-weight:700; letter-spacing:.02em; color:var(--s400); transition:color .15s; }
+.bottom-nav button svg{ width:20px; height:20px; }
+.bottom-nav button.active{ color:var(--green-700); }
+
+.stat2{ display:grid; grid-template-columns:1fr 1fr; gap:0 24px; padding:6px 0 14px; }
+.stat2 .n{ font-size:40px; font-weight:900; letter-spacing:-.04em; line-height:1.1; }
+.stat2 .n.green{ color:var(--green-700); }
+.stat2 .l{ font-size:12px; color:var(--s500); font-weight:600; margin-top:2px; }
+
+/* chat */
+.chat-body{ flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:10px; padding:6px 0 14px; min-height:0; }
+.bubble{ max-width:82%; padding:11px 14px; font-size:14px; font-weight:500; line-height:1.5; background:var(--s50); border:1px solid var(--s100); color:var(--s800); align-self:flex-start; border-radius:2px 14px 14px 14px; }
+.bubble.me{ align-self:flex-end; background:var(--ink); border-color:var(--ink); color:#fff; border-radius:14px 2px 14px 14px; }
+.bubble .nm{ font-weight:800; color:var(--green-700); }
+.bubble.me .nm{ color:var(--green-300); }
+.chat-compose{ display:flex; align-items:center; gap:12px; padding:12px 0 6px; border-top:1px solid var(--s100); flex:0 0 auto; }
+.chat-compose .pill{ flex:1; font-size:14px; font-weight:500; color:var(--s400); padding:8px 0; border-bottom:2px solid var(--s200); }
+.chat-compose .send{ background:var(--ink); color:#fff; width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:0; }
+.chat-compose .send:hover{ background:#000; }
+.chat-compose .send svg{ width:18px; height:18px; }
+
+/* track */
+.track{ margin-top:6px; }
+.tk{ display:flex; gap:14px; padding:0 0 22px; position:relative; }
+.tk::before{ content:""; position:absolute; left:9px; top:22px; bottom:0; width:2px; background:var(--s100); }
+.tk:last-child::before{ display:none; }
+.tk .dot{ width:20px; height:20px; border-radius:50%; border:2px solid var(--s200); background:#fff; flex:0 0 auto; display:flex; align-items:center; justify-content:center; z-index:1; }
+.tk.done .dot{ background:var(--green-700); border-color:var(--green-700); color:#fff; }
+.tk.done .dot svg{ width:11px; height:11px; stroke-width:3.5; }
+.tk.now .dot{ border-color:var(--green-700); }
+.tk.now .dot::after{ content:""; width:8px; height:8px; border-radius:50%; background:var(--green-700); animation:pulse 1.6s infinite; }
+@keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
+.tk .t{ font-size:14px; font-weight:700; }
+.tk.todo .t{ color:var(--s400); }
+.tk .s{ font-size:12.5px; color:var(--s500); font-weight:500; margin-top:2px; }
+.tk .now-tag{ font-size:10px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--green-700); margin-left:6px; }
+
+/* toggle */
+.toggle-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 0; border-bottom:1px solid var(--s100); font-size:14.5px; font-weight:600; color:var(--s700); }
+.tog{ width:44px; height:24px; border-radius:999px; background:var(--s200); position:relative; cursor:pointer; transition:background .2s; flex:0 0 auto; }
+.tog::after{ content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; transition:left .2s; box-shadow:0 1px 2px rgba(0,0,0,.15); }
+.tog.on{ background:var(--green-700); }
+.tog.on::after{ left:23px; }
+
+/* overlay */
+.overlay{ position:absolute; inset:0; background:rgba(255,255,255,.96); display:none; flex-direction:column; align-items:center; justify-content:center; gap:16px; z-index:20; text-align:center; padding:24px; }
+.overlay.show{ display:flex; }
+.spinner{ width:36px; height:36px; border:3px solid var(--s100); border-top-color:var(--green-700); border-radius:50%; animation:spin .8s linear infinite; }
+@keyframes spin{ to{ transform:rotate(360deg);} }
+.overlay .t{ font-weight:700; font-size:15px; }
+.overlay .s{ font-size:13px; color:var(--s500); font-weight:500; }
+
+/* scan */
+.scan-box{ border:2px dashed var(--s200); padding:44px 20px; display:flex; flex-direction:column; align-items:center; gap:12px; margin:18px 0 0; color:var(--s400); }
+.scan-box svg{ width:40px; height:40px; stroke:var(--green-700); stroke-width:1.5; }
+
+/* settings */
+.set-row{ display:flex; align-items:center; gap:14px; padding:16px 0; border-bottom:1px solid var(--s100); font-size:14.5px; font-weight:600; cursor:pointer; }
+.set-row:last-child{ border-bottom:none; }
+.set-row svg{ width:19px; height:19px; stroke:var(--s400); }
+.set-row .v{ margin-left:auto; color:var(--s400); font-weight:500; font-size:13.5px; }
+.set-row:hover{ color:var(--green-700); }
+
+/* google button */
+.google-btn{ display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:14px; border:1px solid var(--s200); background:#fff; font-size:15px; font-weight:600; color:var(--s700); border-radius:0; transition:border-color .15s; }
+.google-btn:hover{ border-color:var(--s400); }
+
+/* big splash number */
+.splash{ text-align:center; padding-top:64px; }
+.splash .chip{ display:inline-flex; padding:20px; background:var(--green-50); border-radius:20px; margin-bottom:24px; }
+.splash .chip svg{ width:36px; height:36px; stroke:var(--green-700); stroke-width:1.8; }
+.splash h2{ font-size:24px; font-weight:800; letter-spacing:-.02em; }
+.splash p{ max-width:270px; margin:12px auto 0; }
+
+/* inbox */
+.inbox-row{ padding:16px 0; border-bottom:1px solid var(--s100); cursor:pointer; }
+.inbox-row:hover h3{ color:var(--green-700); }
+.inbox-row .meta{ display:flex; align-items:center; gap:8px; margin-bottom:3px; }
+.inbox-row .who{ font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--s400); }
+.inbox-row h3{ font-size:15.5px; font-weight:700; transition:color .15s; }
+.inbox-row .sub{ font-size:13px; font-weight:600; color:var(--s700); margin-top:2px; }
+.inbox-row .prev{ font-size:13px; color:var(--s500); font-weight:500; margin-top:3px; line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* credit hero (chef invoices) */
+.credit{ padding:22px 0 18px; border-bottom:1px solid var(--s100); }
+.credit .bal{ font-size:56px; font-weight:900; letter-spacing:-.04em; line-height:1; margin:8px 0 2px; }
+.credit .bal span{ font-size:15px; font-weight:500; color:var(--s500); letter-spacing:0; margin-left:8px; }
+.credit .meta{ display:flex; justify-content:space-between; gap:16px; margin-top:16px; font-size:13px; font-weight:600; color:var(--s500); }
+.credit .meta b{ display:block; color:var(--ink); font-size:14.5px; font-weight:700; margin-top:2px; }
+.spark{ display:flex; align-items:flex-end; gap:6px; height:56px; margin-top:18px; }
+.spark div{ flex:1; background:var(--s100); }
+.spark div.hot{ background:var(--green-700); }
+.spark-lab{ display:flex; gap:6px; margin-top:6px; }
+.spark-lab span{ flex:1; text-align:center; font-size:10px; font-weight:700; color:var(--s400); }
+
+/* ============ Admin ============ */
+.admin{ padding:0 24px 72px; }
+@media(min-width:768px){ .admin{ padding:0 80px 96px; } }
+.admin-head{ padding:48px 0 8px; }
+.admin-head h1{ font-size:34px; font-weight:900; letter-spacing:-.03em; }
+.admin-tabs{ display:flex; gap:4px; overflow-x:auto; padding:16px 0 0; border-bottom:1px solid var(--s100); }
+.admin-tabs button{ font-size:14px; font-weight:600; color:var(--s500); padding:8px 14px 12px; white-space:nowrap; border-bottom:2px solid transparent; margin-bottom:-1px; }
+.admin-tabs button:hover{ color:var(--ink); }
+.admin-tabs button.active{ color:var(--green-700); font-weight:800; border-bottom-color:var(--green-700); }
+.admin-panel{ display:none; padding-top:36px; }
+.admin-panel.active{ display:block; }
+.metric-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:32px 24px; }
+@media(min-width:768px){ .metric-grid{ grid-template-columns:repeat(3,1fr); } }
+.metric .n{ font-size:56px; font-weight:900; letter-spacing:-.04em; line-height:1; }
+.metric .l{ font-size:13px; font-weight:600; color:var(--s500); margin-top:6px; }
+.metric .d{ font-size:12px; font-weight:700; color:var(--green-700); margin-top:4px; }
+.two-col{ display:grid; grid-template-columns:1fr; gap:48px; margin-top:56px; }
+@media(min-width:768px){ .two-col{ grid-template-columns:1fr 1fr; } }
+.panel-h{ font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--s400); margin-bottom:16px; }
+.bars{ display:flex; align-items:flex-end; gap:16px; height:140px; }
+.bars .bar{ flex:1; display:flex; flex-direction:column; justify-content:flex-end; height:100%; }
+.bars .fill{ background:var(--green-700); }
+.bars .lab{ text-align:center; font-size:11px; font-weight:700; color:var(--s400); margin-top:8px; }
+.mixbar{ height:12px; display:flex; overflow:hidden; margin-top:14px; }
+.mixleg{ display:flex; flex-wrap:wrap; gap:16px; margin-top:12px; font-size:12.5px; font-weight:600; color:var(--s500); }
+.mixleg i{ display:inline-block; width:10px; height:10px; margin-right:6px; }
+table{ width:100%; border-collapse:collapse; font-size:14px; }
+th{ text-align:left; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--s400); padding:10px 16px 10px 0; border-bottom:1px solid var(--s200); }
+td{ padding:14px 16px 14px 0; border-bottom:1px solid var(--s100); font-weight:500; color:var(--s700); }
+td:first-child{ font-weight:700; color:var(--ink); }
+.table-wrap{ overflow-x:auto; }
+</style>
+</head>
+<body>
+
+<!-- Icon sprite (lucide) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 7h18M4.5 7l1.4 12a2 2 0 0 0 2 1.8h8.2a2 2 0 0 0 2-1.8L19.5 7M8.5 7V5.2A2.2 2.2 0 0 1 10.7 3h2.6a2.2 2.2 0 0 1 2.2 2.2V7"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 17h13V6H3z"/><path d="M16 10h4l3 3v4h-7z"/><circle cx="7.5" cy="19.5" r="1.5"/><circle cx="17.5" cy="19.5" r="1.5"/></symbol>
+    <symbol id="i-anchor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><path d="M12 22V8M5 12H2a10 10 0 0 0 20 0h-3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.42 0l8.58-8.58a1 1 0 0 0 0-1.42z"/><circle cx="7" cy="7" r="1.5"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8L12 3 3 8m18 0-9 5m9-5v9l-9 5m0-9L3 8m9 5v9M3 8v9l9 5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2M20 8V6a2 2 0 0 0-2-2h-2M4 16v2a2 2 0 0 0 2 2h2M20 16v2a2 2 0 0 1-2 2h-2"/><circle cx="12" cy="12" r="3.5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h2"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.35 1.79.68 2.64a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.44-1.25a2 2 0 0 1 2.11-.45c.85.33 1.74.56 2.64.68A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-beef" viewBox="0 0 24 24"><circle cx="12.5" cy="8.5" r="2.5"/><path d="M12.5 2a6.5 6.5 0 0 0-6.22 4.6c-1.1 3.13-.78 3.9-3.18 6.08A3 3 0 0 0 5 18c4 0 8.4-1.8 11.4-4.3A6.5 6.5 0 0 0 12.5 2Z"/><path d="m18.5 6 2.19 4.5a6.48 6.48 0 0 1 .31 2 6.49 6.49 0 0 1-2.6 5.2C15.4 20.2 11 22 7 22a3 3 0 0 1-2.68-1.66L2.4 16.5"/></symbol>
+    <symbol id="i-fish" viewBox="0 0 24 24"><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z"/><path d="M18 12v.5M16 17.93a9.77 9.77 0 0 1 0-11.86M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33"/></symbol>
+    <symbol id="i-apple" viewBox="0 0 24 24"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></symbol>
+    <symbol id="i-google" viewBox="0 0 48 48"><path fill="#FFC107" stroke="none" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" stroke="none" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4c-7.7 0-14.4 4.4-17.7 10.7z"/><path fill="#4CAF50" stroke="none" d="M24 44c5.5 0 10.4-2.1 14.2-5.5l-6.6-5.4C29.5 34.7 26.9 36 24 36c-5.3 0-9.7-3.3-11.3-8l-6.6 5.1C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" stroke="none" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.2 5.7l6.6 5.4C39.9 37.4 44 31.5 44 24c0-1.3-.1-2.7-.4-3.5z"/></symbol>
+  </defs>
+</svg>
+
+<div class="shell">
+
+  <!-- ============ Prototype switcher ============ -->
+  <div class="switcher">
+    <div class="brand"><svg class="ic"><use href="#i-leaf"/></svg> Agripals</div>
+    <nav>
+      <button class="active" id="tab-landing" onclick="showApp('landing')">Landing</button>
+      <button id="tab-chef" onclick="showApp('chef')">Chef</button>
+      <button id="tab-wholesale" onclick="showApp('wholesale')">Wholesale</button>
+      <button id="tab-admin" onclick="showApp('admin')">Admin</button>
+    </nav>
+  </div>
+
+  <!-- ============ LANDING (agripals.com) ============ -->
+  <div class="view active" id="view-landing">
+    <div class="lp">
+      <div class="lp-bg">
+        <svg viewBox="0 0 24 24" style="top:12%; right:-190px; width:340px; height:340px; transform:rotate(-12deg); stroke-width:1;"><use href="#i-beef"/></svg>
+        <svg viewBox="0 0 24 24" style="top:30%; right:110px; width:110px; height:110px; transform:rotate(15deg); stroke-width:1.2;"><use href="#i-fish"/></svg>
+        <svg viewBox="0 0 24 24" style="top:78%; right:35%; width:110px; height:110px; transform:rotate(-15deg); stroke-width:1.5;"><use href="#i-apple"/></svg>
+      </div>
+
+      <header class="lp-header">
+        <div class="logo"><svg class="ic"><use href="#i-leaf"/></svg> Agripals</div>
+        <button class="access" onclick="showApp('chef')">Chef Access</button>
+      </header>
+
+      <main class="lp-main">
+        <div class="deal-label">Today's wholesale deals</div>
+        <div class="deal-stage" id="deal-stage">
+          <div class="deal on">
+            <div class="price">70¢</div>
+            <div class="name">Royal Miyagi Oysters. <span>Grade A · each</span></div>
+          </div>
+          <div class="deal">
+            <div class="price">$6.95</div>
+            <div class="name">Wild-Caught Prawns. <span>16/20ct · per lb</span></div>
+          </div>
+          <div class="deal">
+            <div class="price">$16</div>
+            <div class="name">Yellowfin Tuna. <span>Sushi grade · per lb</span></div>
+          </div>
+          <div class="deal">
+            <div class="price">$5.20</div>
+            <div class="name">Meyer Lemons. <span>Case · per kg</span></div>
+          </div>
+        </div>
+        <div class="deal-dots" id="deal-dots">
+          <button class="on" onclick="setDeal(0)" aria-label="Deal 1"></button>
+          <button onclick="setDeal(1)" aria-label="Deal 2"></button>
+          <button onclick="setDeal(2)" aria-label="Deal 3"></button>
+          <button onclick="setDeal(3)" aria-label="Deal 4"></button>
+        </div>
+
+        <h2 class="lp-head2">
+          <span class="u">Fresher.</span> <span class="u">Cheaper.</span><br>
+          <span class="m">No Middleman.</span>
+        </h2>
+      </main>
+
+      <div class="cta">
+        <form onsubmit="event.preventDefault(); alert('Thanks! We\'ll text today\'s deals to ' + this.tel.value + ' shortly.'); this.reset();">
+          <input name="tel" type="tel" placeholder="e.g. 555-123-4567" required>
+          <button type="submit" class="btn-black">TEXT US</button>
+        </form>
+        <p class="note">Text our sales team for today's wholesale deals.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <section class="features">
+        <div class="eyebrow">Why chefs switch</div>
+        <h2>The same food, straight from the source.</h2>
+        <div class="grid">
+          <div class="feature">
+            <span class="chip"><svg class="ic"><use href="#i-leaf"/></svg></span>
+            <h3>Fresher</h3>
+            <p>Fewer stops between the farm and your pass — often days fresher than wholesale.</p>
+          </div>
+          <div class="feature">
+            <span class="chip"><svg class="ic"><use href="#i-tag"/></svg></span>
+            <h3>Cheaper</h3>
+            <p>Farm-gate pricing — typically 5–20% less than you're paying a distributor now.</p>
+          </div>
+          <div class="feature">
+            <span class="chip"><svg class="ic"><use href="#i-msg"/></svg></span>
+            <h3>No middleman</h3>
+            <p>Order direct from the grower by text. No portals, no order forms, no markup stack.</p>
+          </div>
+          <div class="feature">
+            <span class="chip"><svg class="ic"><use href="#i-pin"/></svg></span>
+            <h3>Traceable</h3>
+            <p>Know the exact farm every item came from — a story worth telling your diners.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="lp-footer">
+        <p><a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Get today's deals →</a> or try the <a href="#" onclick="showApp('chef');return false;">live demo</a>.</p>
+        <p class="cr">© <span id="yr"></span> Agripals. All rights reserved.</p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ============ CHEF APP ============ -->
+  <div class="view" id="view-chef">
+    <div class="stage">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>Agripals · Chef</span></div>
+        <div class="screens" id="chef-screens">
+
+          <!-- Welcome -->
+          <div class="screen active" id="r-welcome">
+            <div class="splash">
+              <span class="chip"><svg class="ic"><use href="#i-camera"/></svg></span>
+              <h2>Chef App</h2>
+              <p class="muted">Take a photo of your menu. We'll show you which ingredients you can get straight from the farm — fresher, cheaper, and traceable to who grew it.</p>
+            </div>
+            <div class="block" style="margin-top:36px;">
+              <h3>20 seconds to save 20%+</h3>
+              <p class="muted" style="margin-top:4px;">Scan → we find what's direct-from-farm → you get a fresher product at the farm-gate price.</p>
+            </div>
+            <button class="btn-primary" onclick="showScreen('chef','r-auth')">Get Started →</button>
+          </div>
+
+          <!-- Sign in -->
+          <div class="screen" id="r-auth">
+            <div class="splash">
+              <span class="chip"><svg class="ic"><use href="#i-leaf"/></svg></span>
+              <h2>Sign in to continue</h2>
+              <p class="muted">Use your Google account — we'll pull your name and email automatically.</p>
+            </div>
+            <div style="margin-top:36px;">
+              <button class="google-btn" onclick="googleSignIn()"><svg width="18" height="18" viewBox="0 0 48 48"><use href="#i-google"/></svg> Continue with Google</button>
+              <p class="muted" style="text-align:center; font-size:11.5px; margin-top:16px;">By continuing you agree to Agripals' Terms &amp; Privacy Policy.</p>
+            </div>
+          </div>
+
+          <!-- Walkthrough -->
+          <div class="screen" id="r-walkthrough">
+            <div class="app-header"><h2>You're in, Rosa</h2></div>
+            <p class="muted">Signed in as <b style="color:var(--ink);">rosa@gmail.com</b>. Meet Agripals — here's what it does for you:</p>
+            <div style="margin-top:12px;">
+              <div class="list-row">
+                <span class="chip"><svg class="ic"><use href="#i-camera"/></svg></span>
+                <div><div class="t">Scan a menu or invoice</div><div class="d">Agripals extracts what you buy in seconds.</div></div>
+              </div>
+              <div class="list-row">
+                <span class="chip"><svg class="ic"><use href="#i-msg"/></svg></span>
+                <div><div class="t">Message Agripals — your assistant</div><div class="d">Tell it what you need, like texting a friend — it sources food straight from the farm, fresher and cheaper.</div></div>
+              </div>
+              <div class="list-row">
+                <span class="chip"><svg class="ic"><use href="#i-receipt"/></svg></span>
+                <div><div class="t">Orders, invoices &amp; credit — sorted</div><div class="d">Agripals tracks deliveries and keeps your billing and credit straight, all in one place.</div></div>
+              </div>
+            </div>
+            <button class="btn-primary" onclick="showScreen('chef','r-onboarding')">Next →</button>
+          </div>
+
+          <!-- Onboarding -->
+          <div class="screen" id="r-onboarding">
+            <div class="app-header"><h2>Just a few more things</h2></div>
+            <p class="muted">We've already got your name and email from Google — a few details so Agripals can set you up.</p>
+            <div class="field">
+              <label>Restaurant name</label>
+              <input type="text" value="Rosa's Kitchen">
+              <label>Restaurant address</label>
+              <input type="text" value="2130 Mission St, San Francisco, CA">
+              <label>Mobile number</label>
+              <input type="tel" value="(415) 555-0142">
+              <label>How should Agripals reach you?</label>
+            </div>
+            <div class="check-row on" onclick="this.classList.toggle('on')"><span class="box"><svg class="ic"><use href="#i-check"/></svg></span> Text message</div>
+            <div class="check-row" onclick="this.classList.toggle('on')"><span class="box"><svg class="ic"><use href="#i-check"/></svg></span> Just in the app</div>
+            <div class="field">
+              <label>A farm product you'd love us to source <span style="text-transform:none;letter-spacing:0;">(optional)</span></label>
+              <textarea rows="2" placeholder="e.g. Tomales Bay oysters, Meyer lemons, day-boat scallops…"></textarea>
+            </div>
+            <button class="btn-primary" onclick="showScreen('chef','r-messages','nav-r-messages')">Continue to Agripals →</button>
+          </div>
+
+          <!-- Messages -->
+          <div class="screen" id="r-messages" data-nav="true">
+            <div class="app-header"><h2>Messages</h2></div>
+            <div class="inbox-row" onclick="showScreen('chef','r-chat')">
+              <div class="meta"><span class="who">Agripals</span><span class="tag green">New</span></div>
+              <h3>Agripals</h3>
+              <p class="sub">Your farm-direct assistant</p>
+              <p class="prev">Take a photo of your menu and I'll show you what I can supply from our farm list.</p>
+            </div>
+          </div>
+
+          <!-- Chat -->
+          <div class="screen" id="r-chat">
+            <div class="app-header">
+              <button class="back" onclick="showScreen('chef','r-messages','nav-r-messages')"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+              <div><h2 style="font-size:18px;">Agripals</h2><div class="sub">Your farm-direct assistant · orders, invoices &amp; more</div></div>
+            </div>
+            <div class="chat-body" id="r-chat-body">
+              <div class="bubble"><span class="nm">Hi Rosa!</span> I'm Agripals. Think of me as your personal buyer — snap a photo of your menu and I'll spot what I can get you straight from the farm, fresher and cheaper than you're paying now.</div>
+            </div>
+            <button class="btn-text" style="margin:0 0 4px;" onclick="showScreen('chef','r-scan')">Scan my menu →</button>
+            <div class="chat-compose">
+              <div class="pill" id="r-compose">Message Agripals…</div>
+              <button class="send" onclick="advanceChat('chef')" aria-label="Send"><svg class="ic"><use href="#i-arrow-up"/></svg></button>
+            </div>
+          </div>
+
+          <!-- Scan -->
+          <div class="screen" id="r-scan">
+            <div class="app-header">
+              <button class="back" onclick="showScreen('chef','r-messages','nav-r-messages')"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+              <div><h2>Scan menu / invoice</h2><div class="sub">Point at a menu, price list, or supplier invoice</div></div>
+            </div>
+            <div class="eyebrow green">Menu match</div>
+            <p class="muted" style="margin-top:6px;">Scan your menu and I'll match it against our current farm list — what I can supply this week, fresher and cheaper, always traceable to the farm.</p>
+            <div class="scan-box">
+              <svg class="ic"><use href="#i-scan"/></svg>
+              <span class="muted">Position document inside the frame</span>
+            </div>
+            <button class="btn-primary" onclick="captureMenu()">Capture photo</button>
+            <p class="muted" style="text-align:center; margin-top:18px;"><b style="color:var(--green-700);">Chefs are saving 20%+</b> on supplier costs — in the 20 seconds it takes to scan.</p>
+            <div style="margin-top:10px;">
+              <div class="list-row"><span class="num-chip">1</span><div><div class="t">Scan</div><div class="d">We extract every item you already buy.</div></div></div>
+              <div class="list-row"><span class="num-chip">2</span><div><div class="t">Match</div><div class="d">We match it to our current farm menu.</div></div></div>
+              <div class="list-row"><span class="num-chip">3</span><div><div class="t">Order</div><div class="d">Confirm and we place your order straight with the farm.</div></div></div>
+            </div>
+          </div>
+
+          <!-- Results -->
+          <div class="screen" id="r-results">
+            <div class="app-header">
+              <button class="back" onclick="showScreen('chef','r-scan')"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+              <div><h2>Here's what we can supply</h2><div class="sub">From our current farm menu, this week</div></div>
+            </div>
+            <div class="list-row"><span class="chip"><svg class="ic"><use href="#i-check"/></svg></span><div><div class="t">Royal Miyagi Oysters — Grade A</div><div class="d">~6 dozen / week · farm-direct $0.70 each</div></div></div>
+            <div class="list-row"><span class="chip"><svg class="ic"><use href="#i-check"/></svg></span><div><div class="t">Wild-Caught Prawns — 16/20ct</div><div class="d">~15 lbs / week · farm-direct $6.95/lb</div></div></div>
+            <div class="list-row"><span class="chip"><svg class="ic"><use href="#i-check"/></svg></span><div><div class="t">Yellowfin Tuna — Sushi Grade</div><div class="d">~10 lbs / week · farm-direct $16.00/lb</div></div></div>
+            <div class="list-row"><span class="chip"><svg class="ic"><use href="#i-check"/></svg></span><div><div class="t">Meyer Lemons</div><div class="d">~8 kg / week · farm-direct $5.20/kg</div></div></div>
+            <p class="muted" style="margin-top:16px;">These are all on our current farm list — confirm and we'll place your order straight with the farms.</p>
+            <button class="btn-primary" onclick="showScreen('chef','r-confirmed')">Place order →</button>
+          </div>
+
+          <!-- Order confirmed -->
+          <div class="screen" id="r-confirmed">
+            <div class="app-header">
+              <button class="back" onclick="showScreen('chef','r-orders','nav-r-orders')"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+              <h2>Order confirmed</h2>
+            </div>
+            <div class="block">
+              <h3>Pacific Bay Shrimp Co.</h3>
+              <p class="muted" style="margin-top:4px;">15 lbs Wild-Caught Prawns · $6.95/lb · Tue &amp; Fri delivery</p>
+            </div>
+            <div class="track" style="margin-top:20px;">
+              <div class="tk done"><span class="dot"><svg class="ic"><use href="#i-check"/></svg></span><div><div class="t">Confirmed</div></div></div>
+              <div class="tk done"><span class="dot"><svg class="ic"><use href="#i-check"/></svg></span><div><div class="t">Picked up</div></div></div>
+              <div class="tk now"><span class="dot"></span><div><div class="t">In transit<span class="now-tag">Now</span></div></div></div>
+              <div class="tk todo"><span class="dot"></span><div><div class="t">Delivered</div></div></div>
+            </div>
+            <div class="block">
+              <h3>Savings so far</h3>
+              <p class="muted" style="margin-top:4px;">You're saving an estimated <b style="color:var(--green-700);">$25/week</b> on prawns alone.</p>
+            </div>
+          </div>
+
+          <!-- Orders -->
+          <div class="screen" id="r-orders" data-nav="true">
+            <div class="app-header"><h2>My orders</h2></div>
+            <div class="seg">
+              <button class="active" onclick="segTab(this,'r-orders-current','r-orders-past')">Current</button>
+              <button onclick="segTab(this,'r-orders-past','r-orders-current')">Past</button>
+            </div>
+            <div id="r-orders-current">
+              <div class="block" style="cursor:pointer;" onclick="showScreen('chef','r-track')">
+                <div class="row-between"><h3>Tomales Bay Miyagi Oysters</h3><span class="tag green">In transit</span></div>
+                <p class="muted" style="margin-top:4px;">Steve's Oyster Farm · 6 dozen · $18.50/dz</p>
+                <p style="margin-top:8px; font-size:13px; font-weight:700; color:var(--green-700);">On its way · ETA today 8:30am — tap to track</p>
+              </div>
+            </div>
+            <div id="r-orders-past" style="display:none;">
+              <div class="block" style="cursor:pointer;" onclick="showScreen('chef','r-invoice')">
+                <div class="row-between"><h3>Meyer Lemons, 8 kg</h3><span class="tag gray">Delivered</span></div>
+                <p class="muted" style="margin-top:4px;">Sunny Grove Farms · Jun 28 · $42.00 · tap to view invoice</p>
+              </div>
+              <div class="block" style="cursor:pointer;" onclick="showScreen('chef','r-invoice')">
+                <div class="row-between"><h3>Wild-Caught Prawns, 15 lbs</h3><span class="tag gray">Delivered</span></div>
+                <p class="muted" style="margin-top:4px;">Pacific Bay Shrimp Co. · Jun 21 · $104.25 · tap to view invoice</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Track order -->
+          <div class="screen" id="r-track">
+            <div class="app-header">
+              <button class="back" onclick="showScreen('chef','r-orders','nav-r-orders')"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+              <div><h2>Track order</h2><div class="sub">Tomales Bay Miyagi Oysters</div></div>
+            </div>
+            <div class="block" style="padding-top:4px;">
+              <div class="row-between"><h3>Steve's Oyster Farm</h3><span class="muted" style="font-size:13px;">★ 4.9</span></div>
+              <p class="muted" style="margin-top:4px;">6 dozen Grade A Miyagi · $18.50/dz · $111.00 total</p>
+            </div>
+            <div class="track" style="margin-top:22px;">
+              <div class="tk done"><span class="dot"><svg class="ic"><use href="#i-check"/></svg></span><div><div class="t">Order confirmed</div><div class="s">Tue · 9:12 AM</div></div></div>
+              <div class="tk done"><span class="dot"><svg class="ic"><use href="#i-check"/></svg></span><div><div class="t">Packed at the farm</div><div class="s">Wed · 6:40 AM · graded &amp; boxed cold</div></div></div>
+              <div class="tk done"><span class="dot"><svg class="ic"><use href="#i-check"/></svg></span><div><div class="t">Picked up by driver</div><div class="s">Thu · 5:15 AM · Marco · refrigerated van</div></div></div>
+              <div class="tk now"><span class="dot"></span><div><div class="t">In transit<span class="now-tag">Now</span></div><div class="s">Last located Novato, CA · 22 mi away</div></div></div>
+              <div class="tk todo"><span class="dot"></span><div><div class="t">Out for delivery</div><div class="s">Expected ~8:15 AM</div></div></div>
+              <div class="tk todo"><span class="dot"></span><div><div class="t">Delivered</div><div class="s">ETA 8:30 AM</div></div></div>
+            </div>
+            <p class="muted" style="text-align:center;">Agripals is keeping an eye on this delivery for you.</p>
+          </div>
+
+          <!-- Invoices -->
+          <div class="screen" id="r-invoices" data-nav="true">
+            <div class="app-header"><h2>Invoices</h2></div>
+            <div class="credit">
+              <div class="row-between">
+                <span class="eyebrow green">On track · credit healthy</span>
+              </div>
+              <div class="bal">$340<span>currently owing</span></div>
+              <div class="spark">
+                <div style="height:40%;"></div><div style="height:52%;"></div><div style="height:62%;"></div><div style="height:72%;"></div><div style="height:82%;"></div><div class="hot" style="height:100%;"></div>
+              </div>
+              <div class="spark-lab"><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span></div>
+              <div class="meta">
+                <div>Available credit<b>$4,660 of $5,000</b></div>
+                <div style="text-align:right; cursor:pointer;" onclick="showScreen('chef','r-invoice')">Next payment<b>$340 · in 12 days ›</b></div>
+              </div>
+              <p class="muted" style="font-size:12px; margin-top:14px;">Latest invoice emailed to rosa@gmail.com</p>
+            </div>
+            <div class="seg" style="margin-top:18px;">
+              <button class="active" onclick="segTab(this,'r-inv-current','r-inv-past')">Current</button>
+              <button onclick="segTab(this,'r-inv-past','r-inv-current')">Past</button>
+            </div>
+            <div id="r-inv-current">
+              <div class="block" style="cursor:pointer;" onclick="showScreen('chef','r-invoice')">
+                <div class="row-between"><h3>#AG-20260705-0188</h3><span class="tag amber">Due Jul 21</span></div>
+                <p class="muted" style="margin-top:4px;">Tomales Bay Oysters · via Steve's Oyster Farm · $340.00</p>
+              </div>
+            </div>
+            <div id="r-inv-past" style="display:none;">
+              <div class="block" style="cursor:pointer;" onclick="showScreen('chef','r-invoice')">
+                <div class="row-between"><h3>#AG-20260628-0142</h3><span class="tag green">Paid</span></div>
+                <p class="muted" style="margin-top:4px;">Meyer Lemons · via Sunny Grove Farms · $42.00</p>
+              </div>
+              <div class="block" style="cursor:pointer;" onclick="showScreen('chef','r-invoice')">
+                <div class="row-between"><h3>#AG-20260621-0119</h3><span class="tag green">Paid</span></div>
+                <p class="muted" style="margin-top:4px;">Wild Prawns · via Pacific Bay · $104.25</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Invoice -->
+          <div class="screen" id="r-invoice">
+            <div class="app-header">
+              <button class="back" onclick="showScreen('chef','r-invoices','nav-r-invoices')"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+              <div><h2>Invoice</h2><div class="sub">#AG-20260705-0188</div></div>
+            </div>
+            <div class="block" style="padding-top:4px;">
+              <div class="row-between"><h3>From Agripals</h3><span class="tag amber">Due Jul 21</span></div>
+              <p class="muted" style="margin-top:4px;">Billed to Rosa's Kitchen, Mission St, SF · issued Jul 5, 2026</p>
+            </div>
+            <div class="block">
+              <div class="row-between muted"><span>Tomales Bay Oysters · via Steve's Oyster Farm</span><span style="color:var(--ink); font-weight:600;">$320.00</span></div>
+              <div class="row-between muted" style="margin-top:10px;"><span>Delivery · 4 drops</span><span style="color:var(--ink); font-weight:600;">$20.00</span></div>
+              <div style="height:1px; background:var(--s200); margin:14px 0;"></div>
+              <div class="row-between"><b>Total due</b><b style="color:var(--green-700);">$340.00</b></div>
+            </div>
+            <p class="muted" style="font-size:12px; margin-top:12px;">Agripals paid Steve's Oyster Farm on delivery. You pay Agripals on 14-day terms — no cash-flow crunch for you, no credit risk for the farm.</p>
+            <button class="btn-primary">Pay $340.00 now</button>
+            <button class="btn-text">Download PDF invoice</button>
+          </div>
+
+          <!-- Profile -->
+          <div class="screen" id="r-profile" data-nav="true">
+            <div class="app-header" style="justify-content:space-between;">
+              <h2>Rosa's Kitchen</h2>
+              <button class="back" onclick="showScreen('chef','r-settings')" aria-label="Settings"><svg class="ic"><use href="#i-cog"/></svg></button>
+            </div>
+            <p class="muted">Coastal Californian · Mission District, SF · ~45 covers · member since Jul 2026</p>
+            <div class="credit" style="margin-top:8px; border-bottom:none; padding-bottom:0;">
+              <span class="eyebrow green">Saved with Agripals so far</span>
+              <div class="bal" style="color:var(--green-700);">$1,260</div>
+              <p class="muted" style="margin-top:2px;">+$210 this month · going farm-direct on 6 lines</p>
+            </div>
+            <div class="stat2" style="margin-top:20px; border-top:1px solid var(--s100); padding-top:20px;">
+              <div><div class="n green">24</div><div class="l">Farm-direct orders</div></div>
+              <div><div class="n green">6</div><div class="l">Local farms you buy from</div></div>
+              <div style="margin-top:16px;"><div class="n">1.2<span style="font-size:20px; font-weight:700; color:var(--s500);"> days</span></div><div class="l">Avg harvest → your door</div></div>
+              <div style="margin-top:16px;"><div class="n">~4<span style="font-size:20px; font-weight:700; color:var(--s500);"> days</span></div><div class="l">Fresher than wholesale</div></div>
+            </div>
+            <div class="eyebrow" style="margin:20px 0 4px;">Your top farm-direct buys</div>
+            <div class="block" style="padding-top:8px;">
+              <div class="row-between" style="padding:6px 0;"><span style="font-size:14px; font-weight:600;">Tomales Bay Oysters</span><span class="muted">Steve's Oyster Farm</span></div>
+              <div class="row-between" style="padding:6px 0;"><span style="font-size:14px; font-weight:600;">Meyer Lemons</span><span class="muted">Sunny Grove Farms</span></div>
+              <div class="row-between" style="padding:6px 0;"><span style="font-size:14px; font-weight:600;">Wild Prawns</span><span class="muted">Pacific Bay</span></div>
+            </div>
+            <button class="btn-text">Invite another restaurant</button>
+          </div>
+
+          <!-- Settings -->
+          <div class="screen" id="r-settings">
+            <div class="app-header">
+              <button class="back" onclick="showScreen('chef','r-profile','nav-r-profile')"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+              <h2>Settings</h2>
+            </div>
+            <div class="set-row"><svg class="ic"><use href="#i-bell"/></svg>Notifications<span class="v">On ›</span></div>
+            <div class="set-row"><svg class="ic"><use href="#i-pin"/></svg>Delivery address<span class="v">2130 Mission St ›</span></div>
+            <div class="set-row"><svg class="ic"><use href="#i-card"/></svg>Payment methods<span class="v">•••• 4242 ›</span></div>
+            <div class="set-row"><svg class="ic"><use href="#i-msg"/></svg>How Agripals reaches you<span class="v">Text ›</span></div>
+            <div class="set-row"><svg class="ic"><use href="#i-help"/></svg>Help &amp; support<span class="v">›</span></div>
+            <div class="set-row" style="color:#b91c1c;"><svg class="ic" style="stroke:#b91c1c;"><use href="#i-out"/></svg>Sign out<span class="v">›</span></div>
+          </div>
+
+        </div>
+        <div class="bottom-nav" id="chef-nav">
+          <button class="active" id="nav-r-messages" onclick="showScreen('chef','r-messages','nav-r-messages')"><svg class="ic"><use href="#i-msg"/></svg>Messages</button>
+          <button id="nav-r-orders" onclick="showScreen('chef','r-orders','nav-r-orders')"><svg class="ic"><use href="#i-cart"/></svg>Orders</button>
+          <button id="nav-r-invoices" onclick="showScreen('chef','r-invoices','nav-r-invoices')"><svg class="ic"><use href="#i-receipt"/></svg>Invoices</button>
+          <button id="nav-r-profile" onclick="showScreen('chef','r-profile','nav-r-profile')"><svg class="ic"><use href="#i-user"/></svg>Profile</button>
+        </div>
+        <div class="overlay" id="chef-overlay">
+          <div class="spinner"></div>
+          <div class="t" id="chef-overlay-t">Working…</div>
+          <div class="s" id="chef-overlay-s"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ WHOLESALE / FARMER APP ============ -->
+  <div class="view" id="view-wholesale">
+    <div class="stage">
+      <div class="phone">
+        <div class="statusbar"><span>9:41</span><span>Agripals · Wholesale</span></div>
+        <div class="screens">
+
+          <!-- Welcome -->
+          <div class="screen active" id="w-welcome">
+            <div class="splash">
+              <span class="chip"><svg class="ic"><use href="#i-truck"/></svg></span>
+              <h2>Wholesaler / Farmer App</h2>
+              <p class="muted">See incoming orders near you, confirm in one tap, and manage deliveries.</p>
+            </div>
+            <button class="btn-primary" style="margin-top:40px;" onclick="showScreen('wholesale','w-messages','nav-w-messages')">Get Started →</button>
+          </div>
+
+          <!-- Messages -->
+          <div class="screen" id="w-messages" data-nav="true">
+            <div class="app-header"><h2>Messages</h2></div>
+            <div class="inbox-row" onclick="showScreen('wholesale','w-chat')">
+              <div class="meta"><span class="who">Agripals · orders</span><span class="tag green">New</span></div>
+              <h3>New message from Agripals</h3>
+              <p class="sub">Order request · Rosa's Kitchen</p>
+              <p class="prev">Agripals is messaging on behalf of a customer with an order for you.</p>
+            </div>
+            <div class="inbox-row" onclick="showScreen('wholesale','w-customers','nav-w-customers')">
+              <div class="meta"><span class="who">Harbor Bistro</span></div>
+              <h3>Oysters, mixed grade</h3>
+              <p class="sub">Active customer · 4 dozen/wk</p>
+              <p class="prev">Confirmed and delivering Wednesdays.</p>
+            </div>
+          </div>
+
+          <!-- Chat -->
+          <div class="screen" id="w-chat">
+            <div class="app-header">
+              <button class="back" onclick="showScreen('wholesale','w-messages','nav-w-messages')"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+              <div><h2 style="font-size:18px;">Agripals</h2><div class="sub">Messaging on behalf of a customer</div></div>
+            </div>
+            <div class="chat-body" id="w-chat-body">
+              <div class="bubble"><span class="nm">Hi Steve.</span> Rosa's Kitchen (Mission St, SF) wants 6 dozen Grade A Tomales Bay Miyagi oysters per week, delivered Tue &amp; Thu. Farm-direct price on our list is $0.70 each. Can you supply?</div>
+            </div>
+            <button class="btn-text" style="margin:0 0 4px;" onclick="showScreen('wholesale','w-rfq-detail')">View order request →</button>
+            <div class="chat-compose">
+              <div class="pill" id="w-compose">Message Agripals…</div>
+              <button class="send" onclick="advanceChat('wholesale')" aria-label="Send"><svg class="ic"><use href="#i-arrow-up"/></svg></button>
+            </div>
+          </div>
+
+          <!-- Orders near you -->
+          <div class="screen" id="w-orders" data-nav="true">
+            <div class="app-header"><h2>Orders near you</h2></div>
+            <div class="stat2">
+              <div><div class="n green">8</div><div class="l">Open orders nearby</div></div>
+              <div><div class="n green">8</div><div class="l">Active customers</div></div>
+            </div>
+            <div class="row-between" style="margin-top:8px;"><span class="eyebrow">New orders for you</span><span class="tag amber">6 new</span></div>
+            <div class="list-row tap" onclick="showScreen('wholesale','w-rfq-detail')">
+              <span class="chip"><svg class="ic"><use href="#i-anchor"/></svg></span>
+              <div><div class="t">Tomales Bay Miyagi Oysters, Grade A</div><div class="d">Rosa's Kitchen · 6 dozen/wk</div></div>
+              <span class="chev"><svg class="ic"><use href="#i-chev-r"/></svg></span>
+            </div>
+            <div class="list-row tap">
+              <span class="chip"><svg class="ic"><use href="#i-fish"/></svg></span>
+              <div><div class="t">Wild-Caught Prawns, 16/20ct</div><div class="d">Rosa's Kitchen · 15 lbs/wk · currently $8.60/lb</div></div>
+              <span class="chev"><svg class="ic"><use href="#i-chev-r"/></svg></span>
+            </div>
+            <div class="list-row tap">
+              <span class="chip"><svg class="ic"><use href="#i-fish"/></svg></span>
+              <div><div class="t">Yellowfin Tuna, Sushi Grade</div><div class="d">Rosa's Kitchen · 10 lbs/wk · currently $19.50/lb</div></div>
+              <span class="chev"><svg class="ic"><use href="#i-chev-r"/></svg></span>
+            </div>
+            <div class="list-row tap">
+              <span class="chip"><svg class="ic"><use href="#i-fish"/></svg></span>
+              <div><div class="t">Atlantic Salmon Fillet, Skin-On</div><div class="d">Rosa's Kitchen · 12 lbs/wk · currently $10.75/lb</div></div>
+              <span class="chev"><svg class="ic"><use href="#i-chev-r"/></svg></span>
+            </div>
+            <div class="list-row tap" onclick="showScreen('wholesale','w-rfq-detail')">
+              <span class="chip"><svg class="ic"><use href="#i-anchor"/></svg></span>
+              <div><div class="t">Oysters, mixed grade</div><div class="d">Harbor Bistro · 4 dozen/wk</div></div>
+              <span class="chev"><svg class="ic"><use href="#i-chev-r"/></svg></span>
+            </div>
+            <div class="list-row tap">
+              <span class="chip"><svg class="ic"><use href="#i-anchor"/></svg></span>
+              <div><div class="t">Oysters, premium</div><div class="d">The Wharf Café · 3 dozen/wk</div></div>
+              <span class="chev"><svg class="ic"><use href="#i-chev-r"/></svg></span>
+            </div>
+          </div>
+
+          <!-- Order request detail -->
+          <div class="screen" id="w-rfq-detail">
+            <div class="app-header">
+              <button class="back" onclick="showScreen('wholesale','w-orders','nav-w-orders')"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+              <div><h2>Order request</h2><div class="sub">New order · posted 3h ago</div></div>
+            </div>
+            <div class="block" style="padding-top:4px;">
+              <h3>Rosa's Kitchen — Mission St, SF</h3>
+              <p class="muted" style="margin-top:4px;">Tomales Bay Miyagi Oysters, Grade A</p>
+            </div>
+            <div class="block">
+              <div class="row-between muted"><span>Quantity</span><span style="color:var(--ink); font-weight:600;">6 dozen / week</span></div>
+              <div class="row-between muted" style="margin-top:10px;"><span>Delivery days needed</span><span style="color:var(--ink); font-weight:600;">Tue, Thu</span></div>
+              <div class="row-between muted" style="margin-top:10px;"><span>Farm-direct price</span><span style="color:var(--ink); font-weight:600;">$0.70 each</span></div>
+            </div>
+            <button class="btn-primary" onclick="showScreen('wholesale','w-quote')">Confirm &amp; price</button>
+          </div>
+
+          <!-- Confirm order -->
+          <div class="screen" id="w-quote">
+            <div class="app-header">
+              <button class="back" onclick="showScreen('wholesale','w-rfq-detail')"><svg class="ic"><use href="#i-arrow-l"/></svg></button>
+              <h2>Confirm order</h2>
+            </div>
+            <div class="field">
+              <label>Price per dozen (USD)</label>
+              <input type="text" value="$18.50">
+              <label>Delivery days available</label>
+              <select><option>Tue &amp; Thu</option><option>Mon, Wed, Fri</option><option>Daily</option></select>
+              <label>Notes for the restaurant</label>
+              <textarea rows="3">Fresh harvest twice weekly, cold-chain delivery included.</textarea>
+            </div>
+            <button class="btn-primary" onclick="showScreen('wholesale','w-sent')">Send to Agripals →</button>
+          </div>
+
+          <!-- Sent -->
+          <div class="screen" id="w-sent">
+            <div class="splash">
+              <span class="chip"><svg class="ic"><use href="#i-check"/></svg></span>
+              <h2>Order confirmed for Rosa's Kitchen</h2>
+              <p class="muted">Agripals will book the delivery and notify you. Keep an eye on your Customers tab.</p>
+            </div>
+            <button class="btn-primary" style="margin-top:40px;" onclick="showScreen('wholesale','w-orders','nav-w-orders')">Back to orders</button>
+          </div>
+
+          <!-- Customers -->
+          <div class="screen" id="w-customers" data-nav="true">
+            <div class="app-header"><h2>My customers</h2></div>
+            <div class="block" style="padding-top:4px;">
+              <div class="row-between"><h3>Rosa's Kitchen</h3><span class="tag green">Active</span></div>
+              <p class="muted" style="margin-top:4px;">6 dozen oysters/wk · Tue &amp; Thu delivery</p>
+            </div>
+            <div class="block">
+              <div class="row-between"><h3>Harbor Bistro</h3><span class="tag green">Active</span></div>
+              <p class="muted" style="margin-top:4px;">4 dozen oysters/wk · Wed delivery</p>
+            </div>
+            <div class="block">
+              <div class="row-between"><h3>The Wharf Café</h3><span class="tag amber">Quote pending</span></div>
+              <p class="muted" style="margin-top:4px;">Awaiting restaurant decision</p>
+            </div>
+            <div class="block">
+              <span class="eyebrow green">Farm drop opportunity</span>
+              <p class="muted" style="margin-top:6px;">3 of your customers are within 1 mile of each other. Bundle them into a single delivery run to cut your logistics cost.</p>
+              <button class="btn-text" style="text-align:left; padding-left:0;">View farm drop →</button>
+            </div>
+          </div>
+
+          <!-- Stock -->
+          <div class="screen" id="w-stock" data-nav="true">
+            <div class="app-header"><h2>Stock &amp; availability</h2></div>
+            <div class="toggle-row"><span>Tomales Bay Miyagi Oysters, Grade A</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><span>Tomales Bay Miyagi Oysters, Premium</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><span>Pacific Oysters</span><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><span>Mixed Grade (bulk)</span><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+            <p class="muted" style="margin-top:18px;">Prefer the phone? Call your Agripals line and tell the assistant what's in stock — it updates this automatically.</p>
+          </div>
+
+        </div>
+        <div class="bottom-nav" id="wholesale-nav">
+          <button class="active" id="nav-w-messages" onclick="showScreen('wholesale','w-messages','nav-w-messages')"><svg class="ic"><use href="#i-msg"/></svg>Messages</button>
+          <button id="nav-w-orders" onclick="showScreen('wholesale','w-orders','nav-w-orders')"><svg class="ic"><use href="#i-cart"/></svg>Orders</button>
+          <button id="nav-w-customers" onclick="showScreen('wholesale','w-customers','nav-w-customers')"><svg class="ic"><use href="#i-user"/></svg>Customers</button>
+          <button id="nav-w-stock" onclick="showScreen('wholesale','w-stock','nav-w-stock')"><svg class="ic"><use href="#i-box"/></svg>Stock</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ADMIN ============ -->
+  <div class="view" id="view-admin">
+    <div class="admin">
+      <div class="admin-head">
+        <div class="eyebrow">Agripals ops</div>
+        <h1>Dashboard</h1>
+      </div>
+      <div class="admin-tabs">
+        <button class="active" id="atab-overview" onclick="showAdmin('overview')">Overview</button>
+        <button id="atab-orders" onclick="showAdmin('orders')">Orders</button>
+        <button id="atab-wholesalers" onclick="showAdmin('wholesalers')">Wholesalers</button>
+        <button id="atab-restaurants" onclick="showAdmin('restaurants')">Restaurants</button>
+        <button id="atab-farmdrops" onclick="showAdmin('farmdrops')">Farm Drops</button>
+        <button id="atab-support" onclick="showAdmin('support')">Support</button>
+      </div>
+
+      <div class="admin-panel active" id="apanel-overview">
+        <div class="metric-grid">
+          <div class="metric"><div class="n">14</div><div class="l">Restaurants onboarded</div><div class="d">▲ +6 this week</div></div>
+          <div class="metric"><div class="n">9</div><div class="l">Wholesalers / farmers</div><div class="d">▲ +2 this week</div></div>
+          <div class="metric"><div class="n">37</div><div class="l">Orders placed</div><div class="d">▲ +15 this week</div></div>
+          <div class="metric"><div class="n">21%</div><div class="l">Avg. cost savings</div><div class="d">▲ +3pt vs last week</div></div>
+          <div class="metric"><div class="n">10</div><div class="l">Deliveries completed</div><div class="d">Oyster MVP milestone hit</div></div>
+          <div class="metric"><div class="n">2</div><div class="l">Active farm drops</div><div class="d">1 forming</div></div>
+        </div>
+        <div class="two-col">
+          <div>
+            <div class="panel-h">Orders per week</div>
+            <div class="bars">
+              <div class="bar"><div class="fill" style="height:30%;"></div><span class="lab">Wk1</span></div>
+              <div class="bar"><div class="fill" style="height:45%;"></div><span class="lab">Wk2</span></div>
+              <div class="bar"><div class="fill" style="height:60%;"></div><span class="lab">Wk3</span></div>
+              <div class="bar"><div class="fill" style="height:100%;"></div><span class="lab">Wk4</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="panel-h">Category mix</div>
+            <div class="mixbar">
+              <div style="width:40%; background:var(--green-700);"></div>
+              <div style="width:22%; background:var(--green-600);"></div>
+              <div style="width:20%; background:var(--green-300);"></div>
+              <div style="width:18%; background:var(--s200);"></div>
+            </div>
+            <div class="mixleg">
+              <span><i style="background:var(--green-700);"></i>Oysters 40%</span>
+              <span><i style="background:var(--green-600);"></i>Prawns 22%</span>
+              <span><i style="background:var(--green-300);"></i>Tuna 20%</span>
+              <span><i style="background:var(--s200);"></i>Salmon 18%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="apanel-orders">
+        <div class="panel-h">Recent order activity</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Restaurant</th><th>Item</th><th>Status</th><th>Price</th><th>Savings</th></tr>
+            <tr><td>Rosa's Kitchen</td><td>Tomales Bay Miyagi Oysters</td><td><span class="tag green">Confirmed</span></td><td>$18.50/dz</td><td>20%</td></tr>
+            <tr><td>Rosa's Kitchen</td><td>Wild-Caught Prawns</td><td><span class="tag amber">Reviewing</span></td><td>$6.95/lb</td><td>19%</td></tr>
+            <tr><td>Rosa's Kitchen</td><td>Yellowfin Tuna</td><td><span class="tag gray">Awaiting quotes</span></td><td>—</td><td>—</td></tr>
+            <tr><td>Rosa's Kitchen</td><td>Atlantic Salmon Fillet</td><td><span class="tag gray">Awaiting quotes</span></td><td>—</td><td>—</td></tr>
+            <tr><td>Harbor Bistro</td><td>Oysters, mixed</td><td><span class="tag green">Confirmed</span></td><td>$16.90/dz</td><td>19%</td></tr>
+            <tr><td>The Wharf Café</td><td>Oysters, premium</td><td><span class="tag gray">Awaiting quotes</span></td><td>—</td><td>—</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="apanel-wholesalers">
+        <div class="panel-h">Wholesaler / farmer network</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Name</th><th>Type</th><th>Products</th><th>Active customers</th><th>Rating</th></tr>
+            <tr><td>Steve's Oyster Farm</td><td>Farmer</td><td>Tomales Bay Miyagi Oysters</td><td>3</td><td>★ 4.9</td></tr>
+            <tr><td>Pacific Bay Shrimp Co.</td><td>Small wholesaler</td><td>Wild-caught prawns</td><td>2</td><td>★ 4.8</td></tr>
+            <tr><td>Golden State Wholesale</td><td>Large wholesaler</td><td>Tuna, salmon, general seafood</td><td>1</td><td>★ 4.5</td></tr>
+            <tr><td>Pacific Coast Logistics</td><td>Transport</td><td>Cold-chain delivery</td><td>4 routes</td><td>★ 4.7</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="apanel-restaurants">
+        <div class="panel-h">Restaurants onboarded</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Restaurant</th><th>Neighborhood</th><th>Categories</th><th>Est. monthly savings</th></tr>
+            <tr><td>Rosa's Kitchen</td><td>Mission St, SF</td><td>Oysters, prawns, tuna, salmon</td><td>$340</td></tr>
+            <tr><td>Harbor Bistro</td><td>Embarcadero, SF</td><td>Oysters</td><td>$210</td></tr>
+            <tr><td>The Wharf Café</td><td>Fisherman's Wharf</td><td>Oysters (pending)</td><td>—</td></tr>
+            <tr><td>Green Fork Café</td><td>SoMa, SF</td><td>Produce</td><td>—</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="apanel-farmdrops">
+        <div class="panel-h">Farm drop clusters</div>
+        <div class="block" style="max-width:40rem;">
+          <div class="row-between"><h3>SoMa Cluster</h3><span class="tag green">Active</span></div>
+          <p class="muted" style="margin-top:4px;">3 restaurants · shared weekly produce run from Green Valley Farms · next drop Fri Jul 10</p>
+        </div>
+        <div class="block" style="max-width:40rem;">
+          <div class="row-between"><h3>Fisherman's Wharf Cluster</h3><span class="tag amber">Forming</span></div>
+          <p class="muted" style="margin-top:4px;">2 of 4 target restaurants signed on · needs 1 more to make the route economical</p>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="apanel-support">
+        <div class="block" style="max-width:40rem; padding-top:0;">
+          <div class="row-between"><h3>Live support</h3><span class="tag green">WhatsApp relay on</span></div>
+          <p class="muted" style="margin-top:4px;">Every support message is relayed to the team on WhatsApp — reply from your phone and it lands back in the customer's chat.</p>
+        </div>
+        <div class="panel-h" style="margin-top:28px;">Open support requests</div>
+        <div class="table-wrap">
+          <table>
+            <tr><th>From</th><th>App</th><th>Message</th><th>Status</th></tr>
+            <tr><td>Rosa's Kitchen</td><td>Chef</td><td>Can I move my oyster delivery to Fridays?</td><td><span class="tag amber">Awaiting reply</span></td></tr>
+            <tr><td>Steve's Oyster Farm</td><td>Farmer</td><td>How do I update my stock list?</td><td><span class="tag green">Replied</span></td></tr>
+            <tr><td>Harbor Bistro</td><td>Chef</td><td>Invoice #AG-0142 — can I pay by card?</td><td><span class="tag gray">Closed</span></td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- /VIEWS -->
+
+</div>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* ---------- top-level view switcher ---------- */
+function showApp(name){
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  document.querySelectorAll('.switcher nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ---------- phone screen navigation ---------- */
+function showScreen(app, id, navId){
+  const view = document.getElementById('view-' + app);
+  view.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  view.querySelector('#' + id).classList.add('active');
+  const nav = document.getElementById(app + '-nav');
+  if (nav){
+    nav.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    if (navId) nav.querySelector('#' + navId).classList.add('active');
+  }
+}
+
+/* ---------- segmented tabs ---------- */
+function segTab(btn, showId, hideId){
+  btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(showId).style.display = '';
+  document.getElementById(hideId).style.display = 'none';
+}
+
+/* ---------- landing deal slider ---------- */
+let dealIndex = 0, dealTimer = null;
+function renderDeal(){
+  document.querySelectorAll('#deal-stage .deal').forEach((d, i) => d.classList.toggle('on', i === dealIndex));
+  document.querySelectorAll('#deal-dots button').forEach((b, i) => b.classList.toggle('on', i === dealIndex));
+}
+function setDeal(i){ dealIndex = i; renderDeal(); startDealTimer(); }
+function startDealTimer(){
+  clearInterval(dealTimer);
+  dealTimer = setInterval(() => { dealIndex = (dealIndex + 1) % 4; renderDeal(); }, 5000);
+}
+startDealTimer();
+
+/* ---------- chef: google sign-in + scan simulation ---------- */
+function overlay(title, sub, then){
+  const o = document.getElementById('chef-overlay');
+  document.getElementById('chef-overlay-t').textContent = title;
+  document.getElementById('chef-overlay-s').textContent = sub || '';
+  o.classList.add('show');
+  setTimeout(() => { o.classList.remove('show'); then(); }, 1400);
+}
+function googleSignIn(){
+  overlay('Connecting to Google…', '', () => showScreen('chef','r-walkthrough'));
+}
+function captureMenu(){
+  overlay('Reading your document…', 'Extracting products, quantities & frequency', () => showScreen('chef','r-results'));
+}
+
+/* ---------- scripted chats ---------- */
+const chatScripts = {
+  chef: [
+    { me: "I need 6 dozen oysters a week, Tue and Thu." },
+    { bot: "Done — Steve's Oyster Farm can do 6 dozen Grade A Tomales Bay Miyagi at <b>$0.70 each</b>, delivered Tue & Thu. That's about 20% under what you're paying now. Shall I confirm?" },
+    { me: "Confirm it." },
+    { bot: "Confirmed. First delivery Tuesday 8:30am. I'll track it and keep your invoice on 14-day terms — check the Orders tab any time." }
+  ],
+  wholesale: [
+    { me: "Yes — I can do 6 dozen Grade A, Tue and Thu." },
+    { bot: "Great. I've confirmed the order with Rosa's Kitchen at $18.50/dz. I'll book the cold-chain pickup and pay you on delivery — details in your Customers tab." }
+  ]
+};
+const chatStep = { chef: 0, wholesale: 0 };
+function advanceChat(app){
+  const script = chatScripts[app];
+  const body = document.getElementById(app === 'chef' ? 'r-chat-body' : 'w-chat-body');
+  if (chatStep[app] >= script.length) return;
+  const step = script[chatStep[app]++];
+  const div = document.createElement('div');
+  div.className = 'bubble' + (step.me ? ' me' : '');
+  div.innerHTML = step.me || step.bot;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+  if (chatStep[app] < script.length && script[chatStep[app]].bot){
+    setTimeout(() => advanceChat(app), 700);
+  }
+}
+
+/* ---------- admin tabs ---------- */
+function showAdmin(name){
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('apanel-' + name).classList.add('active');
+  document.querySelectorAll('.admin-tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById('atab-' + name).classList.add('active');
+}
+</script>
+</body>
+</html>
