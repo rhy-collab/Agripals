@@ -133,6 +133,72 @@
     display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   footer a{color:#64738b;text-decoration:none;font-weight:700}
 
+  /* ---------- product mockups ---------- */
+  .panel{border:1px solid var(--line);border-radius:20px;background:#fff;overflow:hidden;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+  .p-head{display:flex;align-items:center;gap:9px;padding:15px 20px;border-bottom:1px solid var(--line);
+    font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .p-head i{width:15px;height:15px;color:var(--green)}
+  .p-head .tag{margin-left:auto;letter-spacing:0;text-transform:none;font-size:12px;color:var(--green)}
+  .p-body{padding:clamp(18px,2vw,26px)}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+  .split>div{background:#fff;padding:clamp(18px,2vw,24px)}
+  .lbl{font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+  .big-num{font-size:clamp(30px,3.4vw,44px);font-weight:800;letter-spacing:-.05em;line-height:1;margin:0;display:flex;align-items:baseline;gap:10px}
+  .big-num em{font-style:normal;font-size:14px;font-weight:800}
+  .big-num em.up{color:var(--green)} .big-num em.down{color:#b4451f}
+  .bars{display:flex;align-items:flex-end;gap:6px;height:64px;margin-top:16px}
+  .bars b{flex:1;background:#e6ede9;border-radius:3px}
+  .bars b.on{background:var(--green)}
+  .owe{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid var(--line);font-size:14.5px}
+  .owe:first-of-type{border-top:0;padding-top:4px}
+  .owe .who{font-weight:700}
+  .owe .amt{margin-left:auto;font-weight:800}
+  .owe .when{min-width:92px;text-align:right;font-weight:700;font-size:13px;color:var(--muted)}
+  .owe .when.due{color:#b4451f}
+  .owe .when.ok{color:var(--green)}
+
+  .tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+  .tbl th{text-align:left;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:800;padding:0 0 12px}
+  .tbl td{padding:13px 0;border-top:1px solid var(--line);font-weight:600;color:#334155}
+  .tbl td.dish{font-weight:800;color:var(--ink)}
+  .tbl th.r,.tbl td.r{text-align:right}
+  .chip{display:inline-block;padding:4px 9px;border-radius:7px;font-size:12.5px;font-weight:800}
+  .chip.good{background:#edf7f0;color:#0c6b34}
+  .chip.warn{background:#fdf2ec;color:#9c3d18}
+
+  .trow{display:flex;gap:16px;padding:13px 0;border-top:1px solid var(--line);font-size:14.5px;font-weight:500;color:var(--muted)}
+  .trow:first-child{border-top:0}
+  .trow b{flex:0 0 132px;font-weight:800;color:var(--ink)}
+
+  .flow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(10px,1.6vw,22px)}
+  .flow .node{border:1px solid var(--line);border-radius:14px;padding:16px 14px;text-align:center}
+  .flow .node strong{display:block;font-size:14px;font-weight:800;letter-spacing:-.02em}
+  .flow .node small{display:block;color:var(--muted);font-weight:500;margin-top:5px;font-size:12.5px;line-height:1.45}
+  .flow .node.mid{background:var(--ink);border-color:var(--ink);color:#fff}
+  .flow .node.mid small{color:rgba(255,255,255,.62)}
+  .flow .arr{color:#c2cfc7;display:flex;align-items:center}
+  .flow .arr i{width:22px;height:22px}
+
+  .appmock{width:100%;max-width:320px;border:1px solid var(--line);border-radius:26px;overflow:hidden;background:#fff;
+    box-shadow:0 8px 26px rgba(15,23,42,.08)}
+  .app-top{background:var(--green);color:#fff;padding:15px 17px;display:flex;align-items:center;gap:9px}
+  .app-top b{font-size:15px;font-weight:800}
+  .app-top span{margin-left:auto;font-size:11.5px;opacity:.85;font-weight:700}
+  .app-msgs{padding:16px;display:flex;flex-direction:column;gap:9px;background:#f7f9f8;min-height:196px}
+  .am{max-width:86%;padding:10px 13px;border-radius:14px;font-size:13.5px;line-height:1.4;font-weight:500}
+  .am.them{align-self:flex-start;background:#fff;box-shadow:inset 0 0 0 1px var(--line)}
+  .am.you{align-self:flex-end;background:var(--ink);color:#fff}
+  .app-tabs{display:flex;border-top:1px solid var(--line)}
+  .app-tabs div{flex:1;padding:11px 2px 12px;text-align:center;font-size:9.5px;font-weight:800;color:#9aa8a0;letter-spacing:.02em}
+  .app-tabs div i{display:block;width:17px;height:17px;margin:0 auto 4px}
+  .app-tabs div.on{color:var(--green)}
+
+  @media (max-width:900px){
+    .split{grid-template-columns:1fr}
+    .flow{grid-template-columns:1fr;gap:12px}
+    .flow .arr{transform:rotate(90deg);justify-content:center}
+    .appmock{max-width:100%}
+  }
   @media (max-width:900px){
     .grid2{grid-template-columns:1fr;gap:32px}
     .cards{grid-template-columns:1fr}
@@ -210,6 +276,144 @@
       <div class="b you">yes please</div>
       <div class="b ok">Lot A19 matched — traceability updated for the oysters.</div>
       <div class="b them">On it. I'll text you both quotes this arvo.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="hair">
+
+<section class="wrap sec" aria-labelledby="cash">
+  <div class="grid2">
+    <div class="col">
+      <p class="kicker">Cash flow &amp; credit</p>
+      <h2 id="cash">Know what you owe before they ring you.</h2>
+      <p class="lede">Every invoice we read becomes a due date. Tap any supplier for the breakdown — what's owing, when it's due, and what you can pay early to keep them sweet.</p>
+    </div>
+    <div class="panel">
+      <div class="p-head"><i data-lucide="wallet" aria-hidden="true"></i> This week <span class="tag">updated 6 min ago</span></div>
+      <div class="split">
+        <div>
+          <p class="lbl">Cash position</p>
+          <p class="big-num">$18,240 <em class="up">▲ 4.2%</em></p>
+          <div class="bars" aria-hidden="true"><b style="height:38%"></b><b style="height:52%"></b><b style="height:44%"></b><b style="height:66%"></b><b style="height:58%"></b><b class="on" style="height:82%"></b></div>
+        </div>
+        <div>
+          <p class="lbl">Owed to suppliers</p>
+          <p class="big-num">$4,318 <em class="down">3 due</em></p>
+          <div class="bars" aria-hidden="true"><b style="height:70%"></b><b style="height:48%"></b><b style="height:62%"></b><b style="height:40%"></b><b style="height:55%"></b><b class="on" style="height:34%"></b></div>
+        </div>
+      </div>
+      <div class="p-body">
+        <p class="lbl">Who you owe</p>
+        <div class="owe"><span class="who">Ocean Crystal Seafood</span><span class="amt">$684.20</span><span class="when due">due Fri</span></div>
+        <div class="owe"><span class="who">Tomales Bay Oyster Co</span><span class="amt">$1,240.00</span><span class="when">due 21 Jul</span></div>
+        <div class="owe"><span class="who">Sunny Grove Farms</span><span class="amt">$312.50</span><span class="when ok">pay early · save 2%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hair">
+
+<section class="wrap sec" aria-labelledby="menu">
+  <div class="grid2">
+    <div class="col">
+      <p class="kicker">Menu costing</p>
+      <h2 id="menu">Photograph your menu once.</h2>
+      <p class="lede">We match every invoice line to the dishes it goes into, so you can see the real food cost per plate — and get told the moment a price rise quietly eats your margin.</p>
+    </div>
+    <div class="panel">
+      <div class="p-head"><i data-lucide="utensils" aria-hidden="true"></i> Margin by dish <span class="tag">2 need attention</span></div>
+      <div class="p-body">
+        <table class="tbl">
+          <tr><th>Dish</th><th class="r">Food cost</th><th class="r">On menu</th><th class="r">Margin</th></tr>
+          <tr><td class="dish">Oysters, half dozen</td><td class="r">$4.20</td><td class="r">$24.00</td><td class="r"><span class="chip good">82%</span></td></tr>
+          <tr><td class="dish">Grilled salmon</td><td class="r">$9.80</td><td class="r">$34.00</td><td class="r"><span class="chip warn">71% ▼</span></td></tr>
+          <tr><td class="dish">Prawn linguine</td><td class="r">$6.95</td><td class="r">$32.00</td><td class="r"><span class="chip good">78%</span></td></tr>
+          <tr><td class="dish">Mussels &amp; fries</td><td class="r">$5.40</td><td class="r">$26.00</td><td class="r"><span class="chip warn">69% ▼</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hair">
+
+<section class="wrap sec" aria-labelledby="trace">
+  <div class="grid2">
+    <div class="col">
+      <p class="kicker">Traceability</p>
+      <h2 id="trace">If there's ever a recall, you have the answer.</h2>
+      <p class="lede">Photograph the farm docket. We keep the lot number, the farm, the date and the invoice tied together — so "which oysters were these and who else got them?" takes seconds, not a night of digging.</p>
+    </div>
+    <div class="panel">
+      <div class="p-head"><i data-lucide="shield-check" aria-hidden="true"></i> Lot record <span class="tag">recall-ready</span></div>
+      <div class="p-body">
+        <div class="trow"><b>Lot</b><span>A19 · Pacific Miyagi, Grade A</span></div>
+        <div class="trow"><b>Farm</b><span>Tomales Bay Oyster Co · Marshall, CA</span></div>
+        <div class="trow"><b>Harvested</b><span>Mon 14 Jul · received Tue 15 Jul, 6:40am</span></div>
+        <div class="trow"><b>Invoice</b><span>#4821 · Ocean Crystal Seafood · $684.20</span></div>
+        <div class="trow"><b>Served on</b><span>Oysters half dozen · 14–17 Jul · 96 plates</span></div>
+        <div class="trow"><b>Record kept</b><span>7 years, exportable as PDF any time</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hair">
+
+<section class="wrap sec" aria-labelledby="books">
+  <div class="grid2">
+    <div class="col">
+      <p class="kicker">Your accounting</p>
+      <h2 id="books">It feeds QuickBooks for you.</h2>
+      <p class="lede">Photos, texts, supplier emails and delivery dockets all land in one place, get categorised, and sync straight through — so the books are done as you go, not rebuilt at quarter end.</p>
+    </div>
+    <div>
+      <div class="flow">
+        <div class="node">
+          <strong>What comes in</strong>
+          <small>Invoice photos · texts · supplier emails · delivery dockets</small>
+        </div>
+        <span class="arr" aria-hidden="true"><i data-lucide="arrow-right"></i></span>
+        <div class="node mid">
+          <strong>Agripals</strong>
+          <small>Reads, categorises, matches lots &amp; dishes</small>
+        </div>
+        <span class="arr" aria-hidden="true"><i data-lucide="arrow-right"></i></span>
+        <div class="node">
+          <strong>QuickBooks</strong>
+          <small>Coded and reconciled, ready for your accountant</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hair">
+
+<section class="wrap sec" aria-labelledby="app">
+  <div class="grid2">
+    <div class="col">
+      <p class="kicker">The app, when you want it</p>
+      <h2 id="app">Everything lives in one thread.</h2>
+      <p class="lede">Text does the job on its own — but if you'd rather tap, it's all there: chat to your assistant like you would an accountant, then orders, invoices and cash flow one tab away.</p>
+    </div>
+    <div class="appmock" aria-label="Agripals app preview">
+      <div class="app-top"><i data-lucide="leaf" aria-hidden="true" style="width:18px;height:18px"></i><b>Agripals</b><span>online</span></div>
+      <div class="app-msgs">
+        <div class="am them">Morning. Anything I should know before I order?</div>
+        <div class="am you">how did we do last week?</div>
+        <div class="am them">Food cost 31.4% — down from 33.1%. Salmon's the only line up.</div>
+        <div class="am them">$4,318 owing across 3 suppliers. Ocean Crystal is due Friday.</div>
+      </div>
+      <div class="app-tabs">
+        <div class="on"><i data-lucide="message-circle" aria-hidden="true"></i>Chat</div>
+        <div><i data-lucide="package" aria-hidden="true"></i>Orders</div>
+        <div><i data-lucide="receipt" aria-hidden="true"></i>Invoices</div>
+        <div><i data-lucide="trending-up" aria-hidden="true"></i>Cash</div>
+        <div><i data-lucide="user" aria-hidden="true"></i>Profile</div>
+      </div>
     </div>
   </div>
 </section>
