@@ -4,35 +4,49 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agripals — Restaurant Automation</title>
-<meta name="description" content="Send a photo or a text. Agripals handles stock, invoices, traceability and cash flow for your restaurant.">
+<meta name="description" content="Know before your invoice does. Agripals automates restaurant invoices, price movements, stock and traceability — all from a text.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%23078539%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M11%2020A7%207%200%200%201%209.8%206.1C15.5%205%2017%204.48%2019%202c1%202%202%204.18%202%208%200%205.5-4.78%2010-10%2010Z%27/%3E%3Cpath%20d%3D%27M2%2021c0-3%201.85-5.36%205.08-6C9.5%2014.52%2012%2013%2013%2012%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
-  :root{--green:#078539;--ink:#0b1326;--muted:#64738b;--line:#dfe5ef;--wash:#f6faf7}
+  :root{--green:#078539;--ink:#0b1326;--muted:#64738b;--line:#dfe5ef;--wash:#f6faf7;--up:#b4451f}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased}
   button,input{font:inherit}
   .wrap{width:100%;max-width:720px;margin:0 auto;padding:0 40px}
 
-  /* sparse white header — same rhythm as agripals.com */
   header{border-bottom:1px solid var(--line)}
   .bar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 0}
   .brand{display:flex;align-items:center;gap:11px;color:var(--green);font-weight:800;font-size:30px;line-height:1;letter-spacing:-.04em}
   .brand i{width:37px;height:37px;stroke-width:2.3}
   .quiet{color:#65738d;font-weight:800;font-size:17px;line-height:1;white-space:nowrap}
 
-  /* one clear promise, lots of air */
-  .hero{padding:74px 0 64px}
-  h1{font-size:52px;line-height:1.1;letter-spacing:-.055em;font-weight:600;color:#334155;margin:0;max-width:9.5em}
-  h1 strong{font-weight:800;color:var(--green);text-decoration:underline;text-decoration-color:#83efa8;text-decoration-thickness:3px;text-underline-offset:6px}
-  .sub{margin:22px 0 0;font-size:21px;line-height:1.45;font-weight:500;color:var(--muted);max-width:26em}
+  /* market movement ticker — the hook */
+  .hero{padding:60px 0 58px}
+  .eyebrow{display:flex;align-items:center;gap:9px;margin:0 0 26px}
+  .live{position:relative;display:flex;width:10px;height:10px}
+  .pulse{position:absolute;inset:0;border-radius:99px;background:var(--up);opacity:.75;animation:ping 1.8s cubic-bezier(0,0,.2,1) infinite}
+  .core{position:relative;width:10px;height:10px;border-radius:99px;background:var(--up)}
+  @keyframes ping{75%,100%{transform:scale(2.2);opacity:0}}
+  .eyebrow span{font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 
-  /* full-width strip — its only job is getting them to text */
+  .move{min-height:150px}
+  .delta{display:flex;align-items:baseline;gap:14px;font-size:92px;line-height:.86;font-weight:900;letter-spacing:-.07em;margin:0 0 14px}
+  .delta.up{color:var(--up)} .delta.down{color:var(--green)}
+  .item{font-size:33px;line-height:1.08;font-weight:800;letter-spacing:-.045em;color:#1d2a3f;margin:0}
+  .item span{font-weight:500;color:var(--muted);margin-left:8px}
+  .dots{display:flex;align-items:center;gap:11px;margin:26px 0 30px}
+  .dot{display:block;width:11px;height:8px;border-radius:99px;background:#dce4ef;transition:width .3s}
+  .dot.active{width:44px;background:var(--green)}
+
+  h1{font-size:44px;line-height:1.14;letter-spacing:-.05em;font-weight:600;color:#334155;margin:0;max-width:11em}
+  h1 strong{font-weight:800;color:var(--green);text-decoration:underline;text-decoration-color:#83efa8;text-decoration-thickness:3px;text-underline-offset:6px}
+  .sub{margin:20px 0 0;font-size:20px;line-height:1.45;font-weight:500;color:var(--muted);max-width:27em}
+
   .strip{background:var(--wash);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:52px 0 46px}
-  .strip h2{margin:0 0 26px;font-size:24px;line-height:1.25;letter-spacing:-.03em;font-weight:800;color:var(--ink)}
+  .strip h2{margin:0 0 26px;font-size:24px;line-height:1.25;letter-spacing:-.03em;font-weight:800}
   form{display:flex;flex-direction:column;gap:22px;margin:0}
   input{width:100%;border:0;border-bottom:3px solid #cfdbd2;border-radius:0;background:transparent;color:var(--ink);font-size:26px;line-height:1.2;font-weight:700;padding:3px 0 15px;outline:none}
   input::placeholder{color:#8da0bd;opacity:1}
@@ -42,38 +56,33 @@
   .submit:active{transform:scale(.99)}
   #note{margin:22px 0 0;color:var(--muted);font-size:17px;line-height:1.4;font-weight:700}
 
-  /* proof, further down where it belongs */
   .proof{padding:76px 0 30px}
   .kicker{font-size:14px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin:0 0 14px}
   .proof h3{font-size:34px;line-height:1.15;letter-spacing:-.04em;font-weight:800;margin:0 0 46px;max-width:12em}
-  .item{display:flex;gap:20px;padding:26px 0;border-top:1px solid var(--line)}
-  .item:last-child{border-bottom:1px solid var(--line)}
+  .row{display:flex;gap:20px;padding:26px 0;border-top:1px solid var(--line)}
+  .row:last-of-type{border-bottom:1px solid var(--line)}
   .ic{flex:0 0 auto;width:46px;height:46px;border-radius:14px;background:#eaf6ee;color:var(--green);display:flex;align-items:center;justify-content:center}
   .ic i{width:23px;height:23px}
-  .item h4{margin:2px 0 5px;font-size:19px;font-weight:800;letter-spacing:-.02em}
-  .item p{margin:0;font-size:17px;line-height:1.5;color:var(--muted);font-weight:500}
+  .row h4{margin:2px 0 5px;font-size:19px;font-weight:800;letter-spacing:-.02em}
+  .row p{margin:0;font-size:17px;line-height:1.5;color:var(--muted);font-weight:500}
 
   .end{padding:56px 0 78px}
-  .end p{margin:0 0 22px;font-size:22px;font-weight:700;color:var(--ink)}
-  .ghost{display:inline-block;border:0;background:var(--ink);color:#fff;font-size:19px;font-weight:800;padding:19px 30px;cursor:pointer}
+  .end p{margin:0 0 22px;font-size:22px;font-weight:700}
+  .ghost{border:0;background:var(--ink);color:#fff;font-size:19px;font-weight:800;padding:19px 30px;cursor:pointer}
   footer{border-top:1px solid var(--line);padding:26px 0 40px;color:#94a3b8;font-size:14px;font-weight:600}
 
   @media (max-width:640px){
     .wrap{padding:0 24px}
     .bar{padding:20px 0}
     .brand{font-size:25px}.brand i{width:31px;height:31px}.quiet{font-size:14px}
-    .hero{padding:48px 0 40px}
-    h1{font-size:36px;letter-spacing:-.045em}
-    .sub{font-size:18px;margin-top:18px}
-    .strip{padding:40px 0 36px}
-    .strip h2{font-size:20px;margin-bottom:20px}
-    input{font-size:22px}
-    .submit{font-size:20px;min-height:62px;padding:20px}
-    #note{font-size:15px}
-    .proof{padding:56px 0 20px}
-    .proof h3{font-size:27px;margin-bottom:34px}
-    .item{gap:15px;padding:22px 0}
-    .ic{width:40px;height:40px;border-radius:12px}
+    .hero{padding:44px 0 40px}
+    .delta{font-size:66px;gap:10px}.item{font-size:26px}.move{min-height:118px}
+    h1{font-size:31px;letter-spacing:-.04em}
+    .sub{font-size:17px}
+    .strip{padding:40px 0 36px}.strip h2{font-size:20px;margin-bottom:20px}
+    input{font-size:22px}.submit{font-size:20px;min-height:62px;padding:20px}#note{font-size:15px}
+    .proof{padding:56px 0 20px}.proof h3{font-size:27px;margin-bottom:34px}
+    .row{gap:15px;padding:22px 0}.ic{width:40px;height:40px;border-radius:12px}
     .end{padding:44px 0 60px}.end p{font-size:19px}
   }
 </style>
@@ -88,11 +97,21 @@
 </header>
 
 <section class="wrap hero">
-  <h1>Automate your restaurant <strong>operations</strong>.</h1>
-  <p class="sub">Send a photo or a text. Agripals handles the stock, the invoices, the traceability and the cash flow.</p>
+  <div class="eyebrow">
+    <span class="live"><span class="pulse"></span><span class="core"></span></span>
+    <span>This week in your kitchen</span>
+  </div>
+
+  <div class="move" aria-live="polite">
+    <p class="delta up" id="delta">↑ 20%</p>
+    <p class="item" id="item">Salmon.<span id="unit">this week</span></p>
+  </div>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+
+  <h1>Know before your <strong>invoice</strong> does.</h1>
+  <p class="sub">Agripals watches what you buy, catches the price moves, files every invoice and traces each item back to the farm — from a text.</p>
 </section>
 
-<!-- full-width strip: one job — get them to text -->
 <section class="strip" aria-label="Text Agripals for a demo">
   <div class="wrap">
     <h2>See it work on your phone.</h2>
@@ -108,27 +127,27 @@
   <p class="kicker">What it does</p>
   <h3>Your back office, run from your phone.</h3>
 
-  <div class="item">
-    <span class="ic"><i data-lucide="camera" aria-hidden="true"></i></span>
-    <div><h4>Photo &amp; text assistant</h4><p>Snap an invoice, a delivery or a shelf. Send it like you'd text a mate — Agripals reads it and files it.</p></div>
+  <div class="row">
+    <span class="ic"><i data-lucide="trending-up" aria-hidden="true"></i></span>
+    <div><h4>Price movements</h4><p>"Salmon is up 20% this week." You hear it from us before it lands on an invoice — and we'll tell you what to buy instead.</p></div>
   </div>
-  <div class="item">
+  <div class="row">
+    <span class="ic"><i data-lucide="receipt" aria-hidden="true"></i></span>
+    <div><h4>Every invoice, captured</h4><p>Snap it or forward it. Agripals reads it, files it, and tracks which suppliers have quietly crept up.</p></div>
+  </div>
+  <div class="row">
+    <span class="ic"><i data-lucide="map-pin" aria-hidden="true"></i></span>
+    <div><h4>Traceability</h4><p>Every item traced back to the farm it came from — worth telling your diners, and worth having when someone asks.</p></div>
+  </div>
+  <div class="row">
     <span class="ic"><i data-lucide="calendar-check" aria-hidden="true"></i></span>
     <div><h4>Weekly stock planning</h4><p>Learns what you get through and tells you what you'll need before you run short.</p></div>
   </div>
-  <div class="item">
-    <span class="ic"><i data-lucide="map-pin" aria-hidden="true"></i></span>
-    <div><h4>Food-chain traceability</h4><p>Every item traced back to the farm it came from — worth telling your diners about.</p></div>
-  </div>
-  <div class="item">
-    <span class="ic"><i data-lucide="receipt" aria-hidden="true"></i></span>
-    <div><h4>Invoice &amp; spending insight</h4><p>Where the money actually goes, line by line, and which suppliers have quietly crept up.</p></div>
-  </div>
-  <div class="item">
-    <span class="ic"><i data-lucide="trash-2" aria-hidden="true"></i></span>
+  <div class="row">
+    <span class="ic"><i data-lucide="wallet" aria-hidden="true"></i></span>
     <div><h4>Waste &amp; cash flow</h4><p>What you're throwing away, what's owed, and what's landing — before it becomes a problem.</p></div>
   </div>
-  <div class="item">
+  <div class="row">
     <span class="ic"><i data-lucide="book-open-check" aria-hidden="true"></i></span>
     <div><h4>QuickBooks-ready</h4><p>Books prepared as you go, not reconstructed at the end of the quarter.</p></div>
   </div>
@@ -144,6 +163,30 @@
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
   if(window.lucide) lucide.createIcons();
+
+  /* market movement ticker */
+  var MOVES = [
+    { delta: '↑ 20%', dir: 'up',   item: 'Salmon.',   unit: 'this week'  },
+    { delta: '↓ 12%', dir: 'down', item: 'Oysters.',  unit: 'buy now'    },
+    { delta: '↑ 9%',  dir: 'up',   item: 'Prawns.',   unit: 'this week'  },
+    { delta: '↓ 15%', dir: 'down', item: 'Mussels.',  unit: 'buy now'    }
+  ];
+  var dEl = document.getElementById('delta'), iEl = document.getElementById('item'),
+      uEl = document.getElementById('unit'), dots = document.getElementById('dots'), idx = 0;
+  MOVES.forEach(function(){ var s=document.createElement('span'); s.className='dot'; dots.appendChild(s); });
+  function render(){
+    var m = MOVES[idx];
+    dEl.textContent = m.delta;
+    dEl.className = 'delta ' + m.dir;
+    iEl.firstChild.nodeValue = m.item;
+    uEl.textContent = m.unit;
+    Array.prototype.forEach.call(dots.children, function(d,i){ d.className = 'dot' + (i===idx ? ' active' : ''); });
+  }
+  render();
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    setInterval(function(){ idx = (idx+1) % MOVES.length; render(); }, 3500);
+  }
+
   document.getElementById('demo-form').addEventListener('submit', function(e){
     e.preventDefault();
     var input = document.getElementById('mobile');
