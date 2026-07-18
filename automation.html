@@ -81,7 +81,7 @@
       #f4f7f5;position:relative}
   .shot .img::after{content:"";position:absolute;left:16px;top:12px;width:44%;height:8px;border-radius:2px;background:#d3ddd6}
   .shot .cap{padding:9px 12px;font-size:12.5px;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:6px}
-  .shot .cap i{width:14px;height:14px}
+  .shot .cap svg{width:14px;height:14px;flex:0 0 auto}
 
   /* steps */
   .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(22px,2.6vw,40px)}
@@ -95,7 +95,7 @@
     border:1px solid var(--line);border-radius:20px;overflow:hidden}
   .card{background:#fff;padding:clamp(22px,2.2vw,30px)}
   .ic{width:42px;height:42px;border-radius:12px;background:#eaf6ee;color:var(--green);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-  .ic i{width:21px;height:21px}
+  .ic svg{width:21px;height:21px}
   .card h3{margin:0 0 7px;font-size:clamp(17px,1.75vw,19px);font-weight:800;letter-spacing:-.025em}
   .card p{margin:0;font-size:clamp(14.5px,1.4vw,16px);line-height:1.55;color:var(--muted);font-weight:500}
 
@@ -137,7 +137,7 @@
   .panel{border:1px solid var(--line);border-radius:20px;background:#fff;overflow:hidden;box-shadow:0 1px 2px rgba(15,23,42,.04)}
   .p-head{display:flex;align-items:center;gap:9px;padding:15px 20px;border-bottom:1px solid var(--line);
     font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  .p-head i{width:15px;height:15px;color:var(--green)}
+  .p-head svg{width:15px;height:15px;color:var(--green);flex:0 0 auto}
   .p-head .tag{margin-left:auto;letter-spacing:0;text-transform:none;font-size:12px;color:var(--green)}
   .p-body{padding:clamp(18px,2vw,26px)}
   .split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
@@ -177,7 +177,7 @@
   .flow .node.mid{background:var(--ink);border-color:var(--ink);color:#fff}
   .flow .node.mid small{color:rgba(255,255,255,.62)}
   .flow .arr{color:#c2cfc7;display:flex;align-items:center}
-  .flow .arr i{width:22px;height:22px}
+  .flow .arr svg{width:22px;height:22px}
 
   .appmock{width:100%;max-width:320px;border:1px solid var(--line);border-radius:26px;overflow:hidden;background:#fff;
     box-shadow:0 8px 26px rgba(15,23,42,.08)}
@@ -189,8 +189,8 @@
   .am.them{align-self:flex-start;background:#fff;box-shadow:inset 0 0 0 1px var(--line)}
   .am.you{align-self:flex-end;background:var(--ink);color:#fff}
   .app-tabs{display:flex;border-top:1px solid var(--line)}
-  .app-tabs div{flex:1;padding:11px 2px 12px;text-align:center;font-size:9.5px;font-weight:800;color:#9aa8a0;letter-spacing:.02em}
-  .app-tabs div i{display:block;width:17px;height:17px;margin:0 auto 4px}
+  .app-tabs div{flex:1;padding:11px 2px 12px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-size:9.5px;font-weight:800;color:#9aa8a0;letter-spacing:.02em;white-space:nowrap;line-height:1}
+  .app-tabs div svg{display:block;width:17px;height:17px;margin:0 0 6px}
   .app-tabs div.on{color:var(--green)}
 
   @media (max-width:900px){
