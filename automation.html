@@ -53,47 +53,93 @@
   #note{margin:24px 0 0;color:var(--muted);font-size:clamp(15px,1.4vw,19px);line-height:1.4;font-weight:700}
 
   /* ---------- below the fold ---------- */
-  .sec{padding:clamp(64px,8vw,110px) 0}
-  .kicker{font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin:0 0 16px}
-  h2{font-size:clamp(28px,4vw,44px);line-height:1.14;letter-spacing:-.045em;font-weight:800;margin:0 0 12px;max-width:14em}
-  .lede{margin:0;font-size:clamp(17px,1.7vw,21px);line-height:1.5;font-weight:500;color:var(--muted);max-width:34em}
+  .sec{padding:clamp(72px,7.5vw,124px) 0}
+  .kicker{font-size:12.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin:0 0 18px}
+  h2{font-size:clamp(27px,3.1vw,40px);line-height:1.12;letter-spacing:-.045em;font-weight:800;margin:0}
+  .col p.lede{margin:16px 0 0;font-size:clamp(16px,1.6vw,18px);line-height:1.6;font-weight:500;color:var(--muted)}
   .hair{border:0;border-top:1px solid var(--line);margin:0}
 
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,56px);margin-top:clamp(40px,5vw,64px)}
-  .step .n{font-size:clamp(40px,5vw,64px);line-height:1;font-weight:800;letter-spacing:-.06em;color:var(--green);margin:0 0 14px}
-  .step h3{font-size:clamp(19px,2vw,23px);font-weight:800;letter-spacing:-.02em;margin:0 0 7px}
-  .step p{margin:0;font-size:clamp(15px,1.5vw,17px);line-height:1.5;color:var(--muted);font-weight:500}
+  /* editorial two-column: heading left, content right */
+  .grid2{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);gap:clamp(32px,5.5vw,88px);align-items:start}
 
-  .rows{margin-top:clamp(36px,4vw,56px)}
-  .row{display:flex;gap:22px;padding:clamp(22px,2.4vw,30px) 0;border-top:1px solid var(--line)}
-  .row:last-child{border-bottom:1px solid var(--line)}
-  .ic{flex:0 0 auto;width:48px;height:48px;border-radius:14px;background:#eaf6ee;color:var(--green);display:flex;align-items:center;justify-content:center}
-  .ic i{width:23px;height:23px}
-  .row h3{margin:3px 0 6px;font-size:clamp(18px,1.9vw,21px);font-weight:800;letter-spacing:-.02em}
-  .row p{margin:0;font-size:clamp(15px,1.5vw,17px);line-height:1.5;color:var(--muted);font-weight:500}
+  /* SMS demo thread */
+  .thread{border:1px solid var(--line);border-radius:22px;background:#fff;padding:clamp(20px,2.2vw,28px);
+    display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+  .t-head{display:flex;align-items:center;gap:10px;padding-bottom:16px;margin-bottom:4px;border-bottom:1px solid var(--line)}
+  .t-avatar{width:34px;height:34px;border-radius:10px;background:var(--green);color:#fff;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;letter-spacing:-.02em}
+  .t-head b{font-size:15px;font-weight:800;letter-spacing:-.02em}
+  .t-head span{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--green)}
+  .b{max-width:84%;padding:13px 16px;border-radius:18px;font-size:15.5px;line-height:1.45;font-weight:500}
+  .b.them{align-self:flex-start;background:#f1f5f2;color:#1d2a3f;border-bottom-left-radius:6px}
+  .b.you{align-self:flex-end;background:var(--ink);color:#fff;border-bottom-right-radius:6px}
+  .b.alert{align-self:flex-start;background:#fdf2ec;color:#9c3d18;font-weight:700;box-shadow:inset 0 0 0 1px #f4dbcc}
+  .b.ok{align-self:flex-start;background:#edf7f0;color:#0c6b34;font-weight:700;box-shadow:inset 0 0 0 1px #cfe9d9}
+  .shot{align-self:flex-end;width:min(230px,72%);border-radius:16px;border:1px solid var(--line);overflow:hidden;background:#fbfcfb}
+  .shot .img{height:88px;background:
+      linear-gradient(#e7ece8 1.5px,transparent 1.5px) 0 18px/100% 15px,
+      #f4f7f5;position:relative}
+  .shot .img::after{content:"";position:absolute;left:16px;top:12px;width:44%;height:8px;border-radius:2px;background:#d3ddd6}
+  .shot .cap{padding:9px 12px;font-size:12.5px;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .shot .cap i{width:14px;height:14px}
 
-  .band{background:#0f2a1b;color:#fff;padding:clamp(46px,5vw,72px) 0}
-  .band .kicker{color:#7fd6a3;margin-bottom:0}
-  .band-grid{display:grid;grid-template-columns:auto repeat(4,1fr);gap:clamp(20px,3vw,44px);align-items:center}
-  .band-item{border-left:1px solid rgba(255,255,255,.18);padding-left:clamp(16px,2vw,28px)}
-  .band-item strong{display:block;font-size:clamp(21px,2.4vw,29px);font-weight:800;letter-spacing:-.03em;margin-bottom:5px}
-  .band-item span{font-size:clamp(13px,1.3vw,15px);color:rgba(255,255,255,.72);font-weight:500}
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(22px,2.6vw,40px)}
+  .step{border-top:2px solid var(--ink);padding-top:18px}
+  .step .n{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin:0 0 12px}
+  .step h3{font-size:clamp(18px,1.9vw,21px);font-weight:800;letter-spacing:-.025em;margin:0 0 8px}
+  .step p{margin:0;font-size:clamp(15px,1.45vw,16.5px);line-height:1.55;color:var(--muted);font-weight:500}
 
-  .quote{font-size:clamp(24px,3.2vw,38px);line-height:1.28;letter-spacing:-.04em;font-weight:600;color:#1d2a3f;margin:0;max-width:17em}
+  /* capability cards */
+  .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:20px;overflow:hidden}
+  .card{background:#fff;padding:clamp(22px,2.2vw,30px)}
+  .ic{width:42px;height:42px;border-radius:12px;background:#eaf6ee;color:var(--green);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+  .ic i{width:21px;height:21px}
+  .card h3{margin:0 0 7px;font-size:clamp(17px,1.75vw,19px);font-weight:800;letter-spacing:-.025em}
+  .card p{margin:0;font-size:clamp(14.5px,1.4vw,16px);line-height:1.55;color:var(--muted);font-weight:500}
+
+  /* dark band */
+  .band{background:#0f2a1b;color:#fff;padding:clamp(52px,5.5vw,80px) 0}
+  .band .kicker{color:#7fd6a3;margin-bottom:26px}
+  .band-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+  .band-item{border-left:1px solid rgba(255,255,255,.2);padding:2px clamp(14px,1.8vw,28px)}
+  .band-item:first-child{border-left:0;padding-left:0}
+  .band-item strong{display:block;font-size:clamp(20px,2.2vw,27px);font-weight:800;letter-spacing:-.03em;margin-bottom:8px;line-height:1.1}
+  .band-item span{display:block;font-size:clamp(13px,1.25vw,14.5px);line-height:1.4;color:rgba(255,255,255,.7);font-weight:500}
+
+  /* quote */
+  .quote-sec{background:#f7faf8;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .quote{font-size:clamp(25px,3.1vw,40px);line-height:1.26;letter-spacing:-.04em;font-weight:600;color:#1d2a3f;margin:0;max-width:19em}
   .quote strong{font-weight:800;color:var(--green)}
 
-  .faq{margin-top:clamp(32px,4vw,52px);max-width:52em}
-  .qa{border-top:1px solid var(--line);padding:clamp(20px,2.2vw,28px) 0}
-  .qa:last-child{border-bottom:1px solid var(--line)}
-  .qa h3{margin:0 0 8px;font-size:clamp(17px,1.8vw,20px);font-weight:800;letter-spacing:-.02em}
-  .qa p{margin:0;font-size:clamp(15px,1.5vw,17px);line-height:1.55;color:var(--muted);font-weight:500}
+  /* faq */
+  .faq{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(32px,5vw,72px)}
+  .qa{border-top:1px solid var(--line);padding:clamp(20px,2vw,26px) 0}
+  .qa h3{margin:0 0 8px;font-size:clamp(16.5px,1.7vw,19px);font-weight:800;letter-spacing:-.025em}
+  .qa p{margin:0;font-size:clamp(14.5px,1.4vw,16px);line-height:1.6;color:var(--muted);font-weight:500}
 
-  .final{background:#f7faf8;border-top:1px solid var(--line);padding:clamp(56px,6vw,86px) 0}
-  .final h2{margin-bottom:26px}
+  .final{background:var(--ink);color:#fff;padding:clamp(64px,6.5vw,96px) 0}
+  .final h2{color:#fff;max-width:11em}
+  .final .lede{margin:16px 0 0;color:rgba(255,255,255,.66);font-size:clamp(16px,1.6vw,18px);line-height:1.6;font-weight:500;max-width:30em}
+  .final form{margin-top:clamp(28px,3vw,40px)}
+  .final input{border-bottom-color:rgba(255,255,255,.28);color:#fff}
+  .final input::placeholder{color:rgba(255,255,255,.42)}
+  .final input:focus{border-bottom-color:#fff}
+  .final .submit{background:var(--green);box-shadow:none}
+  .final .submit:hover{background:#0a9b45}
+  #note-2{color:rgba(255,255,255,.6)}
   footer{border-top:1px solid var(--line);padding:30px 0 44px;color:#94a3b8;font-size:14px;font-weight:600;
     display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   footer a{color:#64738b;text-decoration:none;font-weight:700}
 
+  @media (max-width:900px){
+    .grid2{grid-template-columns:1fr;gap:32px}
+    .cards{grid-template-columns:1fr}
+    .faq{grid-template-columns:1fr}
+    .band-grid{grid-template-columns:1fr 1fr;gap:26px 0}
+    .band-item:nth-child(3){border-left:0;padding-left:0}
+  }
   @media (max-width:720px){
     .bar{padding-top:26px}
     main{padding:28px 0}
@@ -104,12 +150,8 @@
     .bg-fish{width:200px;height:200px;right:-30px;top:22%}
     .bg-apple{width:150px;height:150px;right:8%;bottom:20%}
     #note{margin-top:20px}
-    .steps{grid-template-columns:1fr;gap:34px}
-    .band-grid{grid-template-columns:1fr 1fr;gap:24px}
-    .band .kicker{grid-column:1/-1}
-    .band-item{border-left:0;border-top:1px solid rgba(255,255,255,.18);padding:14px 0 0}
-    .row{gap:16px}
-    .ic{width:42px;height:42px;border-radius:12px}
+    .steps{grid-template-columns:1fr;gap:26px}
+    .b{max-width:92%}
   }
 </style>
 </head>
@@ -145,25 +187,58 @@
 
 <!-- ================= below the fold ================= -->
 
+<section class="wrap sec" aria-labelledby="demo">
+  <div class="grid2">
+    <div class="col">
+      <p class="kicker">See it work</p>
+      <h2 id="demo">This is the whole product.</h2>
+      <p class="lede">No dashboard to learn, no fields to fill in. You send a photo the way you'd text a mate, and the answers come back the same way.</p>
+    </div>
+    <div class="thread" aria-label="Example conversation with Agripals">
+      <div class="t-head">
+        <span class="t-avatar">AP</span>
+        <b>Agripals</b>
+        <span>online</span>
+      </div>
+      <div class="shot">
+        <div class="img"></div>
+        <div class="cap"><i data-lucide="paperclip" aria-hidden="true"></i> Invoice · Ocean Crystal Seafood</div>
+      </div>
+      <div class="b them">Got it — 12 lines captured, $684.20 total. Filed against Ocean Crystal.</div>
+      <div class="b alert">Salmon is up 8% · $19.40 more than last week.</div>
+      <div class="b them">Two other farms had it cheaper on Tuesday. Want me to check them?</div>
+      <div class="b you">yes please</div>
+      <div class="b ok">Lot A19 matched — traceability updated for the oysters.</div>
+      <div class="b them">On it. I'll text you both quotes this arvo.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="hair">
+
 <section class="wrap sec" aria-labelledby="how">
-  <p class="kicker">How it works</p>
-  <h2 id="how">No app. No onboarding. Just a text.</h2>
-  <p class="lede">If you can send a photo to a mate, you can run this. Nothing to install, nothing to migrate, no training your staff on new software.</p>
-  <div class="steps">
-    <div class="step">
-      <p class="n">1</p>
-      <h3>Snap it</h3>
-      <p>Invoice, delivery docket, a shelf, a bin. Text the photo to your Agripals number.</p>
+  <div class="grid2">
+    <div class="col">
+      <p class="kicker">How it works</p>
+      <h2 id="how">No app. No onboarding.</h2>
+      <p class="lede">Nothing to install, nothing to migrate, and no training your staff on new software.</p>
     </div>
-    <div class="step">
-      <p class="n">2</p>
-      <h3>We read it</h3>
-      <p>Every line item, price, quantity and lot number is pulled out and filed against the right supplier.</p>
-    </div>
-    <div class="step">
-      <p class="n">3</p>
-      <h3>You get answers</h3>
-      <p>Ask anything — what's gone up, what to order, what's owed. You get a straight answer back by text.</p>
+    <div class="steps">
+      <div class="step">
+        <p class="n">Step 1</p>
+        <h3>Snap it</h3>
+        <p>Invoice, delivery docket, a shelf, a bin. Text the photo to your Agripals number.</p>
+      </div>
+      <div class="step">
+        <p class="n">Step 2</p>
+        <h3>We read it</h3>
+        <p>Every line item, price, quantity and lot number pulled out and filed against the right supplier.</p>
+      </div>
+      <div class="step">
+        <p class="n">Step 3</p>
+        <h3>You get answers</h3>
+        <p>Ask what's gone up, what to order, what's owed. A straight answer comes back by text.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -171,90 +246,117 @@
 <hr class="hair">
 
 <section class="wrap sec" aria-labelledby="what">
-  <p class="kicker">What it handles</p>
-  <h2 id="what">The paperwork nobody has time for.</h2>
-  <div class="rows">
-    <div class="row">
-      <span class="ic"><i data-lucide="trending-up" aria-hidden="true"></i></span>
-      <div><h3>Price movements</h3><p>"Salmon is up 8% this week." You hear it from us before it turns up on an invoice — with what to buy instead.</p></div>
+  <div class="grid2">
+    <div class="col">
+      <p class="kicker">What it handles</p>
+      <h2 id="what">The paperwork nobody has time for.</h2>
+      <p class="lede">Six jobs that quietly eat a service week, done in the background.</p>
     </div>
-    <div class="row">
-      <span class="ic"><i data-lucide="receipt" aria-hidden="true"></i></span>
-      <div><h3>Every invoice, captured</h3><p>Snap it or forward it. We read it, file it, and track which suppliers have quietly crept up on you.</p></div>
-    </div>
-    <div class="row">
-      <span class="ic"><i data-lucide="map-pin" aria-hidden="true"></i></span>
-      <div><h3>Food-chain traceability</h3><p>Lot numbers matched to deliveries, so every item traces back to the farm. Worth telling your diners — and worth having when someone asks.</p></div>
-    </div>
-    <div class="row">
-      <span class="ic"><i data-lucide="calendar-check" aria-hidden="true"></i></span>
-      <div><h3>Weekly stock planning</h3><p>Learns what you actually get through, then tells you what you'll need before you run short.</p></div>
-    </div>
-    <div class="row">
-      <span class="ic"><i data-lucide="wallet" aria-hidden="true"></i></span>
-      <div><h3>Waste &amp; cash flow</h3><p>What you're throwing out, what's owed, and what's landing — while there's still time to do something about it.</p></div>
-    </div>
-    <div class="row">
-      <span class="ic"><i data-lucide="book-open-check" aria-hidden="true"></i></span>
-      <div><h3>QuickBooks-ready</h3><p>Books prepared as you go, not reconstructed the night before your accountant calls.</p></div>
+    <div class="cards">
+      <div class="card">
+        <span class="ic"><i data-lucide="trending-up" aria-hidden="true"></i></span>
+        <h3>Price movements</h3>
+        <p>You hear that salmon is up 8% from us — before it turns up on an invoice, and with what to buy instead.</p>
+      </div>
+      <div class="card">
+        <span class="ic"><i data-lucide="receipt" aria-hidden="true"></i></span>
+        <h3>Every invoice, captured</h3>
+        <p>Snap it or forward it. We read it, file it, and track which suppliers have quietly crept up on you.</p>
+      </div>
+      <div class="card">
+        <span class="ic"><i data-lucide="map-pin" aria-hidden="true"></i></span>
+        <h3>Food-chain traceability</h3>
+        <p>Lot numbers matched to deliveries, so every item traces back to the farm it came from.</p>
+      </div>
+      <div class="card">
+        <span class="ic"><i data-lucide="calendar-check" aria-hidden="true"></i></span>
+        <h3>Weekly stock planning</h3>
+        <p>Learns what you actually get through, then tells you what you'll need before you run short.</p>
+      </div>
+      <div class="card">
+        <span class="ic"><i data-lucide="wallet" aria-hidden="true"></i></span>
+        <h3>Waste &amp; cash flow</h3>
+        <p>What you're throwing out, what's owed, what's landing — while there's still time to act on it.</p>
+      </div>
+      <div class="card">
+        <span class="ic"><i data-lucide="book-open-check" aria-hidden="true"></i></span>
+        <h3>QuickBooks-ready</h3>
+        <p>Books prepared as you go, not reconstructed the night before your accountant calls.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="band">
-  <div class="wrap band-grid">
+  <div class="wrap">
     <p class="kicker">Photos and texts become</p>
-    <div class="band-item"><strong>Labeled.</strong><span>Food chain records attached</span></div>
-    <div class="band-item"><strong>Planned.</strong><span>Weekly stock suggested</span></div>
-    <div class="band-item"><strong>Forecast.</strong><span>Cash flow made visible</span></div>
-    <div class="band-item"><strong>Followed up.</strong><span>Supplier messages primed</span></div>
+    <div class="band-grid">
+      <div class="band-item"><strong>Labeled.</strong><span>Food chain records attached</span></div>
+      <div class="band-item"><strong>Planned.</strong><span>Weekly stock suggested</span></div>
+      <div class="band-item"><strong>Forecast.</strong><span>Cash flow made visible</span></div>
+      <div class="band-item"><strong>Followed&nbsp;up.</strong><span>Supplier messages primed</span></div>
+    </div>
   </div>
 </section>
 
-<section class="wrap sec" aria-labelledby="why">
-  <p class="kicker">Why it matters</p>
-  <p class="quote" id="why">A restaurant doesn't fail because the food was bad. It fails because <strong>nobody had time to look at the numbers</strong> until it was too late.</p>
+<section class="sec quote-sec">
+  <div class="wrap">
+    <p class="kicker">Why it matters</p>
+    <p class="quote">A restaurant doesn't fail because the food was bad. It fails because <strong>nobody had time to look at the numbers</strong> until it was too late.</p>
+  </div>
 </section>
 
-<hr class="hair">
-
 <section class="wrap sec" aria-labelledby="faq">
-  <p class="kicker">Questions</p>
-  <h2 id="faq">The short answers.</h2>
-  <div class="faq">
-    <div class="qa">
-      <h3>Do I need to install anything?</h3>
-      <p>No. It works over text. If your phone can send a photo, you're set up.</p>
+  <div class="grid2">
+    <div class="col">
+      <p class="kicker">Questions</p>
+      <h2 id="faq">The short answers.</h2>
+      <p class="lede">Anything else, just text us — a person will reply.</p>
     </div>
-    <div class="qa">
-      <h3>Does this replace my accountant?</h3>
-      <p>No — it makes them cheaper. We keep the paperwork clean and categorised all quarter, so they spend their time on advice instead of data entry.</p>
-    </div>
-    <div class="qa">
-      <h3>What about my existing suppliers?</h3>
-      <p>Keep them. Agripals reads whatever invoices you already get. If we spot a better farm-direct price, we'll tell you — but you decide.</p>
-    </div>
-    <div class="qa">
-      <h3>Where does my data go?</h3>
-      <p>It stays yours. We use it to answer your questions and nothing else, and you can ask for it back or deleted at any time.</p>
-    </div>
-    <div class="qa">
-      <h3>What does it cost?</h3>
-      <p>We're onboarding a first group of restaurants now and pricing with them. Text us and we'll be straight with you about it.</p>
+    <div class="faq">
+      <div class="qa">
+        <h3>Do I need to install anything?</h3>
+        <p>No. It works over text. If your phone can send a photo, you're set up.</p>
+      </div>
+      <div class="qa">
+        <h3>Does this replace my accountant?</h3>
+        <p>No — it makes them cheaper. The paperwork stays clean and categorised all quarter, so they spend their time on advice instead of data entry.</p>
+      </div>
+      <div class="qa">
+        <h3>What about my existing suppliers?</h3>
+        <p>Keep them. Agripals reads whatever invoices you already get. If we spot a better farm-direct price we'll tell you — but you decide.</p>
+      </div>
+      <div class="qa">
+        <h3>Where does my data go?</h3>
+        <p>It stays yours. We use it to answer your questions and nothing else, and you can ask for it back or deleted at any time.</p>
+      </div>
+      <div class="qa">
+        <h3>What does it cost?</h3>
+        <p>We're onboarding a first group of restaurants now and setting pricing with them. Text us and we'll be straight with you.</p>
+      </div>
+      <div class="qa">
+        <h3>How long until it's useful?</h3>
+        <p>One invoice. Send the last one you got and you'll see what comes back the same day.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="final">
-  <div class="wrap">
-    <h2>Start with one invoice.</h2>
-    <form id="cta-form-2">
-      <input id="mobile-2" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 0412 345 678" required>
-      <button class="submit" type="submit">TEXT US</button>
-    </form>
-    <p id="note-2" style="margin:24px 0 0;color:var(--muted);font-size:clamp(15px,1.4vw,19px);line-height:1.4;font-weight:700;">
-      Send us a photo of the last invoice you got. We'll show you what we pull out of it.
-    </p>
+  <div class="wrap grid2">
+    <div class="col">
+      <h2>Start with one invoice.</h2>
+      <p class="lede">Send a photo of the last invoice you got. We'll show you exactly what we pull out of it — no commitment, no setup.</p>
+    </div>
+    <div>
+      <form id="cta-form-2">
+        <input id="mobile-2" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 0412 345 678" required>
+        <button class="submit" type="submit">TEXT US</button>
+      </form>
+      <p id="note-2" style="margin:22px 0 0;font-size:clamp(14.5px,1.4vw,16px);line-height:1.5;font-weight:600;">
+        We'll only ever text you about your own numbers.
+      </p>
+    </div>
   </div>
 </section>
 
