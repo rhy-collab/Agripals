@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agripals — Restaurant Automation</title>
+<meta name="description" content="Send a photo or a text. Agripals handles stock, invoices, traceability and cash flow for your restaurant.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%23078539%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M11%2020A7%207%200%200%201%209.8%206.1C15.5%205%2017%204.48%2019%202c1%202%202%204.18%202%208%200%205.5-4.78%2010-10%2010Z%27/%3E%3Cpath%20d%3D%27M2%2021c0-3%201.85-5.36%205.08-6C9.5%2014.52%2012%2013%2013%2012%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root{--green:#078539;--ink:#0b1326;--muted:#64738b;--line:#dfe5ef;--wash:#f6faf7}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased}
+  button,input{font:inherit}
+  .wrap{width:100%;max-width:720px;margin:0 auto;padding:0 40px}
+
+  /* sparse white header — same rhythm as agripals.com */
+  header{border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 0}
+  .brand{display:flex;align-items:center;gap:11px;color:var(--green);font-weight:800;font-size:30px;line-height:1;letter-spacing:-.04em}
+  .brand i{width:37px;height:37px;stroke-width:2.3}
+  .quiet{color:#65738d;font-weight:800;font-size:17px;line-height:1;white-space:nowrap}
+
+  /* one clear promise, lots of air */
+  .hero{padding:74px 0 64px}
+  h1{font-size:52px;line-height:1.1;letter-spacing:-.055em;font-weight:600;color:#334155;margin:0;max-width:9.5em}
+  h1 strong{font-weight:800;color:var(--green);text-decoration:underline;text-decoration-color:#83efa8;text-decoration-thickness:3px;text-underline-offset:6px}
+  .sub{margin:22px 0 0;font-size:21px;line-height:1.45;font-weight:500;color:var(--muted);max-width:26em}
+
+  /* full-width strip — its only job is getting them to text */
+  .strip{background:var(--wash);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:52px 0 46px}
+  .strip h2{margin:0 0 26px;font-size:24px;line-height:1.25;letter-spacing:-.03em;font-weight:800;color:var(--ink)}
+  form{display:flex;flex-direction:column;gap:22px;margin:0}
+  input{width:100%;border:0;border-bottom:3px solid #cfdbd2;border-radius:0;background:transparent;color:var(--ink);font-size:26px;line-height:1.2;font-weight:700;padding:3px 0 15px;outline:none}
+  input::placeholder{color:#8da0bd;opacity:1}
+  input:focus{border-color:var(--ink)}
+  .submit{width:100%;border:0;border-radius:0;background:var(--ink);color:#fff;font-size:24px;line-height:1;font-weight:800;letter-spacing:.02em;padding:24px 20px;min-height:70px;cursor:pointer;box-shadow:0 3px 8px rgba(15,23,42,.14)}
+  .submit:hover{background:#000}
+  .submit:active{transform:scale(.99)}
+  #note{margin:22px 0 0;color:var(--muted);font-size:17px;line-height:1.4;font-weight:700}
+
+  /* proof, further down where it belongs */
+  .proof{padding:76px 0 30px}
+  .kicker{font-size:14px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin:0 0 14px}
+  .proof h3{font-size:34px;line-height:1.15;letter-spacing:-.04em;font-weight:800;margin:0 0 46px;max-width:12em}
+  .item{display:flex;gap:20px;padding:26px 0;border-top:1px solid var(--line)}
+  .item:last-child{border-bottom:1px solid var(--line)}
+  .ic{flex:0 0 auto;width:46px;height:46px;border-radius:14px;background:#eaf6ee;color:var(--green);display:flex;align-items:center;justify-content:center}
+  .ic i{width:23px;height:23px}
+  .item h4{margin:2px 0 5px;font-size:19px;font-weight:800;letter-spacing:-.02em}
+  .item p{margin:0;font-size:17px;line-height:1.5;color:var(--muted);font-weight:500}
+
+  .end{padding:56px 0 78px}
+  .end p{margin:0 0 22px;font-size:22px;font-weight:700;color:var(--ink)}
+  .ghost{display:inline-block;border:0;background:var(--ink);color:#fff;font-size:19px;font-weight:800;padding:19px 30px;cursor:pointer}
+  footer{border-top:1px solid var(--line);padding:26px 0 40px;color:#94a3b8;font-size:14px;font-weight:600}
+
+  @media (max-width:640px){
+    .wrap{padding:0 24px}
+    .bar{padding:20px 0}
+    .brand{font-size:25px}.brand i{width:31px;height:31px}.quiet{font-size:14px}
+    .hero{padding:48px 0 40px}
+    h1{font-size:36px;letter-spacing:-.045em}
+    .sub{font-size:18px;margin-top:18px}
+    .strip{padding:40px 0 36px}
+    .strip h2{font-size:20px;margin-bottom:20px}
+    input{font-size:22px}
+    .submit{font-size:20px;min-height:62px;padding:20px}
+    #note{font-size:15px}
+    .proof{padding:56px 0 20px}
+    .proof h3{font-size:27px;margin-bottom:34px}
+    .item{gap:15px;padding:22px 0}
+    .ic{width:40px;height:40px;border-radius:12px}
+    .end{padding:44px 0 60px}.end p{font-size:19px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="brand"><i data-lucide="leaf" aria-hidden="true"></i><span>Agripals</span></div>
+    <span class="quiet">Restaurant Automation</span>
+  </div>
+</header>
+
+<section class="wrap hero">
+  <h1>Automate your restaurant <strong>operations</strong>.</h1>
+  <p class="sub">Send a photo or a text. Agripals handles the stock, the invoices, the traceability and the cash flow.</p>
+</section>
+
+<!-- full-width strip: one job — get them to text -->
+<section class="strip" aria-label="Text Agripals for a demo">
+  <div class="wrap">
+    <h2>See it work on your phone.</h2>
+    <form id="demo-form">
+      <input id="mobile" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 0412 345 678" required>
+      <button class="submit" type="submit">TEXT ME A DEMO</button>
+    </form>
+    <p id="note">We'll text you a live demo. No spam, and we never share your number.</p>
+  </div>
+</section>
+
+<section class="wrap proof">
+  <p class="kicker">What it does</p>
+  <h3>Your back office, run from your phone.</h3>
+
+  <div class="item">
+    <span class="ic"><i data-lucide="camera" aria-hidden="true"></i></span>
+    <div><h4>Photo &amp; text assistant</h4><p>Snap an invoice, a delivery or a shelf. Send it like you'd text a mate — Agripals reads it and files it.</p></div>
+  </div>
+  <div class="item">
+    <span class="ic"><i data-lucide="calendar-check" aria-hidden="true"></i></span>
+    <div><h4>Weekly stock planning</h4><p>Learns what you get through and tells you what you'll need before you run short.</p></div>
+  </div>
+  <div class="item">
+    <span class="ic"><i data-lucide="map-pin" aria-hidden="true"></i></span>
+    <div><h4>Food-chain traceability</h4><p>Every item traced back to the farm it came from — worth telling your diners about.</p></div>
+  </div>
+  <div class="item">
+    <span class="ic"><i data-lucide="receipt" aria-hidden="true"></i></span>
+    <div><h4>Invoice &amp; spending insight</h4><p>Where the money actually goes, line by line, and which suppliers have quietly crept up.</p></div>
+  </div>
+  <div class="item">
+    <span class="ic"><i data-lucide="trash-2" aria-hidden="true"></i></span>
+    <div><h4>Waste &amp; cash flow</h4><p>What you're throwing away, what's owed, and what's landing — before it becomes a problem.</p></div>
+  </div>
+  <div class="item">
+    <span class="ic"><i data-lucide="book-open-check" aria-hidden="true"></i></span>
+    <div><h4>QuickBooks-ready</h4><p>Books prepared as you go, not reconstructed at the end of the quarter.</p></div>
+  </div>
+</section>
+
+<section class="wrap end">
+  <p>Want to see it on your own numbers?</p>
+  <button class="ghost" type="button" onclick="document.getElementById('mobile').focus();window.scrollTo({top:0,behavior:'smooth'});">Text me a demo →</button>
+</section>
+
+<footer class="wrap">&copy; <span id="yr"></span> Agripals · Restaurant Automation</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  if(window.lucide) lucide.createIcons();
+  document.getElementById('demo-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var input = document.getElementById('mobile');
+    var num = input.value.trim();
+    if(!num){ input.focus(); return; }
+    var note = document.getElementById('note');
+    note.textContent = "Thanks! We'll text your demo to " + num + " shortly.";
+    note.style.color = '#078539';
+    input.value = '';
+  });
+</script>
+</body>
+</html>

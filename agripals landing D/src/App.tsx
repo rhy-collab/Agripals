@@ -46,9 +46,12 @@ export default function App() {
                 <Leaf className="w-7 h-7 md:w-8 md:h-8" />
                 <span className="font-bold text-2xl md:text-3xl tracking-tight">Agripals</span>
               </div>
-              <button className="text-sm md:text-base font-semibold text-slate-500 hover:text-green-700 transition-colors">
-                Chef Access
-              </button>
+              <a
+                href="https://forms.gle/AqFsSnandRwdAaYe9"
+                className="text-sm md:text-base font-semibold text-slate-500 hover:text-green-700 transition-colors"
+              >
+                Wholesaler
+              </a>
             </header>
 
             {/* Main Content (Pushed to bottom) */}
