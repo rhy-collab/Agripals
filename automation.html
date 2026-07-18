@@ -52,6 +52,48 @@
   .submit:active{transform:scale(.99)}
   #note{margin:24px 0 0;color:var(--muted);font-size:clamp(15px,1.4vw,19px);line-height:1.4;font-weight:700}
 
+  /* ---------- below the fold ---------- */
+  .sec{padding:clamp(64px,8vw,110px) 0}
+  .kicker{font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin:0 0 16px}
+  h2{font-size:clamp(28px,4vw,44px);line-height:1.14;letter-spacing:-.045em;font-weight:800;margin:0 0 12px;max-width:14em}
+  .lede{margin:0;font-size:clamp(17px,1.7vw,21px);line-height:1.5;font-weight:500;color:var(--muted);max-width:34em}
+  .hair{border:0;border-top:1px solid var(--line);margin:0}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,56px);margin-top:clamp(40px,5vw,64px)}
+  .step .n{font-size:clamp(40px,5vw,64px);line-height:1;font-weight:800;letter-spacing:-.06em;color:var(--green);margin:0 0 14px}
+  .step h3{font-size:clamp(19px,2vw,23px);font-weight:800;letter-spacing:-.02em;margin:0 0 7px}
+  .step p{margin:0;font-size:clamp(15px,1.5vw,17px);line-height:1.5;color:var(--muted);font-weight:500}
+
+  .rows{margin-top:clamp(36px,4vw,56px)}
+  .row{display:flex;gap:22px;padding:clamp(22px,2.4vw,30px) 0;border-top:1px solid var(--line)}
+  .row:last-child{border-bottom:1px solid var(--line)}
+  .ic{flex:0 0 auto;width:48px;height:48px;border-radius:14px;background:#eaf6ee;color:var(--green);display:flex;align-items:center;justify-content:center}
+  .ic i{width:23px;height:23px}
+  .row h3{margin:3px 0 6px;font-size:clamp(18px,1.9vw,21px);font-weight:800;letter-spacing:-.02em}
+  .row p{margin:0;font-size:clamp(15px,1.5vw,17px);line-height:1.5;color:var(--muted);font-weight:500}
+
+  .band{background:#0f2a1b;color:#fff;padding:clamp(46px,5vw,72px) 0}
+  .band .kicker{color:#7fd6a3;margin-bottom:0}
+  .band-grid{display:grid;grid-template-columns:auto repeat(4,1fr);gap:clamp(20px,3vw,44px);align-items:center}
+  .band-item{border-left:1px solid rgba(255,255,255,.18);padding-left:clamp(16px,2vw,28px)}
+  .band-item strong{display:block;font-size:clamp(21px,2.4vw,29px);font-weight:800;letter-spacing:-.03em;margin-bottom:5px}
+  .band-item span{font-size:clamp(13px,1.3vw,15px);color:rgba(255,255,255,.72);font-weight:500}
+
+  .quote{font-size:clamp(24px,3.2vw,38px);line-height:1.28;letter-spacing:-.04em;font-weight:600;color:#1d2a3f;margin:0;max-width:17em}
+  .quote strong{font-weight:800;color:var(--green)}
+
+  .faq{margin-top:clamp(32px,4vw,52px);max-width:52em}
+  .qa{border-top:1px solid var(--line);padding:clamp(20px,2.2vw,28px) 0}
+  .qa:last-child{border-bottom:1px solid var(--line)}
+  .qa h3{margin:0 0 8px;font-size:clamp(17px,1.8vw,20px);font-weight:800;letter-spacing:-.02em}
+  .qa p{margin:0;font-size:clamp(15px,1.5vw,17px);line-height:1.55;color:var(--muted);font-weight:500}
+
+  .final{background:#f7faf8;border-top:1px solid var(--line);padding:clamp(56px,6vw,86px) 0}
+  .final h2{margin-bottom:26px}
+  footer{border-top:1px solid var(--line);padding:30px 0 44px;color:#94a3b8;font-size:14px;font-weight:600;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a{color:#64738b;text-decoration:none;font-weight:700}
+
   @media (max-width:720px){
     .bar{padding-top:26px}
     main{padding:28px 0}
@@ -62,6 +104,12 @@
     .bg-fish{width:200px;height:200px;right:-30px;top:22%}
     .bg-apple{width:150px;height:150px;right:8%;bottom:20%}
     #note{margin-top:20px}
+    .steps{grid-template-columns:1fr;gap:34px}
+    .band-grid{grid-template-columns:1fr 1fr;gap:24px}
+    .band .kicker{grid-column:1/-1}
+    .band-item{border-left:0;border-top:1px solid rgba(255,255,255,.18);padding:14px 0 0}
+    .row{gap:16px}
+    .ic{width:42px;height:42px;border-radius:12px}
   }
 </style>
 </head>
@@ -95,6 +143,126 @@
   </section>
 </div>
 
+<!-- ================= below the fold ================= -->
+
+<section class="wrap sec" aria-labelledby="how">
+  <p class="kicker">How it works</p>
+  <h2 id="how">No app. No onboarding. Just a text.</h2>
+  <p class="lede">If you can send a photo to a mate, you can run this. Nothing to install, nothing to migrate, no training your staff on new software.</p>
+  <div class="steps">
+    <div class="step">
+      <p class="n">1</p>
+      <h3>Snap it</h3>
+      <p>Invoice, delivery docket, a shelf, a bin. Text the photo to your Agripals number.</p>
+    </div>
+    <div class="step">
+      <p class="n">2</p>
+      <h3>We read it</h3>
+      <p>Every line item, price, quantity and lot number is pulled out and filed against the right supplier.</p>
+    </div>
+    <div class="step">
+      <p class="n">3</p>
+      <h3>You get answers</h3>
+      <p>Ask anything — what's gone up, what to order, what's owed. You get a straight answer back by text.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="hair">
+
+<section class="wrap sec" aria-labelledby="what">
+  <p class="kicker">What it handles</p>
+  <h2 id="what">The paperwork nobody has time for.</h2>
+  <div class="rows">
+    <div class="row">
+      <span class="ic"><i data-lucide="trending-up" aria-hidden="true"></i></span>
+      <div><h3>Price movements</h3><p>"Salmon is up 8% this week." You hear it from us before it turns up on an invoice — with what to buy instead.</p></div>
+    </div>
+    <div class="row">
+      <span class="ic"><i data-lucide="receipt" aria-hidden="true"></i></span>
+      <div><h3>Every invoice, captured</h3><p>Snap it or forward it. We read it, file it, and track which suppliers have quietly crept up on you.</p></div>
+    </div>
+    <div class="row">
+      <span class="ic"><i data-lucide="map-pin" aria-hidden="true"></i></span>
+      <div><h3>Food-chain traceability</h3><p>Lot numbers matched to deliveries, so every item traces back to the farm. Worth telling your diners — and worth having when someone asks.</p></div>
+    </div>
+    <div class="row">
+      <span class="ic"><i data-lucide="calendar-check" aria-hidden="true"></i></span>
+      <div><h3>Weekly stock planning</h3><p>Learns what you actually get through, then tells you what you'll need before you run short.</p></div>
+    </div>
+    <div class="row">
+      <span class="ic"><i data-lucide="wallet" aria-hidden="true"></i></span>
+      <div><h3>Waste &amp; cash flow</h3><p>What you're throwing out, what's owed, and what's landing — while there's still time to do something about it.</p></div>
+    </div>
+    <div class="row">
+      <span class="ic"><i data-lucide="book-open-check" aria-hidden="true"></i></span>
+      <div><h3>QuickBooks-ready</h3><p>Books prepared as you go, not reconstructed the night before your accountant calls.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap band-grid">
+    <p class="kicker">Photos and texts become</p>
+    <div class="band-item"><strong>Labeled.</strong><span>Food chain records attached</span></div>
+    <div class="band-item"><strong>Planned.</strong><span>Weekly stock suggested</span></div>
+    <div class="band-item"><strong>Forecast.</strong><span>Cash flow made visible</span></div>
+    <div class="band-item"><strong>Followed up.</strong><span>Supplier messages primed</span></div>
+  </div>
+</section>
+
+<section class="wrap sec" aria-labelledby="why">
+  <p class="kicker">Why it matters</p>
+  <p class="quote" id="why">A restaurant doesn't fail because the food was bad. It fails because <strong>nobody had time to look at the numbers</strong> until it was too late.</p>
+</section>
+
+<hr class="hair">
+
+<section class="wrap sec" aria-labelledby="faq">
+  <p class="kicker">Questions</p>
+  <h2 id="faq">The short answers.</h2>
+  <div class="faq">
+    <div class="qa">
+      <h3>Do I need to install anything?</h3>
+      <p>No. It works over text. If your phone can send a photo, you're set up.</p>
+    </div>
+    <div class="qa">
+      <h3>Does this replace my accountant?</h3>
+      <p>No — it makes them cheaper. We keep the paperwork clean and categorised all quarter, so they spend their time on advice instead of data entry.</p>
+    </div>
+    <div class="qa">
+      <h3>What about my existing suppliers?</h3>
+      <p>Keep them. Agripals reads whatever invoices you already get. If we spot a better farm-direct price, we'll tell you — but you decide.</p>
+    </div>
+    <div class="qa">
+      <h3>Where does my data go?</h3>
+      <p>It stays yours. We use it to answer your questions and nothing else, and you can ask for it back or deleted at any time.</p>
+    </div>
+    <div class="qa">
+      <h3>What does it cost?</h3>
+      <p>We're onboarding a first group of restaurants now and pricing with them. Text us and we'll be straight with you about it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Start with one invoice.</h2>
+    <form id="cta-form-2">
+      <input id="mobile-2" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 0412 345 678" required>
+      <button class="submit" type="submit">TEXT US</button>
+    </form>
+    <p id="note-2" style="margin:24px 0 0;color:var(--muted);font-size:clamp(15px,1.4vw,19px);line-height:1.4;font-weight:700;">
+      Send us a photo of the last invoice you got. We'll show you what we pull out of it.
+    </p>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>&copy; <span id="yr"></span> Agripals · Restaurant Automation</span>
+  <span><a href="/">Agripals wholesale →</a></span>
+</footer>
+
 <script>
   if(window.lucide) lucide.createIcons();
 
@@ -119,16 +287,23 @@
     setInterval(function(){ i=(i+1)%ITEMS.length; render(); }, 3500);
   }
 
-  document.getElementById('cta-form').addEventListener('submit', function(e){
-    e.preventDefault();
-    var input=document.getElementById('mobile');
-    var num=input.value.trim();
-    if(!num){ input.focus(); return; }
-    var note=document.getElementById('note');
-    note.textContent="Thanks! We'll text you from Agripals shortly.";
-    note.style.color='#078539';
-    input.value='';
-  });
+  var yr=document.getElementById('yr'); if(yr) yr.textContent=new Date().getFullYear();
+
+  function wireForm(formId, inputId, noteId){
+    var f=document.getElementById(formId); if(!f) return;
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var input=document.getElementById(inputId);
+      var num=input.value.trim();
+      if(!num){ input.focus(); return; }
+      var note=document.getElementById(noteId);
+      note.textContent="Thanks! We'll text you from Agripals shortly.";
+      note.style.color='#078539';
+      input.value='';
+    });
+  }
+  wireForm('cta-form','mobile','note');
+  wireForm('cta-form-2','mobile-2','note-2');
 </script>
 </body>
 </html>

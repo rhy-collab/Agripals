@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agripals Caller — Voice infrastructure for Australian wheat</title>
+<meta name="description" content="Agripals Caller speaks with wheat growers by phone, asks the right follow-up questions, and turns every conversation into structured crop, risk, and supply data.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%23078539%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M11%2020A7%207%200%200%201%209.8%206.1C15.5%205%2017%204.48%2019%202c1%202%202%204.18%202%208%200%205.5-4.78%2010-10%2010Z%27/%3E%3Cpath%20d%3D%27M2%2021c0-3%201.85-5.36%205.08-6C9.5%2014.52%2012%2013%2013%2012%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root{--green:#078539;--green-light:#83efa8;--green-50:#f0faf3;--ink:#0b1326;--muted:#64738b;--line:#e2e8f0;--line-2:#eef2f7}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#fafafa;-webkit-font-smoothing:antialiased}
+  button,input{font:inherit}
+  a{color:inherit;text-decoration:none}
+  img,svg{display:block}
+  .wrap{width:100%;max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,64px)}
+  section{position:relative}
+  .eyebrow{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+  .eyebrow .n{color:#9aa7bd}
+  h1,h2,h3{margin:0;letter-spacing:-.03em;font-weight:800;color:var(--ink)}
+  p{margin:0;color:var(--muted);line-height:1.55}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:0;background:var(--ink);color:#fff;
+    font-weight:800;letter-spacing:.02em;padding:18px 30px;cursor:pointer;font-size:15px;white-space:nowrap}
+  .btn:hover{background:#000}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);padding:16.5px 28px}
+  .btn.ghost:hover{border-color:var(--ink)}
+  .tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--muted);
+    background:#fff;border:1px solid var(--line);padding:8px 14px;border-radius:99px}
+  .tag i{width:14px;height:14px;stroke-width:2.4;color:var(--green)}
+  .card{background:#fff;border:1px solid var(--line);padding:28px}
+  .underline{text-decoration:underline;text-decoration-color:var(--green-light);text-decoration-thickness:4px;text-underline-offset:5px}
+
+  /* ===== header ===== */
+  header{position:sticky;top:0;z-index:40;background:rgba(250,250,250,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line-2)}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;letter-spacing:-.02em}
+  .brand .mark{width:32px;height:32px;border-radius:8px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;letter-spacing:-.02em}
+  .brand span.sub{color:var(--muted);font-weight:600}
+  nav{display:flex;align-items:center;gap:30px}
+  nav a{font-size:14px;font-weight:600;color:var(--muted)}
+  nav a:hover{color:var(--ink)}
+  nav a.cta-link{color:var(--ink);display:flex;align-items:center;gap:6px}
+  nav a.cta-link i{width:14px;height:14px}
+  .nav-links{display:flex;align-items:center;gap:26px}
+  @media (max-width:860px){ .nav-links{display:none} }
+
+  /* ===== hero ===== */
+  .hero{padding:70px 0 56px;border-bottom:1px solid var(--line-2)}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:start}
+  @media (max-width:960px){ .hero-grid{grid-template-columns:1fr} }
+  .hero h1{font-size:clamp(34px,5vw,54px);line-height:1.04;margin:18px 0 20px}
+  .hero p.lead{font-size:18px;max-width:46ch;margin-bottom:30px}
+  .phone-form{display:flex;gap:0;border:1.5px solid var(--line);background:#fff}
+  .phone-form input{flex:1;min-width:0;border:0;padding:18px 18px;font-size:16px;font-weight:600;outline:none;background:transparent}
+  .phone-form input::placeholder{color:#9aa7bd}
+  .phone-form button{border-radius:0}
+  #note{margin-top:14px;font-size:13px;color:var(--muted)}
+  .hero-links{display:flex;flex-wrap:wrap;gap:22px;margin-top:26px}
+  .hero-links a{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;color:var(--ink)}
+  .hero-links a i{width:15px;height:15px;stroke-width:2.4;color:var(--green)}
+  .trust-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+
+  /* ===== demo call card ===== */
+  .call-card{background:#fff;border:1px solid var(--line);overflow:hidden}
+  .call-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line-2);background:var(--green-50)}
+  .call-head .label{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--green)}
+  .call-head .timer{font-size:11px;font-weight:700;color:var(--muted)}
+  .call-body{padding:20px}
+  .who{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .avatar{width:34px;height:34px;border-radius:99px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+  .who .name{font-size:13px;font-weight:800}
+  .who .meta{font-size:12px;color:var(--muted)}
+  .bubble{max-width:88%;padding:12px 14px;font-size:14px;line-height:1.5;margin-bottom:10px}
+  .bubble.grower{background:var(--line-2);color:var(--ink);border-top-left-radius:2px}
+  .bubble.agripals{background:var(--green-50);border:1px solid #d7f0dd;margin-left:auto;border-top-right-radius:2px}
+  .bubble .who-label{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+  .record{margin-top:16px;border-top:1px dashed var(--line);padding-top:16px}
+  .record .rlabel{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:10px;display:block}
+  .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .rfield{font-size:12px;color:var(--muted);font-weight:700}
+  .rfield b{display:block;color:var(--ink);font-weight:800;font-size:13px;margin-top:2px}
+  .play-row{display:flex;align-items:center;gap:12px;padding:16px 20px;border-top:1px solid var(--line-2)}
+  .play-btn{width:36px;height:36px;border-radius:99px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto;border:0;cursor:pointer}
+  .play-btn i{width:15px;height:15px}
+  .play-text b{display:block;font-size:13px}
+  .play-text span{font-size:12px;color:var(--muted)}
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line-2)}
+  .stat-cell{padding:16px 14px;text-align:center;border-left:1px solid var(--line-2)}
+  .stat-cell:first-child{border-left:0}
+  .stat-cell b{display:block;font-size:20px;font-weight:900;letter-spacing:-.03em}
+  .stat-cell span{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  @media (max-width:640px){ .stat-row{grid-template-columns:repeat(2,1fr)} .stat-cell:nth-child(3){border-left:0} .rgrid{grid-template-columns:1fr} }
+
+  /* ===== graincorp section ===== */
+  .split{padding:76px 0;border-bottom:1px solid var(--line-2)}
+  .split-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:start}
+  @media (max-width:960px){ .split-grid{grid-template-columns:1fr} }
+  .split h2{font-size:clamp(28px,3.6vw,42px);line-height:1.1;margin:16px 0 18px}
+  .stat-big{font-size:clamp(46px,6vw,64px);font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--ink)}
+  .stat-big small{display:block;font-size:14px;font-weight:700;color:var(--muted);margin-top:8px;letter-spacing:0}
+  .point{display:flex;gap:16px;padding:20px 0;border-top:1px solid var(--line-2)}
+  .point:first-child{border-top:0}
+  .point .num{font-size:13px;font-weight:900;color:var(--green);flex:0 0 28px}
+  .point h3{font-size:16px;margin-bottom:6px}
+  .point p{font-size:14px}
+  .callout{margin-top:26px;background:var(--ink);color:#fff;padding:26px}
+  .callout h3{color:#fff;font-size:17px;margin-bottom:8px}
+  .callout p{color:#b7c0d6;font-size:14px}
+
+  /* ===== system steps ===== */
+  .steps{padding:76px 0;border-bottom:1px solid var(--line-2)}
+  .steps-head{max-width:640px;margin-bottom:46px}
+  .steps-head h2{font-size:clamp(28px,3.6vw,42px);line-height:1.1;margin:16px 0 0}
+  .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+  @media (max-width:900px){ .steps-grid{grid-template-columns:1fr 1fr} }
+  @media (max-width:560px){ .steps-grid{grid-template-columns:1fr} }
+  .step{background:#fff;padding:30px 26px;position:relative}
+  .step .sn{font-size:12px;font-weight:900;color:var(--green);letter-spacing:.06em}
+  .step h3{font-size:18px;margin:14px 0 10px}
+  .step p{font-size:14px}
+  .step .arrow{position:absolute;right:-11px;top:50%;transform:translateY(-50%);width:22px;height:22px;background:#fff;border:1px solid var(--line);border-radius:99px;display:flex;align-items:center;justify-content:center;z-index:2}
+  .step .arrow i{width:12px;height:12px;color:var(--green)}
+  @media (max-width:900px){ .step .arrow{display:none} }
+
+  /* ===== network cards ===== */
+  .network{padding:76px 0;border-bottom:1px solid var(--line-2)}
+  .network-head{max-width:640px;margin-bottom:46px}
+  .network-head h2{font-size:clamp(28px,3.6vw,42px);line-height:1.1;margin:16px 0 0}
+  .net-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media (max-width:900px){ .net-grid{grid-template-columns:1fr 1fr} }
+  @media (max-width:560px){ .net-grid{grid-template-columns:1fr} }
+  .net-card{border:1px solid var(--line);padding:24px}
+  .net-tag{display:inline-block;font-size:10px;font-weight:900;letter-spacing:.08em;color:var(--green);background:var(--green-50);padding:5px 9px;margin-bottom:16px}
+  .net-card h3{font-size:16px;margin-bottom:10px}
+  .net-card p{font-size:13px;margin-bottom:16px}
+  .net-cat{font-size:11px;font-weight:800;color:var(--muted);border-top:1px solid var(--line-2);padding-top:12px;text-transform:uppercase;letter-spacing:.04em}
+
+  /* ===== output demo ===== */
+  .output{padding:76px 0;border-bottom:1px solid var(--line-2)}
+  .output-head{max-width:640px;margin-bottom:40px}
+  .output-head h2{font-size:clamp(28px,3.6vw,42px);line-height:1.1;margin:16px 0 0}
+  .out-card{border:1px solid var(--line);background:#fff}
+  .out-tabs{display:flex;border-bottom:1px solid var(--line-2)}
+  .out-tab{padding:14px 22px;font-size:13px;font-weight:800;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent}
+  .out-tab.active{color:var(--ink);border-bottom-color:var(--green)}
+  .out-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line-2)}
+  .out-stat{padding:24px;border-left:1px solid var(--line-2)}
+  .out-stat:first-child{border-left:0}
+  .out-stat b{display:block;font-size:26px;font-weight:900;letter-spacing:-.03em}
+  .out-stat span{font-size:12px;color:var(--muted);font-weight:700}
+  .out-stat .lbl{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800;margin-bottom:6px}
+  @media (max-width:700px){ .out-stats{grid-template-columns:1fr} .out-stat{border-left:0;border-top:1px solid var(--line-2)} .out-stat:first-child{border-top:0} }
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:14px 24px;font-size:13px;border-top:1px solid var(--line-2)}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:800;border-top:0}
+  td.region{font-weight:700}
+  td.sig{color:var(--green);font-weight:700}
+  .illustrative{padding:14px 24px;font-size:11px;color:#9aa7bd;font-weight:700;border-top:1px solid var(--line-2)}
+
+  /* ===== business model ===== */
+  .business{padding:76px 0;border-bottom:1px solid var(--line-2)}
+  .business-head{max-width:640px;margin-bottom:46px}
+  .business-head h2{font-size:clamp(28px,3.6vw,42px);line-height:1.1;margin:16px 0 0}
+  .biz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media (max-width:800px){ .biz-grid{grid-template-columns:1fr} }
+  .biz-card{border:1px solid var(--line);padding:26px}
+  .biz-card .bn{font-size:12px;font-weight:900;color:var(--green);letter-spacing:.06em}
+  .biz-card h3{font-size:17px;margin:12px 0 10px}
+  .biz-card p{font-size:14px}
+
+  /* ===== trust ===== */
+  .trust{padding:76px 0;border-bottom:1px solid var(--line-2);background:var(--green-50)}
+  .trust h2{font-size:clamp(26px,3.4vw,36px);line-height:1.1;margin:16px 0 40px;max-width:20ch}
+  .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media (max-width:800px){ .trust-grid{grid-template-columns:1fr} }
+  .trust-card{background:#fff;border:1px solid #d7f0dd;padding:24px}
+  .trust-card .tn{font-size:12px;font-weight:900;color:var(--green)}
+  .trust-card h3{font-size:16px;margin:12px 0 8px}
+  .trust-card p{font-size:13px}
+
+  /* ===== pilot cta ===== */
+  .pilot{padding:80px 0}
+  .pilot-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  @media (max-width:900px){ .pilot-grid{grid-template-columns:1fr} }
+  .pilot h2{font-size:clamp(28px,3.8vw,44px);line-height:1.08;margin:16px 0 18px}
+  .pilot-list{margin-top:10px}
+  .pilot-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--line-2);font-size:14px;font-weight:700}
+  .pilot-item:first-child{border-top:0}
+  .pilot-item i{width:17px;height:17px;color:var(--green);flex:0 0 auto}
+  .pilot-form{border:1px solid var(--line);padding:28px;background:#fff}
+  .pilot-form label{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:10px}
+  .pilot-form input{width:100%;border:0;border-bottom:2px solid var(--line);padding:10px 0 14px;font-size:18px;font-weight:700;outline:none;background:transparent;margin-bottom:22px}
+  .pilot-form input:focus{border-color:var(--ink)}
+  .pilot-form .btn{width:100%}
+  .pilot-form .fine{margin-top:16px;font-size:12px;color:var(--muted)}
+
+  /* ===== footer ===== */
+  footer{border-top:1px solid var(--line-2);padding:40px 0}
+  .foot-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .foot-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px}
+  .foot-brand .mark{width:26px;height:26px;border-radius:6px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900}
+  footer p{font-size:13px}
+  footer a{font-size:13px;font-weight:700;color:var(--ink)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="brand"><span class="mark">AC</span><span>AGRIPALS CALLER</span></div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#graincorp">For GrainCorp</a>
+      <a href="#model">Business model</a>
+      <a class="cta-link" href="#mobile-demo">Try it on your phone <i data-lucide="arrow-up-right"></i></a>
+    </div>
+    <a class="btn ghost" href="#pilot" style="display:none"></a>
+  </div>
+</header>
+
+<main>
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow"><i data-lucide="phone-call" style="width:14px;height:14px"></i> Voice infrastructure for Australian wheat</div>
+        <h1>Every grower call becomes <span class="underline">market intelligence.</span></h1>
+        <p class="lead">Agripals Caller speaks with wheat growers by phone, asks the right follow-up questions, and turns every conversation into structured crop, risk, and supply data.</p>
+
+        <div id="mobile-demo">
+          <p style="font-size:13px;font-weight:800;color:var(--ink);margin-bottom:10px">Hear Agripals call your mobile</p>
+          <form class="phone-form" id="cta-form">
+            <input id="mobile" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 0412 345 678" required>
+            <button class="btn" type="submit">CALL ME →</button>
+          </form>
+          <p id="note">Request a short demo call. Your number is only used to arrange the demo.</p>
+        </div>
+
+        <div class="hero-links">
+          <a href="#pilot">Build a wheat pilot <i data-lucide="arrow-right"></i></a>
+          <a href="#live-demo">Hear how it works <i data-lucide="arrow-down"></i></a>
+        </div>
+
+        <div class="trust-row">
+          <span class="tag"><i data-lucide="smartphone"></i> Any phone</span>
+          <span class="tag"><i data-lucide="ban"></i> No app required</span>
+          <span class="tag"><i data-lucide="user-check"></i> Human review built in</span>
+        </div>
+      </div>
+
+      <div id="live-demo" class="call-card">
+        <div class="call-head">
+          <span class="label">Wheat check-in</span>
+          <span class="timer">Demo call · 02:14</span>
+        </div>
+        <div class="call-body">
+          <div class="who">
+            <div class="avatar">JM</div>
+            <div>
+              <div class="name">Grower — James M.</div>
+              <div class="meta">Riverina, NSW · Mobile</div>
+            </div>
+          </div>
+          <div class="bubble agripals"><span class="who-label">Agripals</span>G'day, it's Agripals calling on behalf of your grain network. Is now a good time for a two-minute wheat check-in?</div>
+          <div class="bubble grower"><span class="who-label">Grower</span>Yep, go ahead.</div>
+          <div class="bubble agripals"><span class="who-label">Agripals</span>How many hectares of wheat have you got in this season, and how is it looking after the latest rain?</div>
+          <div class="bubble grower"><span class="who-label">Grower</span>About 620 hectares. We had 18 millimetres last week, so it is looking fair — but the western blocks still need another fall.</div>
+
+          <div class="record">
+            <span class="rlabel">Structured record — updated from call</span>
+            <div class="rgrid">
+              <div class="rfield">Wheat area<b>620 ha</b></div>
+              <div class="rfield">Rainfall<b>18mm, last 7 days</b></div>
+              <div class="rfield">Condition<b>Fair, regional split</b></div>
+              <div class="rfield">Follow-up<b>Western blocks — recheck</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="play-row">
+          <button class="play-btn" id="play-toggle" aria-label="Play example call"><i data-lucide="play"></i></button>
+          <div class="play-text"><b>Play example call · 02:14</b><span>Illustrative conversation and data</span></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-cell"><b>01</b><span>Natural voice conversation</span></div>
+          <div class="stat-cell"><b>06+</b><span>Useful fields per call</span></div>
+          <div class="stat-cell"><b>24/7</b><span>Campaign availability</span></div>
+          <div class="stat-cell"><b>ECA</b><span>East-coast wheat focus</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GRAINCORP ===== -->
+  <section class="split" id="graincorp">
+    <div class="wrap split-grid">
+      <div>
+        <div class="eyebrow"><span class="n">First customer /</span> GrainCorp</div>
+        <h2>Farms provide the signal. Wheat companies pay for the view.</h2>
+        <p style="font-size:16px;margin-bottom:22px">Agripals Caller creates a fair, permissioned exchange: growers share short seasonal updates by phone, while companies such as GrainCorp buy a fresher regional picture for origination, storage, logistics, and grower support.</p>
+
+        <div class="stat-big">10,000+<small>Growers connected across a large east-coast storage and handling network. Target-customer profile · no affiliation implied.</small></div>
+
+        <div class="callout">
+          <h3>Permission before prediction.</h3>
+          <p>Regional, aggregated intelligence is the default product. A named farm record or commercial follow-up is shared only when that grower has explicitly opted in.</p>
+        </div>
+      </div>
+      <div>
+        <div class="point">
+          <span class="num">01</span>
+          <div><h3>Know likely receivals sooner</h3><p>Combine expected tonnes, harvest timing, quality confidence, and preferred delivery location before grain reaches a site.</p></div>
+        </div>
+        <div class="point">
+          <span class="num">02</span>
+          <div><h3>Plan a variable season</h3><p>See rainfall concerns and crop-condition changes by region so storage, staffing, rail, and customer commitments can respond earlier.</p></div>
+        </div>
+        <div class="point">
+          <span class="num">03</span>
+          <div><h3>Extend the digital network</h3><p>Add a phone channel alongside existing grower tools, reaching people who are busy, offline, or unlikely to complete another form.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== THE SYSTEM ===== -->
+  <section class="steps" id="how">
+    <div class="wrap">
+      <div class="steps-head">
+        <div class="eyebrow"><span class="n">The system /</span> 01</div>
+        <h2>One conversation. Four useful outcomes.</h2>
+        <p style="margin-top:14px;font-size:15px">Keep the familiar phone call. Remove the repetitive dialling, note-taking, data entry, and reporting that follows it.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step">
+          <span class="sn">01 · Call</span>
+          <h3>Reach growers on any phone.</h3>
+          <p>Agripals calls at the right time, explains who is asking, and has a natural conversation — no app, portal, or new device required.</p>
+          <span class="arrow"><i data-lucide="arrow-right"></i></span>
+        </div>
+        <div class="step">
+          <span class="sn">02 · Understand</span>
+          <h3>Ask the useful follow-up.</h3>
+          <p>The voice agent can ask about wheat area, variety, rainfall, crop condition, inputs, storage, harvest timing, and selling intentions.</p>
+          <span class="arrow"><i data-lucide="arrow-right"></i></span>
+        </div>
+        <div class="step">
+          <span class="sn">03 · Structure</span>
+          <h3>Turn speech into clean records.</h3>
+          <p>Each answer is converted into fields your team can search, review, export, or connect to an existing CRM and reporting workflow.</p>
+          <span class="arrow"><i data-lucide="arrow-right"></i></span>
+        </div>
+        <div class="step">
+          <span class="sn">04 · Act</span>
+          <h3>See the signal earlier.</h3>
+          <p>Watch conditions change by region, flag growers who need follow-up, and plan procurement, support, insurance, or logistics with fresher information.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== THE NETWORK ===== -->
+  <section class="network" id="use-cases">
+    <div class="wrap">
+      <div class="network-head">
+        <div class="eyebrow"><span class="n">The network /</span> 02</div>
+        <h2>Built for the organisations around the grower.</h2>
+        <p style="margin-top:14px;font-size:15px">Growers answer a normal phone call. The organisation running the campaign pays for the platform, usage, and workflow.</p>
+      </div>
+      <div class="net-grid">
+        <div class="net-card">
+          <span class="net-tag">BUY</span>
+          <h3>GrainCorp &amp; large handlers</h3>
+          <p>Check expected tonnes, grade confidence, storage position, selling window, and preferred delivery site before harvest pressure builds.</p>
+          <div class="net-cat">Procurement pipeline</div>
+        </div>
+        <div class="net-card">
+          <span class="net-tag">RISK</span>
+          <h3>Insurers &amp; lenders</h3>
+          <p>Run consented seasonal check-ins, collect structured risk updates, and route exceptions to a person without scaling a call centre.</p>
+          <div class="net-cat">Risk monitoring</div>
+        </div>
+        <div class="net-card">
+          <span class="net-tag">FIELD</span>
+          <h3>Agronomy networks</h3>
+          <p>Capture rainfall, emergence, disease pressure, input needs, and crop confidence while the information is still useful in the field.</p>
+          <div class="net-cat">Grower support</div>
+        </div>
+        <div class="net-card">
+          <span class="net-tag">PUBLIC</span>
+          <h3>Industry &amp; government</h3>
+          <p>Collect permissioned ground truth across regions and turn thousands of conversations into a timely, auditable seasonal picture.</p>
+          <div class="net-cat">Regional intelligence</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== THE OUTPUT ===== -->
+  <section class="output">
+    <div class="wrap">
+      <div class="output-head">
+        <div class="eyebrow"><span class="n">The output /</span> 03</div>
+        <h2>From "the crop looks alright" to a usable regional view.</h2>
+        <p style="margin-top:14px;font-size:15px">Every answer stays connected to its call, time, consent record, and confidence level. Teams see a live signal while retaining the source.</p>
+      </div>
+
+      <div class="out-card">
+        <div class="out-tabs" id="out-tabs">
+          <div class="out-tab active" data-region="all">Demo regional wheat outlook</div>
+          <div class="out-tab" data-region="qld">QLD</div>
+          <div class="out-tab" data-region="nsw">NSW</div>
+          <div class="out-tab" data-region="vic">VIC</div>
+        </div>
+        <div class="out-stats">
+          <div class="out-stat"><span class="lbl">Wheat area reported</span><b>14,820 ha</b><span>Example campaign total</span></div>
+          <div class="out-stat"><span class="lbl">Positive crop confidence</span><b>71%</b><span>Up 4 points this check-in</span></div>
+          <div class="out-stat"><span class="lbl">Rainfall concern flagged</span><b>18%</b><span>Needs regional follow-up</span></div>
+        </div>
+        <table>
+          <thead><tr><th>Region</th><th>Calls</th><th>Avg. confidence</th><th>Primary signal</th></tr></thead>
+          <tbody>
+            <tr><td class="region">Darling Downs, QLD</td><td>184</td><td>Medium</td><td class="sig">Rain needed</td></tr>
+            <tr><td class="region">Riverina, NSW</td><td>132</td><td>High</td><td class="sig">On track</td></tr>
+            <tr><td class="region">Wimmera, VIC</td><td>96</td><td>Medium</td><td class="sig">Monitor inputs</td></tr>
+          </tbody>
+        </table>
+        <div class="illustrative">Illustrative data — figures shown are examples, not a live feed.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== THE BUSINESS ===== -->
+  <section class="business" id="model">
+    <div class="wrap">
+      <div class="business-head">
+        <div class="eyebrow"><span class="n">The business /</span> 04</div>
+        <h2>Growers answer. Wheat companies subscribe.</h2>
+        <p style="margin-top:14px;font-size:15px">Agripals Caller is sold to organisations that need timely, permissioned information across a large wheat network. Growers never need to buy software or download an app.</p>
+      </div>
+      <div class="biz-grid">
+        <div class="biz-card"><span class="bn">01 · Platform</span><h3>Annual licence</h3><p>Covers call campaigns, workflow tools, dashboards, governance, and team access.</p></div>
+        <div class="biz-card"><span class="bn">02 · Usage</span><h3>Per-minute or per-call</h3><p>Pricing that scales with the number and length of grower conversations.</p></div>
+        <div class="biz-card"><span class="bn">03 · Deployment</span><h3>Setup &amp; integration</h3><p>Scripts, data fields, integrations, security requirements, and organisation-specific workflows.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TRUST ===== -->
+  <section class="trust">
+    <div class="wrap">
+      <div class="eyebrow">Built for trust</div>
+      <h2>Automation with a clear human handover.</h2>
+      <div class="trust-grid">
+        <div class="trust-card"><span class="tn">01</span><h3>Permission is explicit</h3><p>State who is calling, why the information is being collected, and how it will be used.</p></div>
+        <div class="trust-card"><span class="tn">02</span><h3>Uncertainty is visible</h3><p>Low-confidence answers and unusual responses are flagged for review instead of silently guessed.</p></div>
+        <div class="trust-card"><span class="tn">03</span><h3>People take over</h3><p>Route sensitive, complex, or high-value conversations to the right team member with the context attached.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PILOT ===== -->
+  <section class="pilot" id="pilot">
+    <div class="wrap pilot-grid">
+      <div>
+        <div class="eyebrow">Start small</div>
+        <h2>Prove it with one region and one useful call.</h2>
+        <p style="font-size:16px">Choose a grower group, a single seasonal question set, and the action your team should take when the answers arrive.</p>
+        <div class="pilot-list">
+          <p style="font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Suggested first pilot</p>
+          <div class="pilot-item"><i data-lucide="check"></i> 100 wheat growers</div>
+          <div class="pilot-item"><i data-lucide="check"></i> One seasonal check-in</div>
+          <div class="pilot-item"><i data-lucide="check"></i> One live dashboard</div>
+        </div>
+      </div>
+      <div class="pilot-form">
+        <form id="pilot-form">
+          <label for="work-email">Work email</label>
+          <input id="work-email" type="email" placeholder="you@company.com" required>
+          <button class="btn" type="submit">Design the pilot →</button>
+        </form>
+        <p class="fine">Private preview. Pilot scope and integrations are confirmed before launch.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <div class="foot-brand"><span class="mark">AC</span><span>AGRIPALS CALLER</span></div>
+    <p>Voice intelligence for Australian wheat.</p>
+    <a href="mailto:hello@agripals.com">hello@agripals.com</a>
+    <p>© 2026 Agripals</p>
+  </div>
+</footer>
+
+<script>
+  if(window.lucide) lucide.createIcons();
+
+  document.getElementById('cta-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var input=document.getElementById('mobile');
+    var num=input.value.trim();
+    if(!num){ input.focus(); return; }
+    var note=document.getElementById('note');
+    note.textContent="Thanks — we'll call you shortly from Agripals Caller.";
+    note.style.color='#078539';
+    input.value='';
+  });
+
+  document.getElementById('pilot-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var input=document.getElementById('work-email');
+    var email=input.value.trim();
+    if(!email){ input.focus(); return; }
+    var fine=document.querySelector('.pilot-form .fine');
+    fine.textContent="Thanks — we'll follow up to design your pilot.";
+    fine.style.color='#078539';
+    input.value='';
+  });
+
+  var playBtn=document.getElementById('play-toggle');
+  var playing=false;
+  playBtn.addEventListener('click', function(){
+    playing=!playing;
+    playBtn.innerHTML = playing ? '<i data-lucide="pause"></i>' : '<i data-lucide="play"></i>';
+    if(window.lucide) lucide.createIcons();
+  });
+
+  var tabs=document.querySelectorAll('.out-tab');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('active'); });
+      t.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
