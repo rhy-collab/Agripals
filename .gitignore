@@ -32,3 +32,9 @@ data/*.csv
 *.bak
 *.bak[0-9]*
 index.html.bak*
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
