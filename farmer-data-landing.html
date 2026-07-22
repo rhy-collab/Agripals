@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FarmPulse — Industry-Leading Ag Intelligence Reports</title>
+<meta name="description" content="FarmPulse publishes the ag industry's sharpest monthly intelligence reports — built from direct, consented farmer conversations. Free monthly report; premium data for teams that trade on it.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%23078539%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M11%2020A7%207%200%200%201%209.8%206.1C15.5%205%2017%204.48%2019%202c1%202%202%204.18%202%208%200%205.5-4.78%2010-10%2010Z%27/%3E%3Cpath%20d%3D%27M2%2021c0-3%201.85-5.36%205.08-6C9.5%2014.52%2012%2013%2013%2012%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#15803d; --green-light:#86efac; --green-bg:#f0fdf4;
+  --ink:#0f172a; --s700:#334155; --s500:#64748b; --s400:#94a3b8;
+  --s200:#e2e8f0; --s100:#f1f5f9; --s50:#f8fafc; --amber:#d97706;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{ font-family:"Inter",ui-sans-serif,system-ui,sans-serif; background:#fafafa; color:var(--ink); -webkit-font-smoothing:antialiased; }
+::selection{ background:#bbf7d0; }
+.shell{ max-width:80rem; margin:0 auto; background:#fff; border-left:1px solid var(--s100); border-right:1px solid var(--s100); }
+.pad{ padding-left:24px; padding-right:24px; }
+@media(min-width:768px){ .pad{ padding-left:80px; padding-right:80px; } }
+svg.ic{ stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+/* header */
+header{ display:flex; align-items:center; justify-content:space-between; padding-top:24px; padding-bottom:24px; }
+.brand{ display:flex; align-items:center; gap:8px; color:var(--green); font-weight:800; font-size:24px; letter-spacing:-.02em; }
+.brand .by{ font-size:12px; font-weight:600; color:var(--s400); letter-spacing:0; margin-left:6px; margin-top:6px; }
+header a{ font-size:15px; font-weight:600; color:var(--s500); text-decoration:none; }
+header a:hover{ color:var(--green); }
+
+/* hero */
+.hero{ padding-top:64px; padding-bottom:8px; position:relative; overflow:hidden; }
+.hero .bg{ position:absolute; inset:0; pointer-events:none; color:var(--s100); opacity:.6; }
+.hero .bg svg{ position:absolute; }
+.eyebrow{ font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--s400); }
+.eyebrow.green{ color:var(--green); }
+.hero .stat-stage{ position:relative; height:210px; margin-top:18px; }
+.hero .stat{ position:absolute; inset:0; opacity:0; transform:translateY(8px); transition:opacity .4s, transform .4s; }
+.hero .stat.on{ opacity:1; transform:none; }
+.hero .stat .big{ font-size:96px; line-height:1; font-weight:900; letter-spacing:-.05em; }
+.hero .stat .line{ font-size:28px; font-weight:500; letter-spacing:-.02em; color:var(--s700); margin-top:12px; }
+.hero .stat .src{ font-size:13px; font-weight:600; color:var(--s400); margin-top:8px; }
+.dots{ display:flex; gap:8px; margin:14px 0 40px; }
+.dots button{ height:6px; width:8px; border-radius:999px; background:var(--s200); border:none; cursor:pointer; transition:all .5s; }
+.dots button.on{ width:32px; background:var(--green); }
+h1.claim{ font-size:40px; font-weight:800; letter-spacing:-.02em; line-height:1.15; max-width:56rem; }
+h1.claim .u{ color:var(--green); text-decoration:underline; text-decoration-color:var(--green-light); text-underline-offset:6px; }
+h1.claim .m{ font-weight:500; color:var(--s700); }
+.hero p.sub{ font-size:18px; font-weight:500; color:var(--s500); max-width:44rem; margin-top:16px; line-height:1.6; }
+@media(min-width:768px){ .hero .stat .big{ font-size:120px; } h1.claim{ font-size:48px; } }
+
+/* capture */
+.capture{ background:#fff; border-top:1px solid var(--s200); padding-top:32px; padding-bottom:36px; }
+.capture form{ display:flex; flex-direction:column; gap:16px; max-width:48rem; }
+@media(min-width:768px){ .capture form{ flex-direction:row; align-items:flex-end; } }
+.capture input{ flex:1; min-width:0; padding:10px 0; font-size:20px; font-weight:500; font-family:inherit; background:transparent; border:none; border-bottom:2px solid var(--s200); border-radius:0; outline:none; color:var(--ink); transition:border-color .15s; }
+.capture input::placeholder{ color:var(--s400); }
+.capture input:focus{ border-color:var(--ink); }
+.btn{ background:var(--ink); color:#fff; font-family:inherit; font-weight:700; letter-spacing:.03em; font-size:17px; padding:15px 32px; border:none; border-radius:0; cursor:pointer; white-space:nowrap; transition:background .15s; }
+.btn:hover{ background:#000; }
+.capture .note{ font-size:14px; color:var(--s500); font-weight:500; margin-top:16px; max-width:48rem; }
+.capture .note b{ color:var(--green); }
+
+.divider{ height:8px; background:var(--s50); }
+
+/* sections */
+section{ padding-top:72px; padding-bottom:72px; }
+section h2{ font-size:30px; font-weight:800; letter-spacing:-.02em; margin:10px 0 12px; }
+section p.lead{ font-size:16.5px; font-weight:500; color:var(--s500); line-height:1.65; max-width:46rem; }
+
+/* report contents */
+.toc{ display:grid; grid-template-columns:1fr; gap:0; margin-top:36px; max-width:56rem; }
+.toc .row{ display:flex; gap:18px; align-items:flex-start; padding:22px 0; border-bottom:1px solid var(--s100); }
+.toc .row:last-child{ border-bottom:none; }
+.toc .n{ font-size:15px; font-weight:800; color:var(--green); padding-top:2px; min-width:32px; }
+.toc h3{ font-size:17px; font-weight:700; }
+.toc p{ font-size:14.5px; color:var(--s500); font-weight:500; line-height:1.6; margin-top:4px; }
+.toc .tag{ font-size:10.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--amber); margin-left:8px; }
+
+/* method */
+.method-grid{ display:grid; grid-template-columns:1fr; gap:40px; margin-top:40px; }
+@media(min-width:768px){ .method-grid{ grid-template-columns:repeat(3,1fr); } }
+.method .chip{ display:inline-flex; padding:16px; background:var(--green-bg); border-radius:16px; margin-bottom:16px; }
+.method .chip svg{ width:28px; height:28px; stroke:var(--green); }
+.method h3{ font-size:17px; font-weight:700; margin-bottom:8px; }
+.method p{ font-size:15px; color:var(--s500); font-weight:500; line-height:1.6; }
+
+/* buyers */
+.buyers{ margin-top:36px; max-width:56rem; }
+.buyer{ padding:22px 0; border-bottom:1px solid var(--s100); }
+.buyer:last-child{ border-bottom:none; }
+.buyer h3{ font-size:16.5px; font-weight:700; color:var(--green); }
+.buyer p{ font-size:15px; color:var(--s500); font-weight:500; line-height:1.6; margin-top:5px; }
+
+/* pricing */
+.tiers{ display:grid; grid-template-columns:1fr; gap:48px; margin-top:44px; }
+@media(min-width:768px){ .tiers{ grid-template-columns:repeat(3,1fr); gap:32px; } }
+.tier .name{ font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--s400); }
+.tier .name.hot{ color:var(--green); }
+.tier .price{ font-size:56px; font-weight:900; letter-spacing:-.04em; line-height:1; margin:14px 0 2px; }
+.tier .per{ font-size:14px; font-weight:500; color:var(--s500); margin-bottom:20px; }
+.tier ul{ list-style:none; }
+.tier li{ padding:10px 0; border-bottom:1px solid var(--s100); font-size:14.5px; font-weight:500; color:var(--s700); }
+.tier li:last-child{ border-bottom:none; }
+.tier .btn{ width:100%; margin-top:22px; font-size:15px; padding:14px; }
+.tier .btn.ghost{ background:#fff; color:var(--ink); border:1px solid var(--s200); }
+.tier .btn.ghost:hover{ border-color:var(--ink); background:#fff; }
+
+/* faq */
+.faq{ max-width:56rem; margin-top:32px; }
+.faq .q{ padding:22px 0; border-bottom:1px solid var(--s100); }
+.faq .q:last-child{ border-bottom:none; }
+.faq h3{ font-size:16px; font-weight:700; }
+.faq p{ font-size:14.5px; color:var(--s500); font-weight:500; line-height:1.65; margin-top:6px; }
+
+/* footer cta */
+.final{ padding-top:80px; padding-bottom:80px; }
+.final h2{ font-size:36px; font-weight:800; letter-spacing:-.02em; max-width:40rem; }
+.final h2 .u{ color:var(--green); text-decoration:underline; text-decoration-color:var(--green-light); text-underline-offset:6px; }
+footer{ padding:40px 24px 48px; text-align:center; color:var(--s400); font-size:14px; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="pad">
+    <div class="brand">
+      <svg class="ic" width="26" height="26" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+      FarmPulse <span class="by">by Agripals</span>
+    </div>
+    <a href="#report">Sample report</a>
+  </header>
+
+  <div class="hero pad">
+    <div class="bg" aria-hidden="true">
+      <svg class="ic" viewBox="0 0 24 24" style="top:8%; right:-160px; width:320px; height:320px; transform:rotate(-12deg); stroke-width:1;"><path d="M2 22 16 8"/><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z"/></svg>
+      <svg class="ic" viewBox="0 0 24 24" style="top:55%; right:12%; width:110px; height:110px; transform:rotate(14deg); stroke-width:1.3;"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 16h8"/><path d="M7 11h12"/><path d="M7 6h3"/></svg>
+    </div>
+
+    <div class="eyebrow">From this month's report</div>
+    <div class="stat-stage" id="stats">
+      <div class="stat on">
+        <div class="big">4&times;</div>
+        <div class="line">a year. That's how often USDA tells you what's in the bins.</div>
+        <div class="src">We ask farmers every month.</div>
+      </div>
+      <div class="stat">
+        <div class="big">~50%</div>
+        <div class="line">of US corn stocks sit on-farm — where no report looks between quarters.</div>
+        <div class="src">FarmPulse Monthly · on-farm stocks read</div>
+      </div>
+      <div class="stat">
+        <div class="big">43</div>
+        <div class="line">days of USDA blackout in 2025. Traders flew blind. Our panel kept answering.</div>
+        <div class="src">Why buyers stopped waiting for government data</div>
+      </div>
+      <div class="stat">
+        <div class="big">90s</div>
+        <div class="line">per farmer conversation. Thousands of them, every month, by consent.</div>
+        <div class="src">The method behind the number</div>
+      </div>
+    </div>
+    <div class="dots" id="dots">
+      <button class="on" onclick="setStat(0)" aria-label="Stat 1"></button>
+      <button onclick="setStat(1)" aria-label="Stat 2"></button>
+      <button onclick="setStat(2)" aria-label="Stat 3"></button>
+      <button onclick="setStat(3)" aria-label="Stat 4"></button>
+    </div>
+
+    <h1 class="claim"><span class="u">The ag report</span> the industry reads first.<br><span class="m">Built from farmer conversations, not last quarter's filings.</span></h1>
+    <p class="sub">Every month FarmPulse publishes the sharpest read on the grain market — global supply, on-farm stocks, selling intentions, and what farmers told us this week. The report is free. The data behind it is a business.</p>
+  </div>
+
+  <div class="capture pad" id="report">
+    <form onsubmit="event.preventDefault(); this.nextElementSibling.innerHTML='<b>Done.</b> This month\'s report is on its way to '+this.email.value+'.'; this.reset();">
+      <input name="email" type="email" placeholder="you@company.com" required autocomplete="email">
+      <button type="submit" class="btn">GET THE REPORT</button>
+    </form>
+    <p class="note">Free, monthly, no spam. First issue arrives immediately — <b>this month's wheat deep-dive included</b>.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <section class="pad">
+    <div class="eyebrow green">Inside every issue</div>
+    <h2>What industry leaders open first.</h2>
+    <p class="lead">One report, five sections, zero filler. Written to be forwarded to the trading desk, the sales floor, and the board.</p>
+    <div class="toc">
+      <div class="row">
+        <div class="n">01</div>
+        <div><h3>The Global Picture</h3><p>Wheat, corn, and soy across every major origin — production, trade flows, and the three numbers that moved this month, explained in plain language.</p></div>
+      </div>
+      <div class="row">
+        <div class="n">02</div>
+        <div><h3>The On-Farm Stocks Read <span class="tag">Panel data</span></h3><p>What farmers are actually holding, straight from our monthly panel conversations — the number USDA only publishes four times a year, refreshed every issue.</p></div>
+      </div>
+      <div class="row">
+        <div class="n">03</div>
+        <div><h3>Selling Intentions <span class="tag">Panel data</span></h3><p>When farmers plan to move grain, at what price they'd pull the trigger, and how that's shifting region by region.</p></div>
+      </div>
+      <div class="row">
+        <div class="n">04</div>
+        <div><h3>The Farmer Sentiment Index</h3><p>A single tracked number for how farmers feel about margins, inputs, and the year ahead — with the verbatims that explain why it moved.</p></div>
+      </div>
+      <div class="row">
+        <div class="n">05</div>
+        <div><h3>Your Region, Your Crop</h3><p>Subscribers can request a custom cut — your geography, your commodity, your questions — generated from the same panel and delivered as its own report.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="pad">
+    <div class="eyebrow green">Where the numbers come from</div>
+    <h2>We ask farmers. Every month. With their permission.</h2>
+    <p class="lead">No scraping, no guessing, no satellite squinting at bins from orbit. A consented panel of farmers answers a 90-second automated conversation each month — and gets the full report free in return.</p>
+    <div class="method-grid">
+      <div class="method">
+        <span class="chip"><svg class="ic" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+        <h3>Consent-first panel</h3>
+        <p>Every farmer opted in — by text, signup, or a real phone conversation. Fully TCPA-compliant, opt-out any time. The panel is the moat, and it's built on trust.</p>
+      </div>
+      <div class="method">
+        <span class="chip"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></span>
+        <h3>AI-assisted conversations</h3>
+        <p>Automated calls and SMS do in 90 seconds what call centers charge a fortune for — which is why we can ask thousands of farmers monthly, not hundreds quarterly.</p>
+      </div>
+      <div class="method">
+        <span class="chip"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
+        <h3>Benchmarked, not vibes</h3>
+        <p>Every panel read is stratified and checked against USDA benchmarks when they publish. When we're early, you'll see it. When we're wrong, you'll see that too.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="pad">
+    <div class="eyebrow green">Who trades on it</div>
+    <h2>Free for farmers. Priced for the people who profit from it.</h2>
+    <div class="buyers">
+      <div class="buyer"><h3>Grain buyers & traders</h3><p>Monthly stocks and selling-intentions reads between USDA quarters — know how much is coming to market before you set basis and book capacity.</p></div>
+      <div class="buyer"><h3>Equipment & input companies</h3><p>Purchase intentions by region and farm size, a season ahead. Time launches and sales pushes to what farmers said they need, not what they bought last year.</p></div>
+      <div class="buyer"><h3>Lenders & insurers</h3><p>Farmer margin sentiment and cash-flow signals, tracked monthly — an early-warning layer your underwriting models don't have.</p></div>
+      <div class="buyer"><h3>Agritech & researchers</h3><p>A living panel for validation studies and custom questions, at a cost per response traditional fieldwork can't touch.</p></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="pad">
+    <div class="eyebrow green">Pricing</div>
+    <h2>The report is free. The edge is not.</h2>
+    <div class="tiers">
+      <div class="tier">
+        <div class="name">Reader</div>
+        <div class="price">$0</div>
+        <div class="per">forever</div>
+        <ul>
+          <li>Monthly flagship report</li>
+          <li>Global market analysis</li>
+          <li>Headline panel numbers</li>
+          <li>Delivered by email</li>
+        </ul>
+        <button class="btn ghost" onclick="document.getElementById('report').scrollIntoView({behavior:'smooth'})">Get the report</button>
+      </div>
+      <div class="tier">
+        <div class="name hot">Desk</div>
+        <div class="price">$8K</div>
+        <div class="per">per month</div>
+        <ul>
+          <li>Everything in Reader</li>
+          <li>Full regional & crop breakdowns</li>
+          <li>Stocks + intentions data tables</li>
+          <li>One custom question per cycle</li>
+          <li>Analyst on call</li>
+        </ul>
+        <button class="btn">Talk to us</button>
+      </div>
+      <div class="tier">
+        <div class="name">Enterprise</div>
+        <div class="price">$24K</div>
+        <div class="per">per month, from</div>
+        <ul>
+          <li>Everything in Desk</li>
+          <li>Raw panel data, API + CSV</li>
+          <li>Custom survey waves</li>
+          <li>Predictive briefs & forecasts</li>
+          <li>White-label reports</li>
+        </ul>
+        <button class="btn ghost">Contact sales</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="pad">
+    <div class="eyebrow green">Fair questions</div>
+    <h2>Asked and answered.</h2>
+    <div class="faq">
+      <div class="q"><h3>How is this different from USDA data?</h3><p>USDA is the benchmark and we treat it that way — but it reports stocks four times a year, in aggregate, with a lag. We report monthly, by region, from named-panel farmer conversations. Use both; act on ours first.</p></div>
+      <div class="q"><h3>Is the farmer outreach legal?</h3><p>Yes, because consent comes first. Farmers join the panel themselves — by inbound text, web signup, or a live recruitment call — before any automated contact. Every message identifies itself, every farmer can leave with one word, and the whole operation is built to TCPA and carrier rules.</p></div>
+      <div class="q"><h3>Why would farmers keep answering?</h3><p>Because they're the other customer. Every panelist gets the full paid report free — what their neighbors are holding and when they plan to sell is worth more to a farmer than to anyone. Data for data.</p></div>
+      <div class="q"><h3>How accurate is a new panel?</h3><p>Honestly: it earns trust issue by issue. Every read is published against the next USDA benchmark so you can score us. We'd rather show you a track record than claim one.</p></div>
+      <div class="q"><h3>Can we ask our own questions?</h3><p>Desk plans get one custom question per monthly cycle; Enterprise runs whole custom waves. Same panel, same method, your questions.</p></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <div class="final pad">
+    <h2>Read it free this month. <span class="u">Trade on it</span> next month.</h2>
+    <div class="capture" style="border-top:none; padding-left:0; padding-right:0;">
+      <form onsubmit="event.preventDefault(); this.nextElementSibling.innerHTML='<b>Done.</b> This month\'s report is on its way to '+this.email.value+'.'; this.reset();">
+        <input name="email" type="email" placeholder="you@company.com" required autocomplete="email">
+        <button type="submit" class="btn">GET THE REPORT</button>
+      </form>
+      <p class="note">Join the industry's reading list. Unsubscribe any time.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>FarmPulse — ag intelligence by Agripals · hello@agripals.com</p>
+    <p style="margin-top:8px;">© <span id="yr"></span> Agripals. All rights reserved.</p>
+  </footer>
+</div>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+let si = 0, st = null;
+function render(){
+  document.querySelectorAll('#stats .stat').forEach((s,i)=>s.classList.toggle('on', i===si));
+  document.querySelectorAll('#dots button').forEach((b,i)=>b.classList.toggle('on', i===si));
+}
+function setStat(i){ si = i; render(); clearInterval(st); st = setInterval(()=>{ si=(si+1)%4; render(); }, 5000); }
+st = setInterval(()=>{ si=(si+1)%4; render(); }, 5000);
+</script>
+</body>
+</html>
